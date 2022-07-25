@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/cardView_margin_default"
+    android:layout_marginEnd="@dimen/cardView_margin_default"
+    android:layout_marginBottom="@dimen/card_category_start_end_margin"
+    android:clickable="true"
+    android:backgroundTint="@color/background"
+    app:cardElevation="@dimen/margin_one">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textView_card_tittle_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/card_category_start_end_margin"
+            android:layout_marginBottom="@dimen/card_category_margin"
+            android:layout_marginTop="@dimen/card_category_margin"
+            android:maxLines="1"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/textView_card_hour_task"
+            app:layout_constraintStart_toEndOf="@id/checkBox_card_status_task"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Fazer as coisas" />
+
+        <CheckBox
+            android:id="@+id/checkBox_card_status_task"
+            android:layout_width="@dimen/size_card_icon_checkbox"
+            android:layout_height="@dimen/size_card_icon"
+            android:layout_marginStart="@dimen/card_category_start_end_margin"
+            android:layout_marginTop="@dimen/card_category_start_end_margin"
+            android:layout_marginEnd="@dimen/textView_margin_start_category"
+            android:buttonTint="@color/text_primary"
+            app:layout_constraintEnd_toStartOf="@+id/textView_card_tittle_task"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView_card_category_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/textView_margin_start_category"
+            android:layout_marginEnd="@dimen/card_category_start_end_margin"
+            android:background="@drawable/text_view_category_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:maxLines="1"
+            android:padding="@dimen/textView_category_padding"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/textView_font_size_category_task"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_card_tittle_task"
+            app:layout_constraintEnd_toStartOf="@+id/priority_line"
+            app:layout_constraintTop_toTopOf="@+id/textView_card_tittle_task"
+            tools:text="Trabalho" />
+
+        <ImageView
+            android:id="@+id/imageView_card_hour_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/textView_card_margin_top_default"
+            android:layout_marginBottom="@dimen/card_category_margin"
+            android:contentDescription="@string/imageView_card_hour_description"
+            android:src="@drawable/ic_card_alarm_time_task"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textView_card_hour_task"
+            app:layout_constraintStart_toStartOf="@+id/textView_card_tittle_task"
+            app:layout_constraintTop_toBottomOf="@id/textView_card_tittle_task" />
+
+        <TextView
+            android:id="@+id/textView_card_hour_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/textView_card_margin_top_default"
+            android:layout_marginBottom="@dimen/card_category_margin"
+            android:maxLines="1"
+            android:text="15:00"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView_card_hour_task"
+            app:layout_constraintTop_toTopOf="@id/imageView_card_hour_task" />
+
+        <ImageView
+            android:id="@+id/imageView_card_calendar_task"
+            android:layout_width="@dimen/size_card_icon"
+            android:layout_height="@dimen/size_card_icon"
+            android:layout_marginStart="@dimen/imageView_calendar_margin_start"
+            android:layout_marginBottom="@dimen/card_category_margin"
+            android:contentDescription="@string/imageView_card_calendar_description"
+            android:src="@drawable/ic_card_calendar_dark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/textView_card_calendar_task"
+            app:layout_constraintStart_toEndOf="@id/textView_card_hour_task"
+            app:layout_constraintTop_toTopOf="@+id/imageView_card_hour_task" />
+
+        <TextView
+            android:id="@+id/textView_card_calendar_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/textView_card_margin_top_default"
+            android:layout_marginBottom="@dimen/card_category_margin"
+            android:maxLines="1"
+            android:text="12/02/1998"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imageView_card_calendar_task"
+            app:layout_constraintTop_toTopOf="@id/imageView_card_calendar_task" />
+
+        <View
+            android:id="@+id/priority_line"
+            android:layout_width="@dimen/margin_default_floating_button_end"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/card_category_start_end_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>

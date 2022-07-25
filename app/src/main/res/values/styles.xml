@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Chip Button -->
+    <style name="chipCustom" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_background_color</item>
+        <item name="android:textColor">@color/chip_text_color</item>
+        <item name="fontFamily">@font/roboto_condensed_regular</item>
+        <item name="android:textSize">@dimen/textSize_chip</item>
+        <item name="chipStrokeColor">@color/chip_stroke_color</item>
+        <item name="chipStrokeWidth">@dimen/margin_stroke_chip</item>
+    </style>
+
+
+    <!-- Check Button-->
+    <style name="checkBooCustom" parent="Widget.Material3.CompoundButton.CheckBox">
+        <item name="android:fontFamily">@font/roboto_condensed_bold</item>
+        <item name="android:textSize">@dimen/textView_font_size_category_task</item>
+    </style>
+
+
+    <!-- Bottom Sheet -->
+    <style name="CustomBottomSheetDialog" parent="@style/Theme.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+    </style>
+    <!-- Bottom Sheet -->
+    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="background">@color/dark_card</item>
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+    <!-- Bottom Sheet -->
+    <style name="CustomShapeAppearanceBottomSheetDialog" parent="Widget.MaterialComponents.BottomSheet.Modal">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/size_card_icon</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="colorSurface">@color/dark_card</item>
+        <item name="backgroundColor">@color/dark_card</item>
+    </style>
+
+
+    <!-- Image Button -->
+    <style name="imageButtonCustom" parent="Widget.AppCompat.ImageButton">
+        <item name="background">@color/image_button_background</item>
+    </style>
+
+
+
+
+    <!-- Radio button -->
+    <style name="customRadio" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <item name="buttonTint">@color/radio_button_tint</item>
+    </style>
+
+
+    <!-- Checked Button -->
+    <style name="customChecked" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/radio_button_tint</item>
+    </style>
+
+
+    <!--SnackBar -->
+    <style name="MaterialSnackbarTheme" parent="@style/Widget.MaterialComponents.Snackbar">
+        <item name="shapeAppearanceOverlay">@style/customSnack</item>
+    </style>
+
+    <style name="MaterialSnackbarTextButtonTheme" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">
+        <item name="backgroundTint">#7777ff</item>
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="MaterialSnackbarTextViewTheme" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+        <item name="android:textColor">@color/dark_background_primary</item>
+        <item name="android:alpha">1.0</item>
+    </style>
+
+    <style name="customSnack" parent="@style/Widget.MaterialComponents.Snackbar.TextView">
+        <item name="colorSurface">@color/dark_hover</item>
+        <item name="colorOnSurface">@color/dark_hover</item>
+    </style>
+
+
+    <style name="customTabText" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="fontFamily">@font/roboto_condensed_regular</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/tab_text</item>
+    </style>
+
+</resources>

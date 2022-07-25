@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">TodoEasy</string>
+
+    <!-- Description Card ImageView -->
+    <string name="imageView_card_hour_description">Image for the icon hour task</string>
+    <string name="imageView_card_calendar_description">Image for the task calendar</string>
+    <string name="imageView_card_task_description">Image for priority task</string>
+
+    <!-- Main activity-->
+
+
+    <!-- Today Tasks-->
+    <string name="textView_today_tasks">Today</string>
+
+    <!-- Create Task-->
+    <string name="textView_create_task">Create Task</string>
+    <string name="textView_priority_task">Priority</string>
+    <string name="textView_hour">Hour</string>
+    <string name="textView_date">Date</string>
+    <string name="textView_status">Task Status</string>
+    <string name="label_name_task">Task Name</string>
+    <string name="label_description_task">Task Description</string>
+    <string name="label_category">Task Category</string>
+    <string name="radio_high_priority">High</string>
+    <string name="radio_medium_priority">Medium</string>
+    <string name="radio_low_priority">Low</string>
+    <string name="error_text">Required Field</string>
+    <string name="error_empty_field">"Empty Fields "</string>
+    <string name="create_task_completed">Task Successfully Created</string>
+    <string name="textMaxLength">20</string>
+    <!-- Description -->
+    <string name="description_close_task">Close create task</string>
+    <string name="description_imageView_low">ImageView for radio button low priority</string>
+    <string name="description_imageView_medium">Image View for radio button Medium priority</string>
+    <string name="description_imageView_high">Description radio button high priority</string>
+    <string name="description_imageButton_hour">Image view alarm icon for hour</string>
+    <string name="description_imageButton_date">ImageView calendar icon for task date</string>
+
+
+    <string name="search_toolbar">Search</string>
+    <string name="tab_today">Today</string>
+    <string name="tab_weekly">Weekly</string>
+    <string name="tab_month">Month</string>
+    <string name="hide_completed">Hide Tasks Completed</string>
+
+</resources>

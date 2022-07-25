@@ -1,0 +1,17 @@
+package com.bootcamp.todoeasy.util
+
+class Constants {
+    companion object {
+        const val PRIORITY_TASK_HIGH = 3
+        const val PRIORITY_TASK_MEDIUM = 2
+        const val PRIORITY_TASK_LOW = 1
+
+        const val COLOR_HIGH = "#CF6679"
+        const val COLOR_MEDIUM = "#F8F150"
+        const val COLOR_LOW = "#00FA9A"
+
+        const val TODAY = "Today"
+        const val WEEKLY = "Weekly"
+        const val MONTH = "Month"
+    }
+}

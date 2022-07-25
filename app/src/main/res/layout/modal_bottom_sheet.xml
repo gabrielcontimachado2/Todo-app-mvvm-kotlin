@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    style="@style/CustomBottomSheetDialog"
+    tools:context=".ui.fragments.modal.ModalBottomSheet">
+
+    <View
+        android:id="@+id/task_push_down"
+        android:layout_width="@dimen/bottom_sheet_width"
+        android:layout_height="@dimen/margin_one"
+        android:layout_marginTop="@dimen/card_category_start_end_margin"
+        android:background="@color/text_secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_tittle_create_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textView_card_margin_start_default"
+        android:layout_marginTop="@dimen/textView_card_margin_start_default"
+        android:text="@string/textView_create_task"
+        android:textSize="@dimen/textSize_card_tittle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/task_push_down" />
+
+    <ImageButton
+        android:id="@+id/imageButton_add_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/textView_card_margin_start_default"
+        android:layout_marginBottom="@dimen/card_category_margin"
+        android:background="?android:selectableItemBackground"
+        app:circularflow_defaultRadius="@dimen/margin_default_app"
+        android:contentDescription="@string/description_close_task"
+        android:src="@drawable/ic_add_circle"
+        app:layout_constraintBottom_toBottomOf="@id/textView_tittle_create_task"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textView_tittle_create_task" />
+
+    <View
+        android:id="@+id/divide"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_top_search_icon"
+        android:layout_marginStart="@dimen/card_category_margin"
+        android:layout_marginTop="@dimen/card_category_start_end_margin"
+        android:layout_marginEnd="@dimen/card_category_margin"
+        android:background="@color/text_secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_tittle_create_task" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInput_name_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default_app"
+        android:layout_marginTop="@dimen/margin_default_app"
+        android:layout_marginEnd="@dimen/margin_default_app"
+        android:hint="@string/label_name_task"
+        app:boxBackgroundColor="@color/dark_hover"
+        app:boxCornerRadiusTopEnd="@dimen/textView_card_margin_start_default"
+        app:boxCornerRadiusTopStart="@dimen/textView_card_margin_start_default"
+        app:counterEnabled="true"
+        app:counterMaxLength="@string/textMaxLength"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divide">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ediText_name_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            app:errorEnabled="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInput_description_task"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default_app"
+        android:layout_marginTop="@dimen/card_category_margin"
+        android:layout_marginEnd="@dimen/margin_default_app"
+        android:hint="@string/label_description_task"
+        android:textColorHint="@color/text_secondary"
+        app:boxBackgroundColor="@color/dark_hover"
+        app:boxCornerRadiusTopEnd="@dimen/textView_card_margin_start_default"
+        app:boxCornerRadiusTopStart="@dimen/textView_card_margin_start_default"
+        app:counterEnabled="true"
+        app:counterMaxLength="@string/textMaxLength"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInput_name_task">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ediText_description_task"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            app:errorEnabled="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInput_category_task"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default_app"
+        android:layout_marginTop="@dimen/card_category_margin"
+        android:layout_marginEnd="@dimen/margin_default_app"
+        android:hint="@string/label_category"
+        android:textColorHint="@color/text_secondary"
+        app:boxBackgroundColor="@color/dark_hover"
+        app:boxCornerRadiusTopEnd="@dimen/textView_card_margin_start_default"
+        app:boxCornerRadiusTopStart="@dimen/textView_card_margin_start_default"
+        app:counterEnabled="true"
+        app:counterMaxLength="@string/textMaxLength"
+        app:layout_constraintBottom_toTopOf="@id/layout_priority"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInput_description_task">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textShortMessage"
+            app:errorEnabled="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_priority"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInput_category_task">
+
+        <TextView
+            android:id="@+id/textView_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_app"
+            android:layout_marginTop="@dimen/card_category_start_end_margin"
+
+            android:text="@string/textView_priority_task"
+
+            android:textSize="@dimen/textView_font_size_category_task"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/radioGroup_priority"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup_priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_app"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView_priority">
+
+
+            <ImageView
+                android:id="@+id/imageView_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_top_radio"
+                android:contentDescription="@string/description_imageView_low"
+                android:src="@drawable/ic_low" />
+
+            <RadioButton
+                android:id="@+id/radioButton_low"
+                style="@style/customRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_category_margin"
+                android:layout_marginEnd="@dimen/card_category_margin"
+                android:text="@string/radio_low_priority"
+                android:textSize="@dimen/textView_font_size_category_task_um" />
+
+            <ImageView
+                android:id="@+id/imageView_medium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_category_margin"
+                android:layout_marginTop="@dimen/margin_top_radio"
+                android:contentDescription="@string/description_imageView_medium"
+                android:src="@drawable/ic_medium" />
+
+            <RadioButton
+                android:id="@+id/radioButton_medium"
+                style="@style/customRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_category_margin"
+                android:layout_marginEnd="@dimen/card_category_margin"
+                android:text="@string/radio_medium_priority"
+                android:textSize="@dimen/textView_font_size_category_task_um" />
+
+            <ImageView
+                android:id="@+id/imageView_high"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_category_margin"
+                android:layout_marginTop="@dimen/margin_top_radio"
+                android:contentDescription="@string/description_imageView_high"
+                android:src="@drawable/ic_high" />
+
+            <RadioButton
+                android:id="@+id/radioButton_high"
+                style="@style/customRadio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/card_category_margin"
+                android:layout_marginEnd="@dimen/margin_default_app"
+                android:text="@string/radio_high_priority"
+                android:textSize="@dimen/textView_font_size_category_task_um" />
+
+        </RadioGroup>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textView_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default_app"
+        android:text="@string/textView_hour"
+        android:textSize="@dimen/textView_font_size_category_task"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/textView_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_priority" />
+
+    <ImageButton
+        android:id="@+id/imageButton_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/card_category_margin"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/description_imageButton_hour"
+        android:src="@drawable/ic_hour_sheet"
+        app:layout_constraintEnd_toEndOf="@id/textView_hour"
+        app:layout_constraintStart_toStartOf="@id/textView_hour"
+        app:layout_constraintTop_toBottomOf="@id/textView_hour" />
+
+    <TextView
+        android:id="@+id/textView_hour_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textView_card_margin_start_default"
+        android:layout_marginEnd="@dimen/margin_default_app"
+        android:textSize="@dimen/textSize_card_tittle"
+        app:layout_constraintBottom_toBottomOf="@id/imageButton_hour"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_date"
+        app:layout_constraintStart_toEndOf="@id/imageButton_hour"
+        app:layout_constraintTop_toTopOf="@id/imageButton_hour"
+        tools:text="15:00" />
+
+    <TextView
+        android:id="@+id/textView_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_start_hour_date"
+        android:layout_marginEnd="50dp"
+        android:text="@string/textView_date"
+        android:textSize="@dimen/textView_font_size_category_task"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/textView_hour"
+        app:layout_constraintTop_toBottomOf="@id/layout_priority" />
+
+    <ImageButton
+        android:id="@+id/imageButton_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/card_category_margin"
+        android:layout_marginBottom="@dimen/margin_start_hour_date"
+        android:background="?android:selectableItemBackground"
+        android:contentDescription="@string/description_imageButton_date"
+        android:src="@drawable/ic_calendar_sheet"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/textView_date"
+        app:layout_constraintStart_toStartOf="@id/textView_date"
+        app:layout_constraintTop_toBottomOf="@id/textView_date" />
+
+    <TextView
+        android:id="@+id/textView_date_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/textView_card_margin_start_default"
+        android:layout_marginEnd="@dimen/margin_default_app"
+        android:fontFamily="@font/roboto_condensed_regular"
+        android:textColor="@color/text_secondary"
+        android:textSize="@dimen/textSize_card_tittle"
+        app:layout_constraintBottom_toBottomOf="@id/imageButton_date"
+        app:layout_constraintStart_toEndOf="@id/imageButton_date"
+        app:layout_constraintTop_toTopOf="@id/imageButton_date"
+        tools:text="20/05/1998" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

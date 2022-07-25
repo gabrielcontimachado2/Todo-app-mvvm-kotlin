@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Dimens For the Card-->
+    <dimen name="cardView_margin_default">8dp</dimen>
+    <dimen name="margin_default_app">24dp</dimen>
+    <dimen name="textView_card_margin_start_default">16dp</dimen>
+    <dimen name="textView_card_margin_top_default">8dp</dimen>
+    <dimen name="textSize_card_tittle">24sp</dimen>
+    <dimen name="imageView_calendar_margin_start">30dp</dimen>
+    <dimen name="size_card_icon">24dp</dimen>
+    <dimen name="size_icon_filter">24dp</dimen>
+    <dimen name="size_card_icon_checkbox">26dp</dimen>
+    <dimen name="textView_margin_start_category">14dp</dimen>
+    <dimen name="textView_category_padding">8dp</dimen>
+    <dimen name="textView_font_size_category_task_um">13sp</dimen>
+    <dimen name="textView_font_size_category_task">16sp</dimen>
+    <dimen name="tab_text">18sp</dimen>
+    <dimen name="card_elevation">24dp</dimen>
+    <dimen name="bottom_sheet_width">30dp</dimen>
+    <dimen name="card_category_padding">16dp</dimen>
+
+
+    <!-- Dimen Card Category-->
+    <dimen name="card_category_margin">4dp</dimen>
+    <dimen name="card_category_start_end_margin">8dp</dimen>
+    <dimen name="cardView_radius">16dp</dimen>
+    <dimen name="layout_height_priority_bar">50dp</dimen>
+    <dimen name="margin_top_tab">52dp</dimen>
+    <dimen name="layout_height_chip_group">60dp</dimen>
+    <dimen name="layout_height_category_bar">30dp</dimen>
+    <dimen name="margin_default_floating_button_end">24dp</dimen>
+    <dimen name="textView_priority_padding">2dp</dimen>
+    <dimen name="textView_width_priority">80dp</dimen>
+    <dimen name="textView_priority_medium_padding">4dp</dimen>
+    <dimen name="textView_width_medium_priority">60dp</dimen>
+    <dimen name="editText_height_search_toolbar">36dp</dimen>
+    <dimen name="margin_top_search_icon">1dp</dimen>
+    <dimen name="margin_stroke_chip">0.5dp</dimen>
+    <dimen name="margin_one">3dp</dimen>
+    <dimen name="touch_target">36dp</dimen>
+    <dimen name="textSize_filter_title">24sp</dimen>
+    <dimen name="textSize_chip">16sp</dimen>
+    <dimen name="margin_start_hour_date">80dp</dimen>
+    <dimen name="margin_top_radio">11dp</dimen>
+
+</resources>

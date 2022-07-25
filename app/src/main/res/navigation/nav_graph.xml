@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/viewPageFragment">
+
+    <dialog
+        android:id="@+id/modalBottomSheet"
+        android:name="com.bootcamp.todoeasy.ui.fragments.modal.ModalBottomSheet"
+        android:label="modal_bottom_sheet"
+        tools:layout="@layout/modal_bottom_sheet" />
+
+    <fragment
+        android:id="@+id/viewPageFragment"
+        android:name="com.bootcamp.todoeasy.ui.viewPage.ViewPageFragment"
+        android:label="ViewPageFragment" />
+</navigation>

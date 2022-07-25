@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners
+        android:topLeftRadius="@dimen/textView_card_margin_start_default"
+        android:topRightRadius="@dimen/textView_card_margin_start_default" />
+
+    <solid android:color="@color/dark_card" />
+</shape>

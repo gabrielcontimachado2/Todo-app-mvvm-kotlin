@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#66b2b2</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Dark pallet -->
+    <color name="dark_background_primary">#18191A</color>
+    <color name="dark_card">#242526</color>
+    <color name="dark_hover">#3A3B3C</color>
+    <color name="text_primary">#E4E6EB</color>
+    <color name="text_secondary">#B0B3B8</color>
+
+
+    <!-- Dark pallet -->
+    <color name="primary">#BB86FC</color>
+    <color name="primary_variant">#3700B3</color>
+    <color name="secondary">#03DAC6</color>
+    <color name="background">#121212</color>
+    <color name="surface">#121212</color>
+    <color name="error">#CF6679</color>
+    <color  name="onPrimary">#000000</color>
+    <color name="onSecondary">#000000</color>
+    <color name="onBackground">#FFFFFF</color>
+    <color name="onSurface">#FFFFFF</color>
+    <color name="onError">#FFFFFF</color>
+
+
+
+    <!-- Card Colors-->
+    <color name="gray_background">#E0E0E0</color>
+    <color name="green_priority_low">#2DD36F</color>
+
+
+    <color name="text_purple">#BB86FC</color>
+
+
+
+
+
+</resources>
