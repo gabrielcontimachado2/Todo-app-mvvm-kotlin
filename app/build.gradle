@@ -11,7 +11,7 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.bootcamp.todoeasy"
+        applicationId "com.todo.todoeasy"
         minSdk 24
         targetSdk 32
         versionCode 1
@@ -19,6 +19,23 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
+    flavorDimensions "version"
+    productFlavors {
+
+        hml {
+            dimension "version"
+            versionName defaultConfig.versionName + "-HML"
+            applicationIdSuffix ".hml"
+            versionNameSuffix "-hml"
+        }
+
+        prod {
+            dimension "version"
+        }
+
+    }
+
 
     buildTypes {
         release {
