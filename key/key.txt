@@ -1,0 +1,4 @@
+key path: \key\todoeasykey
+key store password: todoeasy
+key alias: todoeasy
+key password: todoeasy
