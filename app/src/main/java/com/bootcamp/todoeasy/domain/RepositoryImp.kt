@@ -20,20 +20,36 @@ class RepositoryImp @Inject constructor(
 
     override fun getCategory() = taskDataSourceImp.getCategory()
 
-    override fun getTask(
+    override suspend fun deleteTask(task: Task) = taskDataSourceImp.deleteTask(task)
+
+    override fun getTasksByDateToday(
         search: String,
-        hide: Boolean,
-        day: String,
-    ) = when (day) {
-        Constants.TODAY -> taskDataSourceImp.getTasksByDateToday(search, hide)
-        Constants.WEEKLY -> TODO()
-        Constants.MONTH -> TODO()
-        else -> {
-            flow {
-                emptyList<List<Task>>()
-            }
-        }
-    }
+        hideCompletedTask: Boolean
+    ) = taskDataSourceImp.getTasksByDateToday(search, hideCompletedTask)
+
+
+    //override fun getTask(
+    //    searchQuery: StateFlow<String>,
+    //    hideCompleted: StateFlow<Boolean>,
+    //    taskDay: StateFlow<String>
+    //): Flow<List<Task>> {
+
+    //    val _taskFlow = combine(searchQuery, hideCompleted) {
+
+    //    }
+
+    //    when (taskDay) {
+    //Constants.TODAY -> taskDataSourceImp.getTasksByDateToday(search, hideCompletedTask)
+    //Constants.WEEKLY -> TODO()
+    //Constants.MONTH -> TODO()
+    //else -> {
+    //    flow {
+    //        emptyList<List<Task>>()
+    //    }
+    //}
+
+    //    }
+    //}
 
 
 }

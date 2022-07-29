@@ -5,18 +5,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bootcamp.todoeasy.R
+import com.bootcamp.todoeasy.data.models.Category
+import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.databinding.FragmentTodayBinding
 import com.bootcamp.todoeasy.ui.adapter.TaskAdapter
-import com.bootcamp.todoeasy.util.Constants.Companion.TODAY
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.toList
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -35,35 +38,14 @@ class TodayFragment : Fragment() {
     ): View {
         binding = FragmentTodayBinding.inflate(inflater, container, false)
 
-        return binding.root
-
-
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         setupRecyclerView()
+        observeTask()
+        itemTouchHelper()
 
+        return binding.root
     }
 
-    /** Flow*/
-    private fun observeTask(adapter: TaskAdapter) {
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-                viewModel.taskDay.value = TODAY
-
-                viewModel.taskFlow.collect { taskList ->
-                    adapter.submitList(taskList)
-                }
-            }
-        }
-
-    }
-
+    /** Create the recyclerView with adapter*/
     private fun setupRecyclerView() {
         taskAdapter = TaskAdapter()
         recyclerViewTask = binding.recyclerViewTodayTask
@@ -72,22 +54,84 @@ class TodayFragment : Fragment() {
             setHasFixedSize(true)
             adapter = taskAdapter
         }
-        observeTask(taskAdapter)
+
     }
 
-    /** Flow*/
-    //private fun observeTask() {
-    //    viewLifecycleOwner.lifecycleScope.launch {
-    //        viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+    /** LiveData for observer the list os tasks*/
+    private fun observeTask() {
+        viewModel.task.observe(viewLifecycleOwner, Observer { taskList ->
+            taskAdapter.submitList(taskList)
+        })
+    }
 
-    //            viewModel.taskDay.emit(TODAY)
+    /** Item touch helper for swipe card*/
+    private fun itemTouchHelper() {
+        ItemTouchHelper(itemTouchHelperCallBack).apply {
+            attachToRecyclerView(recyclerViewTask)
+        }
+    }
 
-    //            viewModel.taskFlow.collect { taskList ->
-    //                taskAdapter.submitList(taskList)
-    //            }
-    //        }
-    //    }
-    //}
+    /** Function for swipe card effect in recyclerView, delete the task and undo that action with necessary*/
+    private val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(
+        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+    ) {
+        override fun onMove(
+            recyclerView: RecyclerView,
+            viewHolder: RecyclerView.ViewHolder,
+            target: RecyclerView.ViewHolder
+        ): Boolean {
+            return true
+        }
+
+        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+            val position = viewHolder.adapterPosition
+            val task = taskAdapter.currentList[position]
+
+            /** Delete the task in room db */
+            viewModel.deleteTask(task)
+
+            /** The floating button in main activity for anchor the snackBar above the fab in bottom bar*/
+            val floatingMain: FloatingActionButton =
+                activity?.findViewById(R.id.floatingButton_create_task)!!
+
+            /** SnackBar with action for undo the delete task*/
+            Snackbar.make(view!!, R.string.task_deleted_success, Snackbar.LENGTH_LONG)
+                .apply {
+                    setAction("Undo") {
+                        val categoryUndo = Category(null, task.categoryName)
+                        viewModel.insertTask(task, categoryUndo)
+                        Snackbar.make(
+                            view!!,
+                            R.string.create_task_completed,
+                            Toast.LENGTH_LONG
+                        ).setAnchorView(floatingMain)
+                            .show()
+                    }.anchorView = floatingMain
+                    show()
+                }
+
+        }
+
+    }
+
+
+    // /** Flow*/
+    // private fun observeTask() {
+
+    //     viewLifecycleOwner.lifecycleScope.launch {
+    //         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+    //             viewModel.taskDay.value = TODAY
+
+    //             viewModel.taskFlow.collectLatest { taskList ->
+    //                 taskAdapter.submitList(taskList)
+    //             }
+    //         }
+    //     }
+
+    // }
+
 
 }
 

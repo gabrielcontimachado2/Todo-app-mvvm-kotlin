@@ -1,16 +1,12 @@
 package com.bootcamp.todoeasy.ui
 
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import com.bootcamp.todoeasy.R
 import com.bootcamp.todoeasy.databinding.ActivityMainBinding
@@ -18,7 +14,6 @@ import com.bootcamp.todoeasy.ui.fragments.today.TaskViewModel
 import com.bootcamp.todoeasy.util.onQueryTextChanged
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -39,39 +34,35 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("InflateParams")
     private fun setupChipGroup() {
+
         val categoryChipGroup = binding.categoryFilter.chipGroupCategory
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.category.collect { categoryList ->
-                    categoryList.forEach { category ->
-                        if (!listFilter.contains(category.categoryName)) {
-                            listFilter.add(category.categoryName)
-                        }
-                    }
+        viewModel.category.observe(this) { categoryList ->
+            categoryList.forEach { category ->
+                if (!listFilter.contains(category.categoryName)) {
+                    listFilter.add(category.categoryName)
+                }
+            }
 
-                    with(categoryChipGroup) {
-                        removeAllViews()
-                        listFilter.forEach { categoryString ->
-                            val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
-                            chip.text = categoryString
-                            addView(chip)
+            with(categoryChipGroup) {
+                removeAllViews()
+                listFilter.forEach { categoryString ->
+                    val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
+                    chip.text = categoryString
+                    addView(chip)
 
-                            chip.setOnCheckedChangeListener { _, isChecked ->
-                                if (isChecked) {
-                                    viewModel.categoryRequest.value = chip.text.toString()
-                                }
-                            }
+                    chip.setOnCheckedChangeListener { _, isChecked ->
+                        if (isChecked) {
+                            viewModel.setCategoryFilter(chip.text.toString())
+                            viewModel.updateTaskWithCategory()
                         }
                     }
                 }
             }
         }
-
-
     }
+
 
     private fun setupFabButton() {
         val fabCreateTask = binding.floatingButtonCreateTask
@@ -92,7 +83,8 @@ class MainActivity : AppCompatActivity() {
 
 
         searchView.onQueryTextChanged { queryChanged ->
-            viewModel.searchTask.value = queryChanged
+            viewModel.updateSearchQuery(queryChanged)
+            viewModel.updateTaskWithCategory()
         }
 
         return super.onCreateOptionsMenu(menu)

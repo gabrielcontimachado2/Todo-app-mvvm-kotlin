@@ -1,10 +1,12 @@
 package com.bootcamp.todoeasy.domain
 
 
+import androidx.lifecycle.LiveData
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 
 interface Repository {
@@ -14,7 +16,12 @@ interface Repository {
 
     suspend fun insertCategory(category: Category)
 
-    fun getTask(search: String, hide: Boolean, day: String): Flow<List<Task>>
+    fun getTasksByDateToday(
+        search: String,
+        hideCompletedTask: Boolean
+    ): Flow<List<Task>>
 
     fun getCategory(): Flow<List<Category>>
+
+    suspend fun deleteTask(task: Task)
 }

@@ -14,6 +14,7 @@ class ModalViewModel @Inject constructor(
     private val repositoryImp: RepositoryImp
 ) : ViewModel() {
 
+    /** Create a task and his category in room db */
     fun insertTask(task: Task, category: Category) = viewModelScope.launch {
         repositoryImp.insertTask(task)
         repositoryImp.insertCategory(category)

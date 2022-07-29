@@ -42,5 +42,6 @@
     <string name="tab_weekly">Weekly</string>
     <string name="tab_month">Month</string>
     <string name="hide_completed">Hide Tasks Completed</string>
+    <string name="task_deleted_success">The task delete with success!!!</string>
 
 </resources>

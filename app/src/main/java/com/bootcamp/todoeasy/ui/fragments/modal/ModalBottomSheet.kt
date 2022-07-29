@@ -72,7 +72,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         return onClickAction
     }
 
-    /** Create a task */
+    /** Function for create a task */
     private fun addTask() {
         val imageButtonAdd = binding.imageButtonAddTask
 
@@ -83,7 +83,17 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                 val createdTime = Calendar.getInstance().timeInMillis
 
                 val task =
-                    Task(null, name, description, false, priority, category, Date(date), time, Date(createdTime))
+                    Task(
+                        null,
+                        name,
+                        description,
+                        false,
+                        priority,
+                        category,
+                        Date(date),
+                        time,
+                        Date(createdTime)
+                    )
 
                 val category =
                     Category(null, category)
@@ -112,6 +122,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     /** Check if Inputs is Empty */
     private fun checkFieldsEmpty(): Boolean {
 
+        /** Get the values in fields for test if is empty */
         with(binding) {
             name = ediTextNameTask.text.toString()
             description = ediTextDescriptionTask.text.toString()
