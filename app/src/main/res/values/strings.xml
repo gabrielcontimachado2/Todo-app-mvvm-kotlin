@@ -43,5 +43,6 @@
     <string name="tab_month">Month</string>
     <string name="hide_completed">Hide Tasks Completed</string>
     <string name="task_deleted_success">The task delete with success!!!</string>
+    <string name="task_completed">Congratulations!! one less task for you do today</string>
 
 </resources>

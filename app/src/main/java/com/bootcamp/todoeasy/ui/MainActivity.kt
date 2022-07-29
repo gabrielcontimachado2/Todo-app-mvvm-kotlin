@@ -37,7 +37,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupChipGroup() {
 
         val categoryChipGroup = binding.categoryFilter.chipGroupCategory
-
+        //test crash
+        throw RuntimeException("Test Crash")
         viewModel.category.observe(this) { categoryList ->
             categoryList.forEach { category ->
                 if (!listFilter.contains(category.categoryName)) {
