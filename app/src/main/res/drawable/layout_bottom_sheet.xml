@@ -3,8 +3,8 @@
     android:shape="rectangle">
 
     <corners
-        android:topLeftRadius="@dimen/textView_card_margin_start_default"
-        android:topRightRadius="@dimen/textView_card_margin_start_default" />
+        android:topLeftRadius="@dimen/margin_sixteen"
+        android:topRightRadius="@dimen/margin_sixteen" />
 
     <solid android:color="@color/dark_card" />
 </shape>

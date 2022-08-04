@@ -16,20 +16,33 @@
     <color name="text_secondary">#B0B3B8</color>
 
 
-    <!-- Dark pallet -->
+    <!-- Dark pallet-->
     <color name="primary">#BB86FC</color>
     <color name="primary_variant">#3700B3</color>
     <color name="secondary">#03DAC6</color>
     <color name="background">#121212</color>
     <color name="surface">#121212</color>
     <color name="error">#CF6679</color>
-    <color  name="onPrimary">#000000</color>
+    <color name="onPrimary">#000000</color>
     <color name="onSecondary">#000000</color>
     <color name="onBackground">#FFFFFF</color>
     <color name="onSurface">#FFFFFF</color>
     <color name="onError">#FFFFFF</color>
 
-
+    <!-- Pallet teste
+    <color name="primary">#6200EE</color>
+    <color name="primary_variant">#3700B3</color>
+    <color name="secondary">#03DAC6</color>
+    <color name="secondaryVariant">#018786</color>
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="error">#B00020</color>
+    <color  name="onPrimary">#FFFFFF</color>
+    <color name="onSecondary">#000000</color>
+    <color name="onBackground">#000000</color>
+    <color name="onSurface">#000000</color>
+    <color name="onError">#FFFFFF</color>
+    -->
 
     <!-- Card Colors-->
     <color name="gray_background">#E0E0E0</color>
@@ -37,9 +50,6 @@
 
 
     <color name="text_purple">#BB86FC</color>
-
-
-
 
 
 </resources>

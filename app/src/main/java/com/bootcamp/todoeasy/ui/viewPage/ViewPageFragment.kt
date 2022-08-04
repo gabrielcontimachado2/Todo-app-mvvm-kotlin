@@ -39,7 +39,7 @@ class ViewPageFragment : Fragment() {
 
     private fun setupViewPage() {
 
-        binding.viewPageFragment.adapter = AdapterViewPage(this)
+        binding.viewPageFragment.adapter = AdapterViewPage(requireActivity())
         binding.viewPageFragment.isUserInputEnabled = false
 
         TabLayoutMediator(binding.tabTask, binding.viewPageFragment) { tabLayout, position ->

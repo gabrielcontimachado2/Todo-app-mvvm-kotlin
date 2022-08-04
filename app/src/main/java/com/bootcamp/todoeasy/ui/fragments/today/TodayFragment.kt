@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.*
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,8 +42,56 @@ class TodayFragment : Fragment() {
         setupRecyclerView()
         observeTask()
         itemTouchHelper()
+        setupCardClicked()
+        setupCheckedTask()
 
         return binding.root
+    }
+
+    private fun setupCardClicked() {
+        taskAdapter.setonCardClickListener { task ->
+            val bundle = Bundle().apply {
+                putParcelable("task", task)
+            }
+
+            findNavController().navigate(
+                R.id.detailTask,
+                bundle
+            )
+        }
+    }
+
+    private fun setupCheckedTask() {
+        taskAdapter.setonCheckClickListener { taskClicked ->
+
+            /** The floating button in main activity for anchor the snackBar above the fab in bottom bar*/
+            val floatingMain: FloatingActionButton =
+                activity?.findViewById(R.id.floatingButton_create_task)!!
+
+            if (!taskClicked.status) {
+
+                val taskUpdateChecked = Task(
+                    taskClicked.idTask,
+                    taskClicked.name,
+                    taskClicked.description,
+                    true,
+                    taskClicked.priority,
+                    taskClicked.categoryName,
+                    taskClicked.date,
+                    taskClicked.hour,
+                    taskClicked.created
+                )
+
+                viewModel.insertTask(taskUpdateChecked, null)
+
+                Snackbar.make(view!!, R.string.task_completed, Snackbar.LENGTH_LONG)
+                    .setAnchorView(floatingMain).show()
+            } else {
+                Snackbar.make(view!!, "That task has be completed today", Snackbar.LENGTH_LONG)
+                    .setAnchorView(floatingMain).show()
+            }
+
+        }
     }
 
     /** Create the recyclerView with adapter*/
@@ -73,7 +122,7 @@ class TodayFragment : Fragment() {
 
     /** Function for swipe card effect in recyclerView, delete the task and undo that action with necessary*/
     private val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(
-        ItemTouchHelper.UP or ItemTouchHelper.DOWN,
+        0,
         ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
     ) {
         override fun onMove(
@@ -81,7 +130,7 @@ class TodayFragment : Fragment() {
             viewHolder: RecyclerView.ViewHolder,
             target: RecyclerView.ViewHolder
         ): Boolean {
-            return true
+            return false
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {

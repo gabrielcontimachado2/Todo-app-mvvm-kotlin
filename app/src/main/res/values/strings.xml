@@ -44,5 +44,19 @@
     <string name="hide_completed">Hide Tasks Completed</string>
     <string name="task_deleted_success">The task delete with success!!!</string>
     <string name="task_completed">Congratulations!! one less task for you do today</string>
-
+    <string name="textView_category">Category</string>
+    <string name="textMaxLengthDescription">40</string>
+    <string name="label_name_category">Category Name</string>
+    <string name="delete_task">Delete Task</string>
+    <string name="complete_task">Complete Task</string>
+    <string name="create_category">Create New</string>
+    <string name="create_category_dialog">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="enter">Enter</string>
+    <string name="textView_description">Description</string>
+    <string name="textView_title">Title</string>
+    <string name="expiration_date">Expiration Date</string>
+    <string name="hour">Time</string>
+    <string name="reminder">Reminder</string>
+    <string name="repeat">Repeat Task</string>
 </resources>

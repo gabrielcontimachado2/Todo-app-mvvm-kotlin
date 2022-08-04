@@ -2,9 +2,9 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/CustomBottomSheetDialog"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/CustomBottomSheetDialog"
     tools:context=".ui.fragments.modal.ModalBottomSheet">
 
     <View
@@ -21,8 +21,8 @@
         android:id="@+id/textView_tittle_create_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/textView_card_margin_start_default"
-        android:layout_marginTop="@dimen/textView_card_margin_start_default"
+        android:layout_marginStart="@dimen/margin_sixteen"
+        android:layout_marginTop="@dimen/margin_sixteen"
         android:text="@string/textView_create_task"
         android:textSize="@dimen/textSize_card_tittle"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,12 +32,12 @@
         android:id="@+id/imageButton_add_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/textView_card_margin_start_default"
+        android:layout_marginEnd="@dimen/margin_sixteen"
         android:layout_marginBottom="@dimen/card_category_margin"
         android:background="?android:selectableItemBackground"
-        app:circularflow_defaultRadius="@dimen/margin_default_app"
         android:contentDescription="@string/description_close_task"
         android:src="@drawable/ic_add_circle"
+        app:circularflow_defaultRadius="@dimen/margin_default_app"
         app:layout_constraintBottom_toBottomOf="@id/textView_tittle_create_task"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/textView_tittle_create_task" />
@@ -63,8 +63,8 @@
         android:layout_marginEnd="@dimen/margin_default_app"
         android:hint="@string/label_name_task"
         app:boxBackgroundColor="@color/dark_hover"
-        app:boxCornerRadiusTopEnd="@dimen/textView_card_margin_start_default"
-        app:boxCornerRadiusTopStart="@dimen/textView_card_margin_start_default"
+        app:boxCornerRadiusTopEnd="@dimen/margin_sixteen"
+        app:boxCornerRadiusTopStart="@dimen/margin_sixteen"
         app:counterEnabled="true"
         app:counterMaxLength="@string/textMaxLength"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,6 +74,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ediText_name_task"
             android:layout_width="match_parent"
+            android:maxLength="20"
             android:layout_height="wrap_content"
             android:inputType="textShortMessage"
             app:errorEnabled="true" />
@@ -88,12 +89,13 @@
         android:layout_marginTop="@dimen/card_category_margin"
         android:layout_marginEnd="@dimen/margin_default_app"
         android:hint="@string/label_description_task"
+        android:longClickable="true"
         android:textColorHint="@color/text_secondary"
         app:boxBackgroundColor="@color/dark_hover"
-        app:boxCornerRadiusTopEnd="@dimen/textView_card_margin_start_default"
-        app:boxCornerRadiusTopStart="@dimen/textView_card_margin_start_default"
+        app:boxCornerRadiusTopEnd="@dimen/margin_sixteen"
+        app:boxCornerRadiusTopStart="@dimen/margin_sixteen"
         app:counterEnabled="true"
-        app:counterMaxLength="@string/textMaxLength"
+        app:counterMaxLength="@string/textMaxLengthDescription"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInput_name_task">
@@ -102,11 +104,14 @@
             android:id="@+id/ediText_description_task"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="40"
+            android:focusableInTouchMode="true"
             android:inputType="textShortMessage"
             app:errorEnabled="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!--
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInput_category_task"
         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
@@ -116,6 +121,7 @@
         android:layout_marginTop="@dimen/card_category_margin"
         android:layout_marginEnd="@dimen/margin_default_app"
         android:hint="@string/label_category"
+        android:longClickable="true"
         android:textColorHint="@color/text_secondary"
         app:boxBackgroundColor="@color/dark_hover"
         app:boxCornerRadiusTopEnd="@dimen/textView_card_margin_start_default"
@@ -131,10 +137,32 @@
             android:id="@+id/autoComplete_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textShortMessage"
+            android:inputType="none"
             app:errorEnabled="true" />
 
     </com.google.android.material.textfield.TextInputLayout>
+    -->
+    <TextView
+        android:id="@+id/textView_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default_app"
+        android:text="@string/textView_category"
+        android:textSize="@dimen/textView_font_size_category_task"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInput_description_task" />
+
+    <include
+        android:id="@+id/category_filter_layout"
+        layout="@layout/modal_chip_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default_app"
+        android:layout_marginEnd="@dimen/margin_default_app"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView_category" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -144,7 +172,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textInput_category_task">
+        app:layout_constraintTop_toBottomOf="@id/category_filter_layout">
 
         <TextView
             android:id="@+id/textView_priority"
@@ -152,9 +180,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_default_app"
             android:layout_marginTop="@dimen/card_category_start_end_margin"
-
             android:text="@string/textView_priority_task"
-
             android:textSize="@dimen/textView_font_size_category_task"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -261,7 +287,7 @@
         android:id="@+id/textView_hour_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/textView_card_margin_start_default"
+        android:layout_marginStart="@dimen/margin_sixteen"
         android:layout_marginEnd="@dimen/margin_default_app"
         android:textSize="@dimen/textSize_card_tittle"
         app:layout_constraintBottom_toBottomOf="@id/imageButton_hour"
@@ -300,7 +326,7 @@
         android:id="@+id/textView_date_update"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/textView_card_margin_start_default"
+        android:layout_marginStart="@dimen/margin_sixteen"
         android:layout_marginEnd="@dimen/margin_default_app"
         android:fontFamily="@font/roboto_condensed_regular"
         android:textColor="@color/text_secondary"

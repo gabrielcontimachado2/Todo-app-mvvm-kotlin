@@ -24,4 +24,5 @@ class TaskDataSourceImp @Inject constructor(
     override fun getCategory() = taskDao.getCategory()
 
     override suspend fun deleteTask(task: Task) = taskDao.deleteTask(task)
+
 }

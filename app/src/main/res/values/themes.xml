@@ -21,7 +21,9 @@
 
         <item name="android:windowActivityTransitions">true</item>
 
+        <item name="android:windowAnimationStyle">@style/animationDialog</item>
     </style>
+
 
 
 </resources>

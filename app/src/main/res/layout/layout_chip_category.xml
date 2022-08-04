@@ -9,7 +9,7 @@
         android:id="@+id/add_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/textView_card_margin_start_default"
+        android:layout_marginStart="@dimen/margin_sixteen"
         android:layout_marginEnd="@dimen/card_category_start_end_margin"
         android:background="?android:selectableItemBackground"
         android:src="@drawable/ic_add_more_category"

@@ -4,7 +4,7 @@
     <!-- Dimens For the Card-->
     <dimen name="cardView_margin_default">8dp</dimen>
     <dimen name="margin_default_app">24dp</dimen>
-    <dimen name="textView_card_margin_start_default">16dp</dimen>
+    <dimen name="margin_sixteen">16dp</dimen>
     <dimen name="textView_card_margin_top_default">8dp</dimen>
     <dimen name="textSize_card_tittle">24sp</dimen>
     <dimen name="imageView_calendar_margin_start">30dp</dimen>
@@ -42,6 +42,7 @@
     <dimen name="textSize_filter_title">24sp</dimen>
     <dimen name="textSize_chip">16sp</dimen>
     <dimen name="margin_start_hour_date">80dp</dimen>
+    <dimen name="margin_hundred">100dp</dimen>
     <dimen name="margin_top_radio">11dp</dimen>
 
 </resources>

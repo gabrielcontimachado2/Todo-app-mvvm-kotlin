@@ -17,7 +17,8 @@ import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_MEDIUM
 import com.bootcamp.todoeasy.util.DiffUtilTask
 import com.bootcamp.todoeasy.util.FormatDate
 
-class TaskAdapter : androidx.recyclerview.widget.ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffUtilTask()) {
+class TaskAdapter :
+    androidx.recyclerview.widget.ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffUtilTask()) {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
@@ -33,10 +34,23 @@ class TaskAdapter : androidx.recyclerview.widget.ListAdapter<Task, TaskAdapter.T
         holder.bind(currentTask)
     }
 
+    private var onCardClickListener: ((Task) -> Unit)? = null
+
+    fun setonCardClickListener(listener: (Task) -> Unit) {
+        onCardClickListener = listener
+    }
+
+    private var onCheckClickListener: ((Task) -> Unit)? = null
+
+    fun setonCheckClickListener(listener: (Task) -> Unit) {
+        onCheckClickListener = listener
+    }
+
     override fun getItemCount() = currentList.size
 
     inner class TaskViewHolder(private val binding: CardTaskBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(task: Task) {
             binding.apply {
 
@@ -61,6 +75,13 @@ class TaskAdapter : androidx.recyclerview.widget.ListAdapter<Task, TaskAdapter.T
                     }
                 }
 
+                checkBoxCardStatusTask.setOnClickListener {
+                    onCheckClickListener?.let { it(task) }
+                }
+
+                itemView.setOnClickListener {
+                    onCardClickListener?.let { it(task) }
+                }
             }
 
         }

@@ -7,9 +7,9 @@
     android:layout_marginStart="@dimen/cardView_margin_default"
     android:layout_marginEnd="@dimen/cardView_margin_default"
     android:layout_marginBottom="@dimen/card_category_start_end_margin"
-    android:clickable="true"
     android:backgroundTint="@color/background"
-    app:cardElevation="@dimen/margin_one">
+    android:clickable="true"
+    app:cardElevation="@dimen/cardView_margin_default">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -20,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/card_category_start_end_margin"
-            android:layout_marginBottom="@dimen/card_category_margin"
             android:layout_marginTop="@dimen/card_category_margin"
+            android:layout_marginBottom="@dimen/card_category_margin"
             android:maxLines="1"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@id/textView_card_hour_task"
@@ -54,7 +54,7 @@
             android:maxLines="1"
             android:padding="@dimen/textView_category_padding"
             android:textColor="@color/text_secondary"
-            android:textSize="@dimen/textView_font_size_category_task"
+            android:textSize="@dimen/textView_font_size_category_task_um"
             app:layout_constraintBottom_toBottomOf="@+id/textView_card_tittle_task"
             app:layout_constraintEnd_toStartOf="@+id/priority_line"
             app:layout_constraintTop_toTopOf="@+id/textView_card_tittle_task"
@@ -65,9 +65,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/textView_card_margin_top_default"
-            android:layout_marginBottom="@dimen/card_category_margin"
+            android:layout_marginBottom="@dimen/textView_card_margin_top_default"
             android:contentDescription="@string/imageView_card_hour_description"
-            android:src="@drawable/ic_card_alarm_time_task"
+            android:src="@drawable/ic_alarm_hour"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/textView_card_hour_task"
             app:layout_constraintStart_toStartOf="@+id/textView_card_tittle_task"
@@ -89,14 +89,15 @@
             android:id="@+id/imageView_card_calendar_task"
             android:layout_width="@dimen/size_card_icon"
             android:layout_height="@dimen/size_card_icon"
-            android:layout_marginStart="@dimen/imageView_calendar_margin_start"
-            android:layout_marginBottom="@dimen/card_category_margin"
+            android:layout_marginStart="@dimen/card_elevation"
+            android:layout_marginTop="@dimen/textView_card_margin_top_default"
+            android:layout_marginBottom="@dimen/textView_card_margin_top_default"
             android:contentDescription="@string/imageView_card_calendar_description"
             android:src="@drawable/ic_card_calendar_dark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/textView_card_calendar_task"
             app:layout_constraintStart_toEndOf="@id/textView_card_hour_task"
-            app:layout_constraintTop_toTopOf="@+id/imageView_card_hour_task" />
+            app:layout_constraintTop_toBottomOf="@+id/textView_card_tittle_task" />
 
         <TextView
             android:id="@+id/textView_card_calendar_task"

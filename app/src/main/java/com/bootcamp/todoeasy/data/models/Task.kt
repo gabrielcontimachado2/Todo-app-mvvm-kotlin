@@ -3,12 +3,15 @@ package com.bootcamp.todoeasy.data.models
 import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 
-@Entity(tableName = "task")
+@Entity(
+    tableName = "task")
 @Parcelize
 data class Task(
     @ColumnInfo(name = "idTask")

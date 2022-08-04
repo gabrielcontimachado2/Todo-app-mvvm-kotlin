@@ -4,8 +4,6 @@ package com.bootcamp.todoeasy.domain
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.data.room.TaskDataSourceImp
-import com.bootcamp.todoeasy.util.Constants
-import kotlinx.coroutines.flow.*
 
 import javax.inject.Inject
 
@@ -28,28 +26,29 @@ class RepositoryImp @Inject constructor(
     ) = taskDataSourceImp.getTasksByDateToday(search, hideCompletedTask)
 
 
-    //override fun getTask(
-    //    searchQuery: StateFlow<String>,
-    //    hideCompleted: StateFlow<Boolean>,
-    //    taskDay: StateFlow<String>
-    //): Flow<List<Task>> {
-
-    //    val _taskFlow = combine(searchQuery, hideCompleted) {
-
-    //    }
-
-    //    when (taskDay) {
-    //Constants.TODAY -> taskDataSourceImp.getTasksByDateToday(search, hideCompletedTask)
-    //Constants.WEEKLY -> TODO()
-    //Constants.MONTH -> TODO()
-    //else -> {
-    //    flow {
-    //        emptyList<List<Task>>()
-    //    }
-    //}
-
-    //    }
-    //}
-
-
 }
+//override fun getTask(
+//    searchQuery: StateFlow<String>,
+//    hideCompleted: StateFlow<Boolean>,
+//    taskDay: StateFlow<String>
+//): Flow<List<Task>> {
+
+//    val _taskFlow = combine(searchQuery, hideCompleted) {
+
+//    }
+
+//    when (taskDay) {
+//Constants.TODAY -> taskDataSourceImp.getTasksByDateToday(search, hideCompletedTask)
+//Constants.WEEKLY -> TODO()
+//Constants.MONTH -> TODO()
+//else -> {
+//    flow {
+//        emptyList<List<Task>>()
+//    }
+//}
+
+//    }
+//}
+
+
+

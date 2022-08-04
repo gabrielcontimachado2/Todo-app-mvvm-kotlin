@@ -3,7 +3,36 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/button_category.xml" value="0.3495" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/ic_alarm_hour.xml" value="0.3505" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/ic_arrow.xml" value="0.3505" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/ic_card_calendar_dark.xml" value="0.3505" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/ic_hour_sheet.xml" value="0.3505" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/ic_reminder.xml" value="0.3505" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/ic_repeat.xml" value="0.3505" />
         <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/ic_trash.xml" value="0.292" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/rounded_bottom_sheet.xml" value="0.3505" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/drawable/text_view_category_background.xml" value="0.3505" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/activity_detail_task.xml" value="0.5" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/activity_main.xml" value="0.3489583333333333" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/card_detail_expiration_date.xml" value="0.67" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/card_detail_hour.xml" value="0.67" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/card_detail_option.xml" value="0.67" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/card_detail_reminder.xml" value="0.5" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/card_detail_repeat.xml" value="0.67" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/card_task.xml" value="0.5" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/dialog_category.xml" value="0.5" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/dropdown_category.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/fragment_today.xml" value="0.3489583333333333" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/layout_chip_category.xml" value="0.3489583333333333" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/modal_bottom_sheet.xml" value="0.5" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/modal_bottom_sheet_category.xml" value="0.5" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/modal_chip_layout.xml" value="0.67" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/single_chip.xml" value="0.3489583333333333" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/layout/single_chip_modal.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/menu/menu_bottom_bar.xml" value="0.3489583333333333" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/menu/menu_category.xml" value="0.34791666666666665" />
+        <entry key="..\:/Users/rowi/Desktop/bootCamp/TODO/todoEasy/todo-app/app/src/main/res/menu/menu_top_bar.xml" value="0.34791666666666665" />
         <entry key="..\:/Users/rowi/Desktop/bootCamp/TodoApp/TodoEasyList/app/src/main/res/drawable/chip_stroke_dimen.xml" value="0.284" />
         <entry key="..\:/Users/rowi/Desktop/bootCamp/TodoApp/TodoEasyList/app/src/main/res/drawable/edit_text_search_task.xml" value="0.3265" />
         <entry key="..\:/Users/rowi/Desktop/bootCamp/TodoApp/TodoEasyList/app/src/main/res/drawable/ic_add_circle.xml" value="0.315" />

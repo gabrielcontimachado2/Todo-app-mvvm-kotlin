@@ -35,7 +35,6 @@ class TaskViewModel @Inject constructor(
         get() = _category
 
 
-
     /** Collect the data in room for list of tasks and category's */
     init {
         viewModelScope.launch {
@@ -51,7 +50,7 @@ class TaskViewModel @Inject constructor(
     }
 
     /** Delete the task choice by user */
-    fun deleteTask(task: Task){
+    fun deleteTask(task: Task) {
         viewModelScope.launch {
             repositoryImp.deleteTask(task)
         }
@@ -69,30 +68,16 @@ class TaskViewModel @Inject constructor(
 
     /** Filter the list of tasks with the category selected in main activity in chip buttons */
     fun updateTaskWithCategory() {
-        taskUpdate.clear()
-        viewModelScope.launch {
-            repositoryImp.getTasksByDateToday(
-                searchTask.value.toString(),
-                hideCompletedTask.value!!
-            ).collectLatest { taskList ->
-                taskList.filter { task ->
-                    task.categoryName == categoryRequest.value
-                }.onEach { task ->
-                    if (task.categoryName == categoryRequest.value) {
-                        taskUpdate.add(task)
-                    }
-                    _task.postValue(taskUpdate.toList())
-                }
-            }
-        }
+
     }
 
     /** Create a task and his category in room db */
-    fun insertTask(task: Task, category: Category) = viewModelScope.launch {
+    fun insertTask(task: Task, category: Category?) = viewModelScope.launch {
         repositoryImp.insertTask(task)
-        repositoryImp.insertCategory(category)
+        if (category != null) {
+            repositoryImp.insertCategory(category)
+        }
     }
-
 
 
 //fun updateFiltersByCategoryOrAndSearch() {

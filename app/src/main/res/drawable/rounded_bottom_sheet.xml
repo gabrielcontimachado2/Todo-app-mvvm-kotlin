@@ -2,6 +2,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
 
     <solid android:color="@color/dark_hover"/>
-    <corners android:topRightRadius="@dimen/margin_default_app" android:topLeftRadius="@dimen/margin_default_app"/>
+    <corners android:topRightRadius="@dimen/margin_sixteen" android:topLeftRadius="@dimen/margin_sixteen"/>
 
 </shape>
