@@ -1,0 +1,9 @@
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_sixteen"
+    android:ellipsize="end"
+    android:maxLines="1"
+    android:inputType="none"
+    android:textAppearance="?attr/textAppearanceSubtitle1"
+    android:textSize="@dimen/textView_font_size_category_task" />
