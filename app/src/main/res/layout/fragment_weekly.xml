@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_weekly_task"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="WEEKLYY"/>
+        android:layout_marginTop="@dimen/cardView_margin_default"
+        tools:listitem="@layout/card_task"/>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

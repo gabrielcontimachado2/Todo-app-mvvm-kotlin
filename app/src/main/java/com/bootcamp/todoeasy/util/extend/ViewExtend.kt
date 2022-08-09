@@ -8,7 +8,16 @@ import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import android.widget.SearchView
 import androidx.annotation.RequiresApi
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 
+
+fun Long.toUTCLocalDateTime() = LocalDateTime.ofInstant(
+    Instant.ofEpochMilli(this),
+    ZoneId.ofOffset("UTC", ZoneOffset.UTC)
+)
 
 inline fun SearchView.onQueryTextChanged(crossinline listener: (String) -> Unit) {
     this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

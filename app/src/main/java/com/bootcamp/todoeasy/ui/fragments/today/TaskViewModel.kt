@@ -1,6 +1,8 @@
 package com.bootcamp.todoeasy.ui.fragments.today
 
 
+import android.icu.util.Calendar
+import android.icu.util.TimeZone
 import androidx.lifecycle.*
 import com.bootcamp.todoeasy.data.di.IoDispatcher
 import com.bootcamp.todoeasy.data.models.Category
@@ -9,8 +11,10 @@ import com.bootcamp.todoeasy.domain.RepositoryImp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.ZoneId
+import java.util.*
 import javax.inject.Inject
 
 
@@ -26,28 +30,92 @@ class TaskViewModel @Inject constructor(
     private val hideCompletedTask: MutableLiveData<Boolean> = MutableLiveData(false)
     private var taskUpdate: MutableList<Task> = mutableListOf()
 
-    private var _task: MutableLiveData<List<Task>> = MutableLiveData()
-    val task: LiveData<List<Task>>
-        get() = _task
-
     private var _category: MutableLiveData<List<Category>> = MutableLiveData()
     val category: LiveData<List<Category>>
         get() = _category
 
 
+    /** Task Today */
+    private var _taskToday: MutableLiveData<List<Task>> = MutableLiveData()
+    val taskToday: LiveData<List<Task>>
+        get() = _taskToday
+
+    /** Task Weekly */
+    private var _taskWeekly: MutableLiveData<List<Task>> = MutableLiveData()
+    val taskWeekly: LiveData<List<Task>>
+        get() = _taskWeekly
+
+    /** Task Month */
+    private var _taskMonth: MutableLiveData<List<Task>> = MutableLiveData()
+    val taskMonth: LiveData<List<Task>>
+        get() = _taskMonth
+
+
     /** Collect the data in room for list of tasks and category's */
     init {
-        viewModelScope.launch {
-            repositoryImp.getTasksByDateToday(
-                searchTask.value.toString(),
-                hideCompletedTask.value!!
-            ).collectLatest { taskList ->
-                _task.postValue(taskList)
-            }
-        }
+
+        getTaskToday()
+        getTaskWeek()
+        getTaskMonth()
 
         _category = repositoryImp.getCategory().asLiveData() as MutableLiveData<List<Category>>
     }
+
+
+    private fun getTaskToday() = viewModelScope.launch {
+        repositoryImp.getTasksByDateToday(searchTask.value.toString(), hideCompletedTask.value!!)
+            .collect {
+                _taskToday.value = it
+            }
+    }
+
+    private fun getTaskWeek() = viewModelScope.launch {
+        val calendar = Calendar.getInstance(TimeZone.getDefault())
+
+        calendar.time = Date()
+        calendar.firstDayOfWeek = Calendar.MONDAY
+
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+        val startWeek = calendar.time
+
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
+        val endWeek = calendar.time
+
+        repositoryImp.getTaskByDateWeek(
+            searchTask.value.toString(),
+            hideCompletedTask.value!!,
+            startWeek,
+            endWeek
+        ).collect {
+            _taskWeekly.value = it
+        }
+
+    }
+
+    private fun getTaskMonth() = viewModelScope.launch {
+        val calendar = Calendar.getInstance(TimeZone.getDefault())
+
+        calendar.time = Date()
+
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        val startMonth = calendar.time
+
+        calendar.add(Calendar.MONTH, 1)
+        calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.add(Calendar.DATE, -1)
+        val endMonth = calendar.time
+
+        repositoryImp.getTaskByDateMonth(
+            searchTask.value.toString(),
+            hideCompletedTask.value!!,
+            startMonth,
+            endMonth
+        ).collect {
+            _taskMonth.value = it
+        }
+
+    }
+
 
     /** Delete the task choice by user */
     fun deleteTask(task: Task) {
@@ -67,7 +135,28 @@ class TaskViewModel @Inject constructor(
     }
 
     /** Filter the list of tasks with the category selected in main activity in chip buttons */
-    fun updateTaskWithCategory() {
+    fun updateTaskWithCategory() = viewModelScope.launch {
+
+        val listFilter: MutableList<Task> = mutableListOf()
+
+        if (categoryRequest.value.toString() != null) {
+            repositoryImp.getTasksByDateTodayCategory(
+                searchTask.value.toString(),
+                hideCompletedTask.value!!,
+                categoryRequest.value.toString()
+            ).collect {
+                listFilter.addAll(it)
+            }
+        } else {
+            repositoryImp.getTasksByDateToday(
+                searchTask.value.toString(),
+                hideCompletedTask.value!!,
+            ).collect {
+                listFilter.addAll(it)
+            }
+        }
+
+        _taskToday.value = listFilter
 
     }
 
@@ -77,6 +166,10 @@ class TaskViewModel @Inject constructor(
         if (category != null) {
             repositoryImp.insertCategory(category)
         }
+    }
+
+    fun updateTaskByChecked(taskId: String, checked: Boolean) = viewModelScope.launch {
+        repositoryImp.updateTaskChecked(taskId, checked)
     }
 
 

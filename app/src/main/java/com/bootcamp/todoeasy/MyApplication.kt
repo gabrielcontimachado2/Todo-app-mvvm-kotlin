@@ -1,14 +1,12 @@
 package com.bootcamp.todoeasy
 
 import android.app.Application
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import androidx.core.app.NotificationCompat
-import com.bootcamp.todoeasy.util.TaskNotificationService
+import com.bootcamp.todoeasy.util.notification.TaskNotificationService
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp

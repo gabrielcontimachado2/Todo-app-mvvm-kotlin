@@ -49,14 +49,20 @@
     <string name="label_name_category">Category Name</string>
     <string name="delete_task">Delete Task</string>
     <string name="complete_task">Complete Task</string>
-    <string name="create_category">Create New</string>
+    <string name="create_category">+ Create New</string>
     <string name="create_category_dialog">Create</string>
     <string name="cancel">Cancel</string>
     <string name="enter">Enter</string>
     <string name="textView_description">Description</string>
     <string name="textView_title">Title</string>
-    <string name="expiration_date">Expiration Date</string>
+    <string name="expiration_date">Due Date</string>
     <string name="hour">Time</string>
     <string name="reminder">Reminder</string>
     <string name="repeat">Repeat Task</string>
+    <string name="select_category">Update Category</string>
+
+    <string name="finish">Task %1$s finish now %2$s</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="task_undo_completed">Task Successfully Undone</string>
 </resources>

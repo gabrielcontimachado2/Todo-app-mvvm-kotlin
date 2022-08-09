@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/textView_width_medium_priority"
+    android:id="@+id/card_due_date"
     android:clickable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout

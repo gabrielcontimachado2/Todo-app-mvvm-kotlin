@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.bootcamp.todoeasy.ui.fragments.month.MonthFragment
 import com.bootcamp.todoeasy.ui.fragments.today.TodayFragment
-import com.bootcamp.todoeasy.ui.fragments.weekly.WeeklyFragment
+import com.bootcamp.todoeasy.ui.fragments.weekly.WeekFragment
 
 
 
@@ -20,7 +20,7 @@ class AdapterViewPage(fragment: FragmentActivity) : FragmentStateAdapter(fragmen
                 TodayFragment()
             }
             1 -> {
-                WeeklyFragment()
+                WeekFragment()
             }
             2 -> {
                 MonthFragment()

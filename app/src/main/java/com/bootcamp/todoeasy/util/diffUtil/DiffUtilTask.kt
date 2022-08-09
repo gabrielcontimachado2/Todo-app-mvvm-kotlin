@@ -1,4 +1,4 @@
-package com.bootcamp.todoeasy.util
+package com.bootcamp.todoeasy.util.diffUtil
 
 import androidx.recyclerview.widget.DiffUtil
 import com.bootcamp.todoeasy.data.models.Task

@@ -3,8 +3,6 @@ package com.bootcamp.todoeasy.ui.adapter
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ListAdapter
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.databinding.CardTaskBinding
@@ -14,8 +12,8 @@ import com.bootcamp.todoeasy.util.Constants.Companion.COLOR_MEDIUM
 import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_HIGH
 import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_LOW
 import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_MEDIUM
-import com.bootcamp.todoeasy.util.DiffUtilTask
-import com.bootcamp.todoeasy.util.FormatDate
+import com.bootcamp.todoeasy.util.diffUtil.DiffUtilTask
+import com.bootcamp.todoeasy.util.date.FormatDate
 
 class TaskAdapter :
     androidx.recyclerview.widget.ListAdapter<Task, TaskAdapter.TaskViewHolder>(DiffUtilTask()) {

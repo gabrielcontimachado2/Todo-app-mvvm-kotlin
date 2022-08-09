@@ -15,8 +15,8 @@ import java.util.*
 @Parcelize
 data class Task(
     @ColumnInfo(name = "idTask")
-    @PrimaryKey(autoGenerate = true)
-    val idTask: Long?,
+    @PrimaryKey
+    val idTask: String,
     val name: String,
     val description: String,
     val status: Boolean,
@@ -24,5 +24,7 @@ data class Task(
     val categoryName: String,
     val date: Date = Date(99 - 99 - 9999),
     val hour: String,
-    val created: Date
+    val created: Date,
+    val reminder: Boolean,
+    val interval: String
 ) : Parcelable

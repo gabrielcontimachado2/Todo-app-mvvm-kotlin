@@ -1,9 +1,11 @@
 package com.bootcamp.todoeasy.ui.fragments.modal
 
+import android.content.Context
 import androidx.lifecycle.*
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.domain.RepositoryImp
+import com.bootcamp.todoeasy.util.alarm.SetAlarm
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -29,8 +31,22 @@ class ModalViewModel @Inject constructor(
         repositoryImp.insertCategory(category)
     }
 
-    init{
+    init {
         _category = repositoryImp.getCategory().asLiveData() as MutableLiveData<List<Category>>
+    }
+
+    fun setAlarm(
+        context: Context,
+        task: Task,
+        alarmHour: Int,
+        alarmMinute: Int,
+        date: Long,
+        createdTime: Long,
+        interval: String
+    ) {
+        val setAlarm = SetAlarm(context)
+
+        setAlarm.setAlarmTask(task, alarmHour, alarmMinute, date, createdTime, interval = "")
     }
 
 }

@@ -1,4 +1,4 @@
-package com.bootcamp.todoeasy.ui.fragments.category
+package com.bootcamp.todoeasy.ui.fragments.category.dialogCreateCategory
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -18,7 +18,6 @@ class CategoryDialogFragment : DialogFragment() {
 
     private lateinit var binding: DialogCategoryBinding
     private val viewModel: CategoryDialogViewModel by viewModels()
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,6 +56,7 @@ class CategoryDialogFragment : DialogFragment() {
                 viewModel.insertCategory(newCategory)
 
                 dismiss()
+
             }
         }
     }

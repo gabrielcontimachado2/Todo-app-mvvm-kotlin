@@ -1,5 +1,4 @@
-package com.bootcamp.todoeasy.ui.fragments.today
-
+package com.bootcamp.todoeasy.ui.fragments.weekly
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,35 +7,33 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp.todoeasy.R
 import com.bootcamp.todoeasy.data.models.Category
-import com.bootcamp.todoeasy.databinding.FragmentTodayBinding
+import com.bootcamp.todoeasy.databinding.FragmentWeeklyBinding
 import com.bootcamp.todoeasy.ui.adapter.TaskAdapter
+import com.bootcamp.todoeasy.ui.fragments.today.TaskViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
-class TodayFragment : Fragment() {
+class WeekFragment : Fragment() {
 
-    private lateinit var binding: FragmentTodayBinding
+    private lateinit var binding: FragmentWeeklyBinding
     private val viewModel: TaskViewModel by viewModels()
     private lateinit var taskAdapter: TaskAdapter
     private lateinit var recyclerViewTask: RecyclerView
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentTodayBinding.inflate(inflater, container, false)
+    ): View? {
+        binding = FragmentWeeklyBinding.inflate(inflater, container, false)
 
         setupRecyclerView()
         observeTask()
@@ -47,60 +44,20 @@ class TodayFragment : Fragment() {
         return binding.root
     }
 
-    private fun setupCardClicked() {
-        taskAdapter.setonCardClickListener { task ->
-            val bundle = Bundle().apply {
-                putParcelable("task", task)
-            }
-
-            findNavController().navigate(
-                R.id.detailTask,
-                bundle
-            )
-        }
-    }
-
-    private fun setupCheckedTask() {
-        taskAdapter.setonCheckClickListener { taskClicked ->
-
-            /** The floating button in main activity for anchor the snackBar above the fab in bottom bar*/
-            val floatingMain: FloatingActionButton =
-                activity?.findViewById(R.id.floatingButton_create_task)!!
-
-
-            if (!taskClicked.status) {
-
-                viewModel.updateTaskByChecked(taskClicked.idTask!!, true)
-
-                Snackbar.make(view!!, R.string.task_completed, Snackbar.LENGTH_LONG)
-                    .setAnchorView(floatingMain).show()
-            } else {
-
-                viewModel.updateTaskByChecked(taskClicked.idTask!!, false)
-
-                Snackbar.make(view!!, R.string.task_undo_completed, Snackbar.LENGTH_LONG)
-                    .setAnchorView(floatingMain).show()
-            }
-
+    private fun observeTask() {
+        viewModel.taskWeekly.observe(viewLifecycleOwner) { taskList ->
+            taskAdapter.submitList(taskList)
         }
     }
 
     /** Create the recyclerView with adapter*/
     private fun setupRecyclerView() {
         taskAdapter = TaskAdapter()
-        recyclerViewTask = binding.recyclerViewTodayTask
+        recyclerViewTask = binding.recyclerViewWeeklyTask
         recyclerViewTask.apply {
             layoutManager = LinearLayoutManager(requireContext())
             setHasFixedSize(true)
             adapter = taskAdapter
-        }
-
-    }
-
-    /** LiveData for observer the list os tasks*/
-    private fun observeTask() {
-        viewModel.taskToday.observe(viewLifecycleOwner) { taskList ->
-            taskAdapter.submitList(taskList)
         }
     }
 
@@ -155,24 +112,42 @@ class TodayFragment : Fragment() {
 
     }
 
+    private fun setupCardClicked() {
+        taskAdapter.setonCardClickListener { task ->
+            val bundle = Bundle().apply {
+                putParcelable("task", task)
+            }
 
-// /** Flow*/
-// private fun observeTask() {
+            findNavController().navigate(
+                R.id.detailTask,
+                bundle
+            )
+        }
+    }
 
-//     viewLifecycleOwner.lifecycleScope.launch {
-//         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+    private fun setupCheckedTask() {
+        taskAdapter.setonCheckClickListener { taskClicked ->
 
-//             viewModel.taskDay.value = TODAY
+            /** The floating button in main activity for anchor the snackBar above the fab in bottom bar*/
+            val floatingMain: FloatingActionButton =
+                activity?.findViewById(R.id.floatingButton_create_task)!!
 
-//             viewModel.taskFlow.collectLatest { taskList ->
-//                 taskAdapter.submitList(taskList)
-//             }
-//         }
-//     }
 
-// }
+            if (!taskClicked.status) {
 
+                viewModel.updateTaskByChecked(taskClicked.idTask!!, true)
+
+                Snackbar.make(view!!, R.string.task_completed, Snackbar.LENGTH_LONG)
+                    .setAnchorView(floatingMain).show()
+            } else {
+
+                viewModel.updateTaskByChecked(taskClicked.idTask!!, false)
+
+                Snackbar.make(view!!, R.string.task_undo_completed, Snackbar.LENGTH_LONG)
+                    .setAnchorView(floatingMain).show()
+            }
+
+        }
+    }
 
 }
-
-

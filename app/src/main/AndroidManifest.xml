@@ -36,7 +36,7 @@
             android:resource="@array/preloaded_fonts" />
 
 
-        <receiver android:name=".util.AlarmReceiver" />
+        <receiver android:name=".ui.broadcastReceiver.alarm.AlarmReceiver" />
     </application>
 
 

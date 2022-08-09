@@ -42,7 +42,7 @@ object AppModule {
     @Provides
     fun provideLocalTaskDataSource(
         database: TaskDatabase
-    ): TaskDataSource{
+    ): TaskDataSource {
         return TaskDataSourceImp(database.taskDao())
     }
 
@@ -50,7 +50,7 @@ object AppModule {
     @Provides
     fun provideTaskRepository(
         @LocalTaskDataSource taskDataSourceImp: TaskDataSourceImp,
-    ): Repository{
+    ): Repository {
         return RepositoryImp(taskDataSourceImp)
     }
 
@@ -59,6 +59,7 @@ object AppModule {
     fun providesIODispatcher(): CoroutineDispatcher = Dispatchers.IO
 
 }
+
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class IoDispatcher

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/radioGroup_priority"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/margin_default_app"
+    android:orientation="horizontal"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/textView_priority">
+
+
+    <RadioButton
+        android:id="@+id/radioButton_low"
+        style="@style/customRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/card_category_margin"
+        android:layout_marginEnd="@dimen/card_category_margin"
+
+        android:textSize="@dimen/textView_font_size_category_task_um" />
+
+
+    <RadioButton
+        android:id="@+id/radioButton_medium"
+        style="@style/customRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/card_category_margin"
+        android:layout_marginEnd="@dimen/card_category_margin"
+        android:textSize="@dimen/textView_font_size_category_task_um" />
+
+    <RadioButton
+        android:id="@+id/radioButton_high"
+        style="@style/customRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/card_category_margin"
+        android:layout_marginEnd="@dimen/margin_default_app"
+        android:textSize="@dimen/textView_font_size_category_task_um" />
+
+</RadioGroup>

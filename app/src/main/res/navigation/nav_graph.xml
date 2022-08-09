@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/viewPageFragment"
         android:name="com.bootcamp.todoeasy.ui.viewPage.ViewPageFragment"
-        android:label="ViewPageFragment" >
+        android:label="ViewPageFragment">
         <action
             android:id="@+id/action_viewPageFragment_to_detailTask"
             app:destination="@id/detailTask" />
@@ -30,7 +30,7 @@
         android:id="@+id/todayFragment"
         android:name="com.bootcamp.todoeasy.ui.fragments.today.TodayFragment"
         android:label="fragment_today"
-        tools:layout="@layout/fragment_today" >
+        tools:layout="@layout/fragment_today">
         <action
             android:id="@+id/action_todayFragment_to_detailTask"
             app:destination="@id/detailTask" />
@@ -40,14 +40,25 @@
         android:id="@+id/detailTask"
         android:name="com.bootcamp.todoeasy.ui.activitys.detailTask.DetailTaskActivity"
         android:label="activity_detail_task"
-        tools:layout="@layout/activity_detail_task" >
+        tools:layout="@layout/activity_detail_task">
         <argument
             android:name="task"
             app:argType="com.bootcamp.todoeasy.data.models.Task" />
     </activity>
+
     <dialog
         android:id="@+id/categoryDialogFragment"
-        android:name="com.bootcamp.todoeasy.ui.fragments.category.CategoryDialogFragment"
+        android:name="com.bootcamp.todoeasy.ui.fragments.category.dialogCreateCategory.CategoryDialogFragment"
         android:label="CategoryDialogFragment" />
+
+    <dialog
+        android:id="@+id/categoryUpdateDialogFragment"
+        android:name="com.bootcamp.todoeasy.ui.fragments.category.dialogUpdateCategory.CategoryUpdateDialogFragment"
+        android:label="CategoryUpdateDialogFragment">
+        <argument
+            android:name="taskId"
+            app:argType="string" />
+    </dialog>
+
 
 </navigation>

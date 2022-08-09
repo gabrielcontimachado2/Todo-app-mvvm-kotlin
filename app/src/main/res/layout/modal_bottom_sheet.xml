@@ -143,7 +143,7 @@
     </com.google.android.material.textfield.TextInputLayout>
     -->
     <TextView
-        android:id="@+id/textView_category"
+        android:id="@+id/autoComplete_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_default_app"
@@ -162,7 +162,7 @@
         android:layout_marginEnd="@dimen/margin_default_app"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_category" />
+        app:layout_constraintTop_toBottomOf="@id/autoComplete_category" />
 
 
     <androidx.constraintlayout.widget.ConstraintLayout

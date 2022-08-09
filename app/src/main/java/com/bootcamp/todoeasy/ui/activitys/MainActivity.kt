@@ -1,18 +1,16 @@
 package com.bootcamp.todoeasy.ui.activitys
 
 
-import android.app.Dialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.ViewGroup
 import android.widget.SearchView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import com.bootcamp.todoeasy.R
 import com.bootcamp.todoeasy.databinding.ActivityMainBinding
-import com.bootcamp.todoeasy.ui.fragments.category.CategoryDialogFragment
+import com.bootcamp.todoeasy.ui.fragments.category.dialogCreateCategory.CategoryDialogFragment
 import com.bootcamp.todoeasy.ui.fragments.today.TaskViewModel
 import com.bootcamp.todoeasy.util.onQueryTextChanged
 import com.google.android.material.chip.Chip

@@ -1,10 +1,5 @@
 package com.bootcamp.todoeasy.ui.fragments.modal
 
-import android.app.AlarmManager
-import android.app.PendingIntent
-import android.content.Context.ALARM_SERVICE
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,13 +9,12 @@ import com.bootcamp.todoeasy.R
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.databinding.ModalBottomSheetBinding
-import com.bootcamp.todoeasy.ui.fragments.category.CategoryDialogFragment
-import com.bootcamp.todoeasy.util.AlarmReceiver
+import com.bootcamp.todoeasy.ui.fragments.category.dialogCreateCategory.CategoryDialogFragment
+import com.bootcamp.todoeasy.util.*
 import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_HIGH
 import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_LOW
 import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_MEDIUM
-import com.bootcamp.todoeasy.util.FormatDate
-import com.bootcamp.todoeasy.util.hideKeyboard
+import com.bootcamp.todoeasy.util.date.FormatDate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -28,10 +22,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.Instant
-import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 import java.util.*
 
 
@@ -53,9 +44,8 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     private var alarmYear: Int = 0
     private var alarmMonth: Int = 0
     private var alarmDay: Int = 0
+    private var createdTime: Long = 0
 
-    private var alarmMgr: AlarmManager? = null
-    private lateinit var alarmIntent: PendingIntent
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -147,7 +137,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
     /** Enter Action in the AutoCompleteText*/
     private fun actionEnter() {
-        //  binding.autoCompleteCategory.setOnEnterKeyListener(clickedAction())
+        binding.ediTextDescriptionTask.setOnEnterKeyListener(clickedAction())
     }
 
     /** Action When Click */
@@ -160,18 +150,19 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
     /** Function for create a task */
     private fun addTask() {
-        val imageButtonAdd = binding.imageButtonAddTask
 
-        imageButtonAdd.setOnClickListener {
+        binding.imageButtonAddTask.setOnClickListener {
 
             if (checkFieldsEmpty()) {
 
-                val createdTime = Calendar.getInstance().timeInMillis
+                createdTime = Calendar.getInstance().timeInMillis.toUTCLocalDateTime()
+                    .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
+                val taskId = UUID.randomUUID().toString()
 
                 val task =
                     Task(
-                        null,
+                        taskId,
                         name,
                         description,
                         false,
@@ -179,14 +170,26 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                         category,
                         Date(date),
                         time,
-                        Date(createdTime)
+                        Date(createdTime),
+                        true,
+                        ""
                     )
 
                 val category =
                     Category(null, category)
 
-
                 viewModel.insertTask(task, category)
+
+                viewModel.setAlarm(
+                    requireContext(),
+                    task,
+                    alarmHour,
+                    alarmMinute,
+                    date,
+                    createdTime,
+                    interval = ""
+                )
+
                 clearFields()
                 disableErrorMessage()
                 Snackbar.make(
@@ -195,10 +198,6 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                     Snackbar.LENGTH_SHORT
                 )
                     .show()
-
-                setAlarmTask(task)
-
-
             } else {
                 Snackbar.make(
                     dialog!!.window!!.decorView,
@@ -208,41 +207,6 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                     .show()
             }
         }
-    }
-
-    private fun setAlarmTask(task: Task) {
-
-
-        //val taskBundle = Bundle()
-        //taskBundle.putParcelable("task", task)
-
-        //intent.putExtra("task", taskBundle)
-
-        alarmMgr = requireContext().getSystemService(ALARM_SERVICE) as AlarmManager
-
-        val intent = Intent(requireContext(), AlarmReceiver::class.java)
-
-        alarmIntent = PendingIntent.getBroadcast(
-            context,
-            0,
-            intent,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
-        )
-
-
-        val calendar: Calendar = Calendar.getInstance().apply {
-            timeInMillis = date
-            set(Calendar.HOUR_OF_DAY, alarmHour)
-            set(Calendar.MINUTE, alarmMinute)
-        }
-
-        alarmMgr?.setInexactRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY,
-            alarmIntent
-        )
-
     }
 
     /** Check if Inputs is Empty */
@@ -342,7 +306,8 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
             picker.addOnPositiveButtonClickListener {
 
-                time = "${picker.hour}:${picker.minute}"
+                time = String.format("%02d:%02d", picker.hour, picker.minute)
+
                 alarmHour = picker.hour
                 alarmMinute = picker.minute
                 binding.textViewHourUpdate.text = time
@@ -354,18 +319,12 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     private fun setupShowDatePicker() {
         val calendar = binding.imageButtonDate
 
-
         calendar.setOnClickListener {
-
-            fun Long.toUTCLocalDateTime() = LocalDateTime.ofInstant(
-                Instant.ofEpochMilli(this),
-                ZoneId.ofOffset("UTC", ZoneOffset.UTC)
-            )
 
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setTitleText("Select Task Date")
-                    .setSelection(Calendar.getInstance(TimeZone.getTimeZone("GMT-03:00")).timeInMillis)
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
             datePicker.show(childFragmentManager, "DatePicker")
             datePicker.addOnPositiveButtonClickListener {
@@ -373,8 +332,6 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
                 date = it.toUTCLocalDateTime().atZone(ZoneId.systemDefault()).toInstant()
                     .toEpochMilli()
-
-
 
                 binding.textViewDateUpdate.text = format.formatLong(date)
             }

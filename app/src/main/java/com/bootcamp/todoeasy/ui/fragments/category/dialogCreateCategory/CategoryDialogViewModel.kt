@@ -1,4 +1,4 @@
-package com.bootcamp.todoeasy.ui.fragments.category
+package com.bootcamp.todoeasy.ui.fragments.category.dialogCreateCategory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

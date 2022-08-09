@@ -1,4 +1,4 @@
-package com.bootcamp.todoeasy.util
+package com.bootcamp.todoeasy.util.touchHelper
 
 import android.media.MediaRouter
 import androidx.recyclerview.widget.ItemTouchHelper

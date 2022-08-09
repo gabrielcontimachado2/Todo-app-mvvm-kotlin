@@ -1,4 +1,4 @@
-package com.bootcamp.todoeasy.util
+package com.bootcamp.todoeasy.util.date
 
 import java.text.SimpleDateFormat
 import java.util.*

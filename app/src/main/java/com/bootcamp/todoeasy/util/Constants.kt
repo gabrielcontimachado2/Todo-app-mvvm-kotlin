@@ -10,6 +10,7 @@ class Constants {
         const val COLOR_MEDIUM = "#F8F150"
         const val COLOR_LOW = "#00FA9A"
 
+        const val DAY = "Day"
         const val TODAY = "Today"
         const val WEEKLY = "Weekly"
         const val MONTH = "Month"

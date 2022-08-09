@@ -22,6 +22,8 @@
         <item name="android:windowActivityTransitions">true</item>
 
         <item name="android:windowAnimationStyle">@style/animationDialog</item>
+
+        <item name="android:popupMenuStyle">@style/PopupMenu</item>
     </style>
 
 
