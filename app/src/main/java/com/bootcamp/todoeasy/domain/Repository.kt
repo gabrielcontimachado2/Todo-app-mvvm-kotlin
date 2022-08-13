@@ -14,6 +14,8 @@ interface Repository {
 
     suspend fun deleteTask(task: Task)
 
+    suspend fun deleteCategory(category: Category)
+
     /** Inserts */
     suspend fun insertCategory(category: Category)
 
@@ -24,14 +26,16 @@ interface Repository {
 
     suspend fun getTaskByCreate(created: Date): Task
 
-    fun getTasksByDateToday(
-        search: String,
-        hideCompletedTask: Boolean,
-    ): Flow<List<Task>>
+    suspend fun getCategoryByName(categoryName: String): Category
 
     fun getCategory(): Flow<List<Category>>
 
     suspend fun getCategoryWithTask(): List<CategoryWithTask>
+
+    fun getTasksByDateToday(
+        search: String,
+        hideCompletedTask: Boolean,
+    ): Flow<List<Task>>
 
     fun getTasksByDateTodayCategory(
         search: String,

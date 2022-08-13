@@ -99,6 +99,10 @@
 
     <style name="PopupMenu" parent="@android:style/Widget.PopupMenu">
         <item name="android:popupBackground">@color/dark_hover</item>
+        <item name="android:topLeftRadius">@dimen/card_category_start_end_margin</item>
+        <item name="android:topRightRadius">@dimen/card_category_start_end_margin</item>
+        <item name="android:bottomRightRadius">@dimen/card_category_start_end_margin</item>
+        <item name="android:bottomLeftRadius">@dimen/card_category_start_end_margin</item>
     </style>
 
 </resources>

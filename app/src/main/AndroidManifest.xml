@@ -6,7 +6,7 @@
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM_PERMISSION_STATE_CHANGED" />
     <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name=".MyApplication"
@@ -19,7 +19,6 @@
         <activity
             android:name=".ui.activitys.MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,13 +30,15 @@
             android:name=".ui.activitys.detailTask.DetailTaskActivity"
             android:parentActivityName=".ui.activitys.MainActivity" />
 
+        <activity
+            android:name=".ui.activitys.detailCategory.DetailCategoryActivity"
+            android:parentActivityName=".ui.activitys.MainActivity" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
 
-
         <receiver android:name=".ui.broadcastReceiver.alarm.AlarmReceiver" />
     </application>
-
 
 </manifest>

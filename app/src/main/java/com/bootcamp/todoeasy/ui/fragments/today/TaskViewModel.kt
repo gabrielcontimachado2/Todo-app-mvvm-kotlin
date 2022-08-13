@@ -3,6 +3,7 @@ package com.bootcamp.todoeasy.ui.fragments.today
 
 import android.icu.util.Calendar
 import android.icu.util.TimeZone
+import android.icu.util.ULocale
 import androidx.lifecycle.*
 import com.bootcamp.todoeasy.data.di.IoDispatcher
 import com.bootcamp.todoeasy.data.models.Category
@@ -11,6 +12,8 @@ import com.bootcamp.todoeasy.domain.RepositoryImp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZoneId
@@ -26,9 +29,9 @@ class TaskViewModel @Inject constructor(
 
 
     private val categoryRequest: MutableLiveData<String> = MutableLiveData("")
-    private val searchTask: MutableLiveData<String> = MutableLiveData("")
+    val searchTask: MutableLiveData<String> = MutableLiveData("")
     private val hideCompletedTask: MutableLiveData<Boolean> = MutableLiveData(false)
-    private var taskUpdate: MutableList<Task> = mutableListOf()
+
 
     private var _category: MutableLiveData<List<Category>> = MutableLiveData()
     val category: LiveData<List<Category>>
@@ -37,8 +40,20 @@ class TaskViewModel @Inject constructor(
 
     /** Task Today */
     private var _taskToday: MutableLiveData<List<Task>> = MutableLiveData()
-    val taskToday: LiveData<List<Task>>
-        get() = _taskToday
+    val taskToday: LiveData<List<Task>> = Transformations.switchMap(categoryRequest) { it ->
+        if (it != "") {
+            repositoryImp.getTasksByDateTodayCategory(
+                searchTask.value.toString(),
+                hideCompletedTask.value!!,
+                it
+            ).asLiveData()
+        } else {
+            repositoryImp.getTasksByDateToday(
+                searchTask.value.toString(),
+                hideCompletedTask.value!!
+            ).asLiveData()
+        }
+    }
 
     /** Task Weekly */
     private var _taskWeekly: MutableLiveData<List<Task>> = MutableLiveData()
@@ -54,7 +69,7 @@ class TaskViewModel @Inject constructor(
     /** Collect the data in room for list of tasks and category's */
     init {
 
-        getTaskToday()
+
         getTaskWeek()
         getTaskMonth()
 
@@ -63,19 +78,38 @@ class TaskViewModel @Inject constructor(
 
 
     private fun getTaskToday() = viewModelScope.launch {
-        repositoryImp.getTasksByDateToday(searchTask.value.toString(), hideCompletedTask.value!!)
-            .collect {
-                _taskToday.value = it
+
+
+    }
+
+    fun task(): List<Task> {
+
+        val listFilter = mutableListOf<Task>()
+
+        viewModelScope.launch {
+            repositoryImp.getTasksByDateTodayCategory(
+                searchTask.value.toString(),
+                hideCompletedTask.value!!,
+                categoryRequest.value.toString()
+            ).collectLatest {
+                listFilter.addAll(it)
             }
+        }
+
+        return listFilter.toList()
     }
 
     private fun getTaskWeek() = viewModelScope.launch {
-        val calendar = Calendar.getInstance(TimeZone.getDefault())
+        val calendar = Calendar.getInstance(ULocale.forLocale(Locale.getDefault()))
 
-        calendar.time = Date()
+
         calendar.firstDayOfWeek = Calendar.MONDAY
 
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+
         val startWeek = calendar.time
 
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
@@ -87,17 +121,19 @@ class TaskViewModel @Inject constructor(
             startWeek,
             endWeek
         ).collect {
-            _taskWeekly.value = it
+            _taskWeekly.postValue(it)
         }
 
     }
 
     private fun getTaskMonth() = viewModelScope.launch {
-        val calendar = Calendar.getInstance(TimeZone.getDefault())
+        val calendar = Calendar.getInstance(ULocale.forLocale(Locale.getDefault()))
 
-        calendar.time = Date()
 
         calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
         val startMonth = calendar.time
 
         calendar.add(Calendar.MONTH, 1)
@@ -111,7 +147,7 @@ class TaskViewModel @Inject constructor(
             startMonth,
             endMonth
         ).collect {
-            _taskMonth.value = it
+            _taskMonth.postValue(it)
         }
 
     }
@@ -133,6 +169,7 @@ class TaskViewModel @Inject constructor(
     fun updateSearchQuery(queryChanged: String) {
         searchTask.value = queryChanged
     }
+
 
     /** Filter the list of tasks with the category selected in main activity in chip buttons */
     fun updateTaskWithCategory() = viewModelScope.launch {
@@ -156,8 +193,7 @@ class TaskViewModel @Inject constructor(
             }
         }
 
-        _taskToday.value = listFilter
-
+        _taskToday.postValue(listFilter)
     }
 
     /** Create a task and his category in room db */

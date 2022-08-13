@@ -1,6 +1,7 @@
 package com.bootcamp.todoeasy.data.room
 
 
+import androidx.room.Query
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.data.relantions.CategoryWithTask
@@ -12,6 +13,7 @@ interface TaskDataSource {
     /** Delete */
     suspend fun deleteTask(task: Task)
 
+    suspend fun deleteCategory(category: Category)
 
     /** Inserts */
     suspend fun insertTask(task: Task)
@@ -24,14 +26,16 @@ interface TaskDataSource {
 
     suspend fun getTaskByCreate(created: Date): Task
 
-    fun getTasksByDateToday(
-        search: String,
-        hideCompletedTask: Boolean,
-    ): Flow<List<Task>>
+    suspend fun getCategoryByName(categoryName: String): Category
 
     fun getCategory(): Flow<List<Category>>
 
     suspend fun getCategoryWithTask(): List<CategoryWithTask>
+
+    fun getTasksByDateToday(
+        search: String,
+        hideCompletedTask: Boolean,
+    ): Flow<List<Task>>
 
     fun getTasksByDateTodayCategory(
         search: String,

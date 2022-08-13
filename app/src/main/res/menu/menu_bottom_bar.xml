@@ -11,9 +11,13 @@
 
     <item
         android:id="@+id/hide_completed"
-        android:icon="@drawable/ic_toolbar_search"
         android:title="@string/hide_completed"
-        />
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/category_detail"
+        android:title="@string/category_detail"
+        app:showAsAction="never" />
 
 
 </menu>

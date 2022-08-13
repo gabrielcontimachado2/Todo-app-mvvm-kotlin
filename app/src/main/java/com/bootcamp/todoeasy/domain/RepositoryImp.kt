@@ -17,6 +17,10 @@ class RepositoryImp @Inject constructor(
     /** Deletes */
     override suspend fun deleteTask(task: Task) = taskDataSourceImp.deleteTask(task)
 
+    override suspend fun deleteCategory(category: Category) =
+        taskDataSourceImp.deleteCategory(category)
+
+
     /** Inserts */
     override suspend fun insertTask(task: Task) = taskDataSourceImp.insertTask(task)
 
@@ -31,13 +35,16 @@ class RepositoryImp @Inject constructor(
 
     override suspend fun getTaskByCreate(created: Date) = taskDataSourceImp.getTaskByCreate(created)
 
+    override suspend fun getCategoryByName(categoryName: String) =
+        taskDataSourceImp.getCategoryByName(categoryName)
+
+    override suspend fun getCategoryWithTask(): List<CategoryWithTask> =
+        taskDataSourceImp.getCategoryWithTask()
+
     override fun getTasksByDateToday(
         search: String,
         hideCompletedTask: Boolean,
     ) = taskDataSourceImp.getTasksByDateToday(search, hideCompletedTask)
-
-    override suspend fun getCategoryWithTask(): List<CategoryWithTask> =
-        taskDataSourceImp.getCategoryWithTask()
 
     override fun getTasksByDateTodayCategory(
         search: String,
@@ -59,7 +66,8 @@ class RepositoryImp @Inject constructor(
         endDayMonth: Date
     ) = taskDataSourceImp.getTaskByDateMonth(search, hide, startDayMonth, endDayMonth)
 
-    /** Inserts */
+
+    /** Updates */
     override suspend fun updateTaskCategory(taskId: String, categoryName: String) =
         taskDataSourceImp.updateTaskCategory(taskId, categoryName)
 

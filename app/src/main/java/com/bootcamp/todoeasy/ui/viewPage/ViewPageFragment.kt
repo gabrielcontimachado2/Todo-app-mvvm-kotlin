@@ -28,19 +28,15 @@ class ViewPageFragment : Fragment() {
 
         binding = FragmentViewPageBinding.inflate(inflater, container, false)
 
+        setupViewPage()
+
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
 
-        setupViewPage()
-    }
-
+    /** Create the view Pager fo tasks fragments*/
     private fun setupViewPage() {
-
         binding.viewPageFragment.adapter = AdapterViewPage(requireActivity())
-        binding.viewPageFragment.isUserInputEnabled = false
 
         TabLayoutMediator(binding.tabTask, binding.viewPageFragment) { tabLayout, position ->
             tabLayout.text = when (position) {
@@ -52,6 +48,5 @@ class ViewPageFragment : Fragment() {
                 }
             }
         }.attach()
-
     }
 }

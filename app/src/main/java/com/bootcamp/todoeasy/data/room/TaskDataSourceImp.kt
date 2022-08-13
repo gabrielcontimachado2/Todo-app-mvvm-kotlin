@@ -15,6 +15,7 @@ class TaskDataSourceImp @Inject constructor(
     /** Deletes */
     override suspend fun deleteTask(task: Task) = taskDao.deleteTask(task)
 
+    override suspend fun deleteCategory(category: Category) = taskDao.deleteCategory(category)
 
     /** Inserts */
     override suspend fun insertTask(task: Task) = taskDao.insertTask(task)
@@ -27,6 +28,12 @@ class TaskDataSourceImp @Inject constructor(
 
     override suspend fun getTaskByCreate(created: Date) = taskDao.getTaskByCreate(created)
 
+    override suspend fun getCategoryByName(categoryName: String) = taskDao.getCategoryByName(categoryName)
+
+    override fun getCategory() = taskDao.getCategory()
+
+    override suspend fun getCategoryWithTask() = taskDao.getCategoryWithTask()
+
     override fun getTasksByDateToday(
         search: String,
         hideCompletedTask: Boolean,
@@ -34,10 +41,6 @@ class TaskDataSourceImp @Inject constructor(
         search,
         hideCompletedTask,
     )
-
-    override fun getCategory() = taskDao.getCategory()
-
-    override suspend fun getCategoryWithTask() = taskDao.getCategoryWithTask()
 
     override fun getTasksByDateTodayCategory(
         search: String,

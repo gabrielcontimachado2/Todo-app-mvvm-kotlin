@@ -16,6 +16,8 @@ interface TaskDao {
     @Delete
     suspend fun deleteTask(task: Task)
 
+    @Delete
+    suspend fun deleteCategory(category: Category)
 
     /** Inserts */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -38,6 +40,9 @@ interface TaskDao {
     @Query("SELECT * FROM task WHERE created =:created")
     suspend fun getTaskByCreate(created: Date): Task
 
+    @Query("SELECT * FROM category WHERE categoryName =:categoryName")
+    suspend fun getCategoryByName(categoryName: String): Category
+
     @Transaction
     @Query("SELECT * FROM category")
     suspend fun getCategoryWithTask(): List<CategoryWithTask>
@@ -49,7 +54,7 @@ interface TaskDao {
         categoryName: String
     ): Flow<List<Task>>
 
-    @Query("SELECT * FROM task WHERE date BETWEEN :startDayWeek AND :endDayWeek AND (status != :hide OR status = 0) AND name LIKE '%' || :search || '%' ORDER BY priority DESC ")
+    @Query("SELECT * FROM task WHERE date/1000 BETWEEN :startDayWeek/1000 AND :endDayWeek/1000 AND (status != :hide OR status = 0) AND name LIKE '%' || :search || '%' ORDER BY priority DESC ")
     fun getTaskByDateWeek(
         search: String,
         hide: Boolean,
@@ -57,13 +62,14 @@ interface TaskDao {
         endDayWeek: Date
     ): Flow<List<Task>>
 
-    @Query("SELECT * FROM task WHERE date BETWEEN :startDayMonth AND :endDayMonth AND (status != :hide OR status = 0) AND name LIKE '%' || :search || '%' ORDER BY priority DESC ")
+    @Query("SELECT * FROM task WHERE date/1000 BETWEEN :startDayMonth/1000 AND :endDayMonth/1000  AND (status != :hide OR status = 0) AND name LIKE '%' || :search || '%' ORDER BY date ASC, priority DESC ")
     fun getTaskByDateMonth(
         search: String,
         hide: Boolean,
         startDayMonth: Date,
         endDayMonth: Date
     ): Flow<List<Task>>
+
 
     /** Updates */
     @Query("UPDATE task SET categoryName =:categoryName WHERE idTask =:taskId")

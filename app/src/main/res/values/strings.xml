@@ -65,4 +65,9 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="task_undo_completed">Task Successfully Undone</string>
+    <string name="textView_detail_category">Category</string>
+    <string name="category_detail">Category Manager</string>
+    <string name="button_add">+ Create</string>
+    <string name="button_delete">Delete</string>
+    <string name="category_empty">Select a Category for Delete</string>
 </resources>

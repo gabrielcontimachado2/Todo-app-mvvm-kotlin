@@ -55,12 +55,6 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
         binding = ModalBottomSheetBinding.inflate(inflater, container, false)
 
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
         setupShowDatePicker()
         setupShowTimePicker()
         radioGroupPriority()
@@ -70,8 +64,11 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         actionEnter()
         addTask()
 
+        return binding.root
     }
 
+
+    /** Open the Dialog Fragment for create category*/
     private fun setupCreateCategory() {
         val createCategory = binding.categoryFilterLayout.addCategory
 
@@ -81,10 +78,10 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    /** Create the Chip Group with Category from Room */
     private fun setupCategoryChip() {
         val categoryChipGroup = binding.categoryFilterLayout.chipGroupCategory
 
-        listFilter.add("None")
 
         viewModel.category.observe(this) { categoryList ->
             categoryList.forEach { category ->
@@ -102,11 +99,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
                     chip.setOnCheckedChangeListener { _, isChecked ->
                         if (isChecked) {
-                            category = if (chip.text.toString() == "None") {
-                                ""
-                            } else {
-                                chip.text.toString()
-                            }
+                            category = chip.text.toString()
                         }
                     }
                 }
@@ -153,11 +146,12 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
         binding.imageButtonAddTask.setOnClickListener {
 
-            if (checkFieldsEmpty()) {
+            if (checkFieldNotEmpty()) {
 
                 createdTime = Calendar.getInstance().timeInMillis.toUTCLocalDateTime()
                     .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
 
+                /** Random ID for Task*/
                 val taskId = UUID.randomUUID().toString()
 
                 val task =
@@ -210,7 +204,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     }
 
     /** Check if Inputs is Empty */
-    private fun checkFieldsEmpty(): Boolean {
+    private fun checkFieldNotEmpty(): Boolean {
 
         /** Get the values in fields for test if is empty */
         with(binding) {
@@ -290,6 +284,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    /** Open the Material Time Picker and set Hour*/
     private fun setupShowTimePicker() {
         val hour = binding.imageButtonHour
 
@@ -306,8 +301,10 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
             picker.addOnPositiveButtonClickListener {
 
+                /** String Format */
                 time = String.format("%02d:%02d", picker.hour, picker.minute)
 
+                /** Get the Pick Hour and Minute */
                 alarmHour = picker.hour
                 alarmMinute = picker.minute
                 binding.textViewHourUpdate.text = time
@@ -316,6 +313,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
+    /** Open the Material Date Picker, set and Convert Date*/
     private fun setupShowDatePicker() {
         val calendar = binding.imageButtonDate
 
@@ -328,10 +326,14 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                     .build()
             datePicker.show(childFragmentManager, "DatePicker")
             datePicker.addOnPositiveButtonClickListener {
+
+                /** Format the Date*/
                 val format = FormatDate()
 
+                /** Convert the UTC date for the System Default Locale */
                 date = it.toUTCLocalDateTime().atZone(ZoneId.systemDefault()).toInstant()
                     .toEpochMilli()
+
 
                 binding.textViewDateUpdate.text = format.formatLong(date)
             }

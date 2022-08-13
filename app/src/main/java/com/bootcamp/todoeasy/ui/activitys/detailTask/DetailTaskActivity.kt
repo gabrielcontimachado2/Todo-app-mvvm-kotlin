@@ -115,6 +115,8 @@ class DetailTaskActivity : AppCompatActivity() {
 
         viewModel.category.observe(this) { categoryList ->
             categoryList.forEach { category ->
+
+                /** Create a List without Items Repeated */
                 if (!listCategory.contains(category.categoryName)) {
                     listCategory.add(category.categoryName)
                 }
@@ -126,8 +128,10 @@ class DetailTaskActivity : AppCompatActivity() {
             popupMenu.menu.add(category)
         }
 
+
         popupMenu.setOnMenuItemClickListener { item ->
 
+            /** Open the Create Category Dialog When "Create New" was Selected and Update the Value with that */
             if (item.toString() == getString(R.string.create_category)) {
 
                 val bundle = Bundle()
@@ -156,10 +160,12 @@ class DetailTaskActivity : AppCompatActivity() {
     /**Observer the Task and set values in Detail Screen*/
     private fun observerTask() {
 
+        /** Get the TaskId the Task in the Arguments */
         taskId = args.task.idTask
 
         viewModel.updateTask(taskId)
 
+        /** Observer the task and setup All inputs With the values update in task */
         viewModel.task.observe(this) { task ->
             val descriptionEditable = getEditable(task.description)
             val titleEditable = getEditable(task.name)
@@ -197,8 +203,11 @@ class DetailTaskActivity : AppCompatActivity() {
 
     }
 
+    /** Function for Convert String to Editable for Set Text in EditText */
     private fun getEditable(string: String) = Editable.Factory.getInstance().newEditable(string)
 
+
+    /** Toolbar */
     private fun setupToolbar() {
 
         setSupportActionBar(binding.toolbarDetail)
@@ -211,6 +220,7 @@ class DetailTaskActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_top_bar, menu)
         return super.onCreateOptionsMenu(menu)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
