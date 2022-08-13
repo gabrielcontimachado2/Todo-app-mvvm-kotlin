@@ -23,11 +23,6 @@
             app:destination="@id/detailCategoryActivity" />
     </fragment>
 
-    <dialog
-        android:id="@+id/modalCategory"
-        android:name="com.bootcamp.todoeasy.ui.fragments.category.ModalCategory"
-        android:label="modal_bottom_sheet_category"
-        tools:layout="@layout/modal_bottom_sheet_category" />
 
     <fragment
         android:id="@+id/todayFragment"
@@ -68,6 +63,17 @@
         android:name="com.bootcamp.todoeasy.ui.activitys.detailCategory.DetailCategoryActivity"
         android:label="activity_detail_category"
         tools:layout="@layout/activity_detail_category" />
+
+    <dialog
+        android:id="@+id/priorityDialogFragment"
+        android:name="com.bootcamp.todoeasy.ui.fragments.priority.PriorityDialogFragment"
+        android:label="PriorityDialogFragment" >
+        <argument
+            android:name="taskId"
+            app:argType="string" />
+        <argument android:name="taskPriority"
+            app:argType="integer" />
+    </dialog>
 
 
 </navigation>

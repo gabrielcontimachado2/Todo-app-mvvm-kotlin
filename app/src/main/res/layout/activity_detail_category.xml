@@ -21,7 +21,7 @@
         android:id="@+id/textView_tittle_create_task"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_sixteen"
+        android:layout_marginStart="@dimen/margin_default_app"
         android:layout_marginTop="@dimen/margin_sixteen"
         android:text="@string/textView_detail_category"
         android:textSize="@dimen/textSize_card_tittle"

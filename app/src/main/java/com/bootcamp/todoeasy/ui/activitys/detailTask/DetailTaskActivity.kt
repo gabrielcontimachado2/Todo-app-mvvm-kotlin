@@ -14,9 +14,16 @@ import com.bootcamp.todoeasy.R
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.databinding.ActivityDetailTaskBinding
 import com.bootcamp.todoeasy.ui.fragments.category.dialogUpdateCategory.CategoryUpdateDialogFragment
+import com.bootcamp.todoeasy.ui.fragments.priority.PriorityDialogFragment
 import com.bootcamp.todoeasy.util.Constants.Companion.DAY
+import com.bootcamp.todoeasy.util.Constants.Companion.HIGH
 import com.bootcamp.todoeasy.util.Constants.Companion.JOB_DELAY
+import com.bootcamp.todoeasy.util.Constants.Companion.LOW
+import com.bootcamp.todoeasy.util.Constants.Companion.MEDIUM
 import com.bootcamp.todoeasy.util.Constants.Companion.MONTH
+import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_HIGH
+import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_LOW
+import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_MEDIUM
 import com.bootcamp.todoeasy.util.Constants.Companion.WEEKLY
 import com.bootcamp.todoeasy.util.date.FormatDate
 import com.bootcamp.todoeasy.util.toUTCLocalDateTime
@@ -37,10 +44,7 @@ class DetailTaskActivity : AppCompatActivity() {
     private val args: DetailTaskActivityArgs by navArgs()
     private val viewModel: DetailTaskViewModel by viewModels()
     private var listCategory = mutableListOf<String>()
-    private lateinit var taskArg: Task
     private lateinit var taskId: String
-    private lateinit var taskDescription: String
-    private var taskTitle: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,6 +60,28 @@ class DetailTaskActivity : AppCompatActivity() {
         setupDueDate()
         setupTime()
         setupTitleAndDescription()
+        setupPriority()
+    }
+
+    /** Open the Dialog for Update the Task Priority*/
+    private fun setupPriority() {
+
+        binding.priority.cardPriority.setOnClickListener {
+
+            val dialogPriority = PriorityDialogFragment()
+
+            val bundleTaskId = Bundle()
+            bundleTaskId.putString("taskId", taskId)
+            bundleTaskId.putInt("taskPriority", args.task.priority)
+
+            dialogPriority.arguments = bundleTaskId
+            dialogPriority.show(supportFragmentManager, "priorityDialog")
+
+            dialogPriority.onDismissListener = {
+                viewModel.updateTask(taskId)
+            }
+
+        }
     }
 
     /** Update the Title and Description when Text Changed, in two Jobs with a Delay the 0.5 Seconds */
@@ -104,7 +130,8 @@ class DetailTaskActivity : AppCompatActivity() {
                 val time = String.format("%02d:%02d", picker.hour, picker.minute)
 
                 viewModel.updateHour(taskId, time)
-                viewModel.updateTask(taskId)
+                binding.hour.textViewDrawableHour.text = time
+                //viewModel.updateTask(taskId)
             }
 
         }
@@ -127,7 +154,10 @@ class DetailTaskActivity : AppCompatActivity() {
                     .toEpochMilli()
 
                 viewModel.updateDueDate(taskId, date)
-                viewModel.updateTask(taskId)
+
+                val formart = FormatDate()
+                binding.dueDate.textViewDrawableDate.text = formart.formatLong(date)
+                //viewModel.updateTask(taskId)
             }
         }
 
@@ -231,6 +261,22 @@ class DetailTaskActivity : AppCompatActivity() {
                 }
                 else -> {
                     binding.repeat.textViewDrawableRepeat.text = getString(R.string.no)
+                }
+
+            }
+
+            when (task.priority) {
+                PRIORITY_TASK_LOW -> {
+                    binding.priority.textViewDrawablePriority.text = LOW
+                }
+                PRIORITY_TASK_MEDIUM -> {
+                    binding.priority.textViewDrawablePriority.text = MEDIUM
+                }
+                PRIORITY_TASK_HIGH -> {
+                    binding.priority.textViewDrawablePriority.text = HIGH
+                }
+                else -> {
+                    binding.priority.textViewDrawablePriority.text = LOW
                 }
 
             }

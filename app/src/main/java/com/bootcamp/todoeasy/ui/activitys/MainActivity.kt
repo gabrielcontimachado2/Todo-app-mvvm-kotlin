@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupBottomBar() {
         binding.bottomAppBar.setOnMenuItemClickListener {
 
-            ///**Don't work ;( TODO*/
+            /**Don't work ;( TODO*/
             //val searchQuery = it.subMenu.findItem(R.id.action_search)
             //val searchView = searchQuery.actionView as SearchView
 
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    /** Open the Dialog Fragment for create category*/
+    /** Open the Dialog Fragment for create category */
     private fun setupCreateCategory() {
         val createCategory = binding.categoryFilter.addCategory
 

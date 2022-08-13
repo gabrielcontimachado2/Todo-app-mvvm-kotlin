@@ -1,6 +1,7 @@
 package com.bootcamp.todoeasy.data.room
 
 
+import androidx.room.Query
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.data.relantions.CategoryWithTask
@@ -82,4 +83,7 @@ class TaskDataSourceImp @Inject constructor(
 
     override suspend fun updateTaskDescription(taskId: String, taskDescription: String) =
         taskDao.updateTaskDescription(taskId, taskDescription)
+
+    override suspend fun updateTaskPriority(taskId: String, taskPriority: Int) =
+        taskDao.updateTaskPriority(taskId, taskPriority)
 }

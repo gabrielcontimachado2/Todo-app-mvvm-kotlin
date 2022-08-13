@@ -90,4 +90,8 @@ interface TaskDao {
     @Query("UPDATE task SET description =:taskDescription WHERE idTask =:taskId")
     suspend fun updateTaskDescription(taskId: String, taskDescription: String)
 
+    @Query("UPDATE task SET priority =:taskPriority WHERE idTask =:taskId")
+    suspend fun updateTaskPriority(taskId: String, taskPriority: Int)
+
+
 }

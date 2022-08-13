@@ -1,6 +1,7 @@
 package com.bootcamp.todoeasy.domain
 
 
+import androidx.room.Query
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.data.relantions.CategoryWithTask
@@ -69,4 +70,6 @@ interface Repository {
     suspend fun updateTaskTitle(taskId: String, taskTitle: String)
 
     suspend fun updateTaskDescription(taskId: String, taskDescription: String)
+
+    suspend fun updateTaskPriority(taskId: String, taskPriority: Int)
 }

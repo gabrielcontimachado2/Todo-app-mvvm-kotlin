@@ -1,6 +1,7 @@
 package com.bootcamp.todoeasy.domain
 
 
+import androidx.room.Query
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.data.relantions.CategoryWithTask
@@ -85,6 +86,10 @@ class RepositoryImp @Inject constructor(
 
     override suspend fun updateTaskDescription(taskId: String, taskDescription: String) =
         taskDataSourceImp.updateTaskDescription(taskId, taskDescription)
+
+    override suspend fun updateTaskPriority(taskId: String, taskPriority: Int) =
+        taskDataSourceImp.updateTaskPriority(taskId, taskPriority)
+
 }
 //override fun getTask(
 //    searchQuery: StateFlow<String>,

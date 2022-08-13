@@ -47,6 +47,7 @@ class DetailCategoryActivity : AppCompatActivity() {
             if (checkFieldsNotEmpty()) {
                 viewModel.deleteCategory(categorySelected)
                 listFilter.remove(categorySelected)
+                categorySelected = ""
                 Toast.makeText(
                     this,
                     getString(R.string.category_delete, categorySelected),
