@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_priority"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/textView_width_medium_priority"
+    android:clickable="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/textView_width_medium_priority"
+        android:background="@color/background">
+
+        <ImageView
+            android:id="@+id/textView_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_default_app"
+            android:src="@drawable/ic_priority_type"
+            app:layout_constraintBottom_toBottomOf="@+id/textView_expiration_priority"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView_expiration_priority" />
+
+        <TextView
+            android:id="@+id/textView_expiration_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_sixteen"
+            android:text="@string/textView_priority_task"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/textView_priority"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_line_bottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_top_search_icon"
+            android:layout_marginStart="@dimen/margin_default_app"
+            android:layout_marginEnd="@dimen/margin_default_app"
+            android:background="@color/text_secondary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <TextView
+            android:id="@+id/textView_drawable_priority"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_default_app"
+            android:background="@drawable/text_view_category_background"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/roboto_condensed_regular"
+            android:maxLines="1"
+            android:padding="@dimen/textView_category_padding"
+            android:textColor="@color/text_secondary"
+            android:textSize="@dimen/textView_font_size_category_task_um"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="HIGH" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
