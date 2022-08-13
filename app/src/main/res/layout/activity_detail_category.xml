@@ -40,7 +40,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textView_tittle_create_task" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_delete_category"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
         app:layout_constraintEnd_toStartOf="@+id/button_add_category"
         app:layout_constraintTop_toTopOf="@id/button_add_category" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/button_add_category"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"

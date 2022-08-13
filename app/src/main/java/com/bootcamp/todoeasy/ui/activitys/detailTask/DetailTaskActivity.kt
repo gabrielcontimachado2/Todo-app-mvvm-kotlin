@@ -8,12 +8,14 @@ import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.navigation.navArgs
 import com.bootcamp.todoeasy.R
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.databinding.ActivityDetailTaskBinding
 import com.bootcamp.todoeasy.ui.fragments.category.dialogUpdateCategory.CategoryUpdateDialogFragment
 import com.bootcamp.todoeasy.util.Constants.Companion.DAY
+import com.bootcamp.todoeasy.util.Constants.Companion.JOB_DELAY
 import com.bootcamp.todoeasy.util.Constants.Companion.MONTH
 import com.bootcamp.todoeasy.util.Constants.Companion.WEEKLY
 import com.bootcamp.todoeasy.util.date.FormatDate
@@ -22,7 +24,10 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 import java.time.ZoneId
+import java.util.concurrent.Executors
+import javax.inject.Scope
 
 
 @AndroidEntryPoint
@@ -35,6 +40,7 @@ class DetailTaskActivity : AppCompatActivity() {
     private lateinit var taskArg: Task
     private lateinit var taskId: String
     private lateinit var taskDescription: String
+    private var taskTitle: String = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +55,35 @@ class DetailTaskActivity : AppCompatActivity() {
         setupExposedDownCategory()
         setupDueDate()
         setupTime()
+        setupTitleAndDescription()
+    }
+
+    /** Update the Title and Description when Text Changed, in two Jobs with a Delay the 0.5 Seconds */
+    private fun setupTitleAndDescription() {
+
+        val scope = CoroutineScope(Job() + Dispatchers.IO)
+
+        val jobTitleAndDescription = scope.launch {
+            delay(JOB_DELAY)
+
+            val jobTitle = launch {
+                binding.ediTextTitle.addTextChangedListener { titleEditable ->
+                    if (titleEditable.toString().isNotEmpty()) {
+                        viewModel.updateTitle(taskId, titleEditable.toString())
+                    }
+                }
+            }
+
+            val jobDescription = launch {
+                binding.ediTextCategoryDescription.addTextChangedListener { descriptionEditable ->
+                    if (descriptionEditable.toString().isNotEmpty()) {
+                        viewModel.updateDescription(taskId, descriptionEditable.toString())
+                    }
+                }
+            }
+
+        }
+
     }
 
     /** Setup Hour and update the task with new Hour */
@@ -167,6 +202,7 @@ class DetailTaskActivity : AppCompatActivity() {
 
         /** Observer the task and setup All inputs With the values update in task */
         viewModel.task.observe(this) { task ->
+
             val descriptionEditable = getEditable(task.description)
             val titleEditable = getEditable(task.name)
             val formatDate = FormatDate()

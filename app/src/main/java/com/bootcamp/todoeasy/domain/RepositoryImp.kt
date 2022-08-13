@@ -80,6 +80,11 @@ class RepositoryImp @Inject constructor(
     override suspend fun updateTaskHour(taskId: String, hour: String) =
         taskDataSourceImp.updateTaskHour(taskId, hour)
 
+    override suspend fun updateTaskTitle(taskId: String, taskTitle: String) =
+        taskDataSourceImp.updateTaskTitle(taskId, taskTitle)
+
+    override suspend fun updateTaskDescription(taskId: String, taskDescription: String) =
+        taskDataSourceImp.updateTaskDescription(taskId, taskDescription)
 }
 //override fun getTask(
 //    searchQuery: StateFlow<String>,

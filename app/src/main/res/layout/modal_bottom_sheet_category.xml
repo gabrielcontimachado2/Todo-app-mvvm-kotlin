@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CustomBottomSheetDialog"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    tools:context=".ui.fragments.category.ModalCategory">
+    android:layout_height="wrap_content">
 
     <View
         android:id="@+id/task_push_down"

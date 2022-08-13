@@ -16,9 +16,14 @@ import com.bootcamp.todoeasy.databinding.ActivityMainBinding
 import com.bootcamp.todoeasy.ui.activitys.detailCategory.DetailCategoryActivity
 import com.bootcamp.todoeasy.ui.fragments.category.dialogCreateCategory.CategoryDialogFragment
 import com.bootcamp.todoeasy.ui.fragments.today.TaskViewModel
+import com.bootcamp.todoeasy.util.Constants.Companion.JOB_DELAY
 import com.bootcamp.todoeasy.util.onQueryTextChanged
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -44,6 +49,25 @@ class MainActivity : AppCompatActivity() {
     /** Function for menu item clicked in bottom bar menu*/
     private fun setupBottomBar() {
         binding.bottomAppBar.setOnMenuItemClickListener {
+
+            ///**Don't work ;( TODO*/
+            //val searchQuery = it.subMenu.findItem(R.id.action_search)
+            //val searchView = searchQuery.actionView as SearchView
+
+            //var jobSearch: Job? = null
+
+            //searchView.onQueryTextChanged { queryChanged ->
+            //    jobSearch?.cancel()
+            //    jobSearch = MainScope().launch {
+            //        delay(JOB_DELAY)
+            //        queryChanged.let {
+            //            if (queryChanged.isNotEmpty()) {
+            //                viewModel.searchTask.value = queryChanged
+            //            }
+            //        }
+            //    }
+            //}
+
             when (it.itemId) {
                 R.id.category_detail -> {
                     openDetailCategory()
@@ -51,16 +75,6 @@ class MainActivity : AppCompatActivity() {
                 }
                 else -> true
             }
-
-            /**Don't work ;( TODO*/
-            //val searchQuery = it.subMenu.findItem(R.id.action_search)
-            //val searchView = searchQuery.actionView as SearchView
-
-            //searchView.onQueryTextChanged { queryChanged ->
-            //    viewModel.searchTask.value = queryChanged
-            //}
-
-            //true
         }
 
 

@@ -83,4 +83,11 @@ interface TaskDao {
 
     @Query("UPDATE task SET hour =:hour WHERE idTask =:taskId")
     suspend fun updateTaskHour(taskId: String, hour: String)
+
+    @Query("UPDATE task SET name =:taskTitle WHERE idTask =:taskId")
+    suspend fun updateTaskTitle(taskId: String, taskTitle: String)
+
+    @Query("UPDATE task SET description =:taskDescription WHERE idTask =:taskId")
+    suspend fun updateTaskDescription(taskId: String, taskDescription: String)
+
 }

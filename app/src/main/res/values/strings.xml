@@ -70,4 +70,5 @@
     <string name="button_add">+ Create</string>
     <string name="button_delete">Delete</string>
     <string name="category_empty">Select a Category for Delete</string>
+    <string name="category_delete">Category %s was Deleted</string>
 </resources>

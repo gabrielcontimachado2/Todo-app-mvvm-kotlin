@@ -28,7 +28,8 @@ class TaskDataSourceImp @Inject constructor(
 
     override suspend fun getTaskByCreate(created: Date) = taskDao.getTaskByCreate(created)
 
-    override suspend fun getCategoryByName(categoryName: String) = taskDao.getCategoryByName(categoryName)
+    override suspend fun getCategoryByName(categoryName: String) =
+        taskDao.getCategoryByName(categoryName)
 
     override fun getCategory() = taskDao.getCategory()
 
@@ -75,4 +76,10 @@ class TaskDataSourceImp @Inject constructor(
 
     override suspend fun updateTaskHour(taskId: String, hour: String) =
         taskDao.updateTaskHour(taskId, hour)
+
+    override suspend fun updateTaskTitle(taskId: String, taskTitle: String) =
+        taskDao.updateTaskTitle(taskId, taskTitle)
+
+    override suspend fun updateTaskDescription(taskId: String, taskDescription: String) =
+        taskDao.updateTaskDescription(taskId, taskDescription)
 }

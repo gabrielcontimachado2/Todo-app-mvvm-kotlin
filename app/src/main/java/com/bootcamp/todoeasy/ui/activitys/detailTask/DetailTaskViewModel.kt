@@ -48,7 +48,20 @@ class DetailTaskViewModel @Inject constructor(
         }
     }
 
-    fun updateDueDate(taskId: String, dueDate: Long){
+    fun updateTitle(taskId: String, taskTitle: String) {
+        viewModelScope.launch {
+            repositoryImp.updateTaskTitle(taskId, taskTitle)
+        }
+    }
+
+    fun updateDescription(taskId: String, taskDescription: String) {
+        viewModelScope.launch {
+            repositoryImp.updateTaskDescription(taskId, taskDescription)
+        }
+    }
+
+
+    fun updateDueDate(taskId: String, dueDate: Long) {
         viewModelScope.launch {
             repositoryImp.updateTaskDueDate(taskId, Date(dueDate))
         }
@@ -59,7 +72,6 @@ class DetailTaskViewModel @Inject constructor(
             repositoryImp.updateTaskHour(taskId, hour)
         }.isCompleted
     }
-
 
     fun updateTask(taskId: String) {
         viewModelScope.launch {

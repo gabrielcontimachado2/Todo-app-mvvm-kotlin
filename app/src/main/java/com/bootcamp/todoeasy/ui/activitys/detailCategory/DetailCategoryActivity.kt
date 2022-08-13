@@ -47,6 +47,11 @@ class DetailCategoryActivity : AppCompatActivity() {
             if (checkFieldsNotEmpty()) {
                 viewModel.deleteCategory(categorySelected)
                 listFilter.remove(categorySelected)
+                Toast.makeText(
+                    this,
+                    getString(R.string.category_delete, categorySelected),
+                    Toast.LENGTH_LONG
+                ).show()
             } else {
                 Toast.makeText(this, R.string.category_empty, Toast.LENGTH_LONG).show()
             }

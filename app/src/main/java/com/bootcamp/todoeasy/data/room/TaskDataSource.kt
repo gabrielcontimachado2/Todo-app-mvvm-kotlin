@@ -67,5 +67,8 @@ interface TaskDataSource {
 
     suspend fun updateTaskHour(taskId: String, hour: String)
 
+    suspend fun updateTaskTitle(taskId: String, taskTitle: String)
+
+    suspend fun updateTaskDescription(taskId: String, taskDescription: String)
 
 }
