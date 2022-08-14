@@ -1,5 +1,6 @@
 package com.bootcamp.todoeasy.ui.activitys.detailTask
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.text.Editable
 import android.view.Menu
@@ -7,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.*
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.navigation.navArgs
@@ -44,6 +46,7 @@ class DetailTaskActivity : AppCompatActivity() {
     private val args: DetailTaskActivityArgs by navArgs()
     private val viewModel: DetailTaskViewModel by viewModels()
     private var listCategory = mutableListOf<String>()
+    private var status: Boolean = false
     private lateinit var taskId: String
 
 
@@ -242,6 +245,7 @@ class DetailTaskActivity : AppCompatActivity() {
             binding.dueDate.textViewDrawableDate.text = formatDate.formatDate(task.date)
             binding.hour.textViewDrawableHour.text = task.hour
             binding.textViewCategory.text = task.categoryName
+            status = task.status
 
             if (task.reminder) {
                 binding.reminder.textViewDrawableReminder.text = getString(R.string.yes)
@@ -299,23 +303,72 @@ class DetailTaskActivity : AppCompatActivity() {
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_top_bar, menu)
-        return super.onCreateOptionsMenu(menu)
+        return true
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.delete_task -> {
-
+                showDialogDelete()
                 true
             }
             R.id.complete_task -> {
-
+                showDialogComplete()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showDialogComplete() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle(getString(R.string.complete_task))
+
+        if (status) {
+            alertDialogBuilder.setMessage(getString(R.string.message_complete_undone))
+        } else {
+            alertDialogBuilder.setMessage(getString(R.string.message_complete))
+        }
+
+        alertDialogBuilder.setPositiveButton(android.R.string.yes) { dialog, which ->
+            status = if (status) {
+                viewModel.updateStatus(taskId, false)
+                Toast.makeText(this, R.string.complete_task_message_undo, Toast.LENGTH_LONG).show()
+                false
+            } else {
+                viewModel.updateStatus(taskId, true)
+                Toast.makeText(this, R.string.complete_task_message, Toast.LENGTH_LONG).show()
+                true
+            }
+        }
+
+        alertDialogBuilder.setNegativeButton(android.R.string.no) { dialog, which ->
+            dialog.dismiss()
+        }
+
+        alertDialogBuilder.show()
+    }
+
+    private fun showDialogDelete() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle(getString(R.string.delete_task))
+        alertDialogBuilder.setMessage(getString(R.string.message_delete))
+
+        alertDialogBuilder.setPositiveButton(android.R.string.yes) { dialog, which ->
+            viewModel.deleteTask(args.task)
+            finish()
+            Toast.makeText(this, R.string.task_deleted_success, Toast.LENGTH_LONG).show()
+
+        }
+
+        alertDialogBuilder.setNegativeButton(android.R.string.no) { dialog, which ->
+            dialog.dismiss()
+        }
+
+        alertDialogBuilder.show()
     }
 
 

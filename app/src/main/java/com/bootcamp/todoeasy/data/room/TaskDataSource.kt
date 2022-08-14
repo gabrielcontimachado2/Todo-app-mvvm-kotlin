@@ -73,4 +73,6 @@ interface TaskDataSource {
 
     suspend fun updateTaskPriority(taskId: String, taskPriority: Int)
 
+    suspend fun updateTaskStatus(taskId: String, taskStatus: Boolean)
+
 }

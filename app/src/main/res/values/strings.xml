@@ -42,7 +42,7 @@
     <string name="tab_weekly">Weekly</string>
     <string name="tab_month">Month</string>
     <string name="hide_completed">Hide Tasks Completed</string>
-    <string name="task_deleted_success">The task delete with success!!!</string>
+    <string name="task_deleted_success">The task delete with success!</string>
     <string name="task_completed">Congratulations!! one less task for you do today</string>
     <string name="textView_category">Category</string>
     <string name="textMaxLengthDescription">40</string>
@@ -72,6 +72,12 @@
     <string name="category_empty">Select a Category for Delete</string>
     <string name="category_delete">Category %s was Deleted</string>
     <string name="label_priority">Task Priority</string>
+    <string name="message_delete">Are you sure you want delete the task</string>
+
+    <string name="message_complete">Are you sure you want complete the task</string>
+    <string name="message_complete_undone">Are you sure you want undone the task</string>
+    <string name="complete_task_message">Congratulations, task completed with success!</string>
+    <string name="complete_task_message_undo">Task Undone with Success!</string>
 
     <string-array name="priorityArray">
         <item>Low</item>

@@ -1,6 +1,7 @@
 package com.bootcamp.todoeasy.data.room
 
 
+import android.text.BoringLayout
 import androidx.room.*
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
@@ -93,5 +94,7 @@ interface TaskDao {
     @Query("UPDATE task SET priority =:taskPriority WHERE idTask =:taskId")
     suspend fun updateTaskPriority(taskId: String, taskPriority: Int)
 
+    @Query("UPDATE task SET status =:taskStatus WHERE idTask =:taskId")
+    suspend fun updateTaskStatus(taskId: String, taskStatus: Boolean)
 
 }

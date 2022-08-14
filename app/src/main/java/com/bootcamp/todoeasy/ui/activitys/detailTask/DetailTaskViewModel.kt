@@ -27,6 +27,7 @@ class DetailTaskViewModel @Inject constructor(
     val task: LiveData<Task>
         get() = _task
 
+
     init {
         viewModelScope.launch {
             repositoryImp.getCategory().collectLatest {
@@ -35,6 +36,13 @@ class DetailTaskViewModel @Inject constructor(
         }
     }
 
+    fun updateStatus(taskId: String, taskStatus: Boolean) = viewModelScope.launch {
+        repositoryImp.updateTaskStatus(taskId, taskStatus)
+    }
+
+    fun deleteTask(task: Task) = viewModelScope.launch {
+        repositoryImp.deleteTask(task)
+    }
 
     fun getTaskByCreate(taskCreate: Date) {
         viewModelScope.launch {

@@ -24,6 +24,8 @@
         <item name="android:windowAnimationStyle">@style/animationDialog</item>
 
         <item name="android:popupMenuStyle">@style/PopupMenu</item>
+
+        <item name="listPopupWindowStyle">@style/popupMenuCustom</item>
     </style>
 
 

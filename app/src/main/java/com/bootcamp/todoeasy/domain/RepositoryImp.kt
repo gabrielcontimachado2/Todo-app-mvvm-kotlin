@@ -90,6 +90,8 @@ class RepositoryImp @Inject constructor(
     override suspend fun updateTaskPriority(taskId: String, taskPriority: Int) =
         taskDataSourceImp.updateTaskPriority(taskId, taskPriority)
 
+    override suspend fun updateTaskStatus(taskId: String, taskStatus: Boolean) =
+        taskDataSourceImp.updateTaskStatus(taskId, taskStatus)
 }
 //override fun getTask(
 //    searchQuery: StateFlow<String>,

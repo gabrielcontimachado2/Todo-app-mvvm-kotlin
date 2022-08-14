@@ -86,4 +86,7 @@ class TaskDataSourceImp @Inject constructor(
 
     override suspend fun updateTaskPriority(taskId: String, taskPriority: Int) =
         taskDao.updateTaskPriority(taskId, taskPriority)
+
+    override suspend fun updateTaskStatus(taskId: String, taskStatus: Boolean) =
+        taskDao.updateTaskStatus(taskId, taskStatus)
 }

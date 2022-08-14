@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.activitys.detailTask.DetailTaskActivity">
 
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_detail"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"

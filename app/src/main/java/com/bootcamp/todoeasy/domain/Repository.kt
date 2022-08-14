@@ -72,4 +72,6 @@ interface Repository {
     suspend fun updateTaskDescription(taskId: String, taskDescription: String)
 
     suspend fun updateTaskPriority(taskId: String, taskPriority: Int)
+
+    suspend fun updateTaskStatus(taskId: String, taskStatus: Boolean)
 }
