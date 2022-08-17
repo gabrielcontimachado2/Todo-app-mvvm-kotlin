@@ -1,13 +1,11 @@
 package com.bootcamp.todoeasy.data.room
 
 
-import android.text.BoringLayout
 import androidx.room.*
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
-import com.bootcamp.todoeasy.data.relantions.CategoryWithTask
+import com.bootcamp.todoeasy.data.relations.CategoryWithTask
 import kotlinx.coroutines.flow.Flow
-import java.time.LocalDate
 import java.util.*
 
 @Dao

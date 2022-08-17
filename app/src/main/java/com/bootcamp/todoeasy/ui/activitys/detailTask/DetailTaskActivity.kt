@@ -357,14 +357,14 @@ class DetailTaskActivity : AppCompatActivity() {
         alertDialogBuilder.setTitle(getString(R.string.delete_task))
         alertDialogBuilder.setMessage(getString(R.string.message_delete))
 
-        alertDialogBuilder.setPositiveButton(android.R.string.yes) { dialog, which ->
+        alertDialogBuilder.setPositiveButton(R.string.yes) { dialog, which ->
             viewModel.deleteTask(args.task)
             finish()
             Toast.makeText(this, R.string.task_deleted_success, Toast.LENGTH_LONG).show()
 
         }
 
-        alertDialogBuilder.setNegativeButton(android.R.string.no) { dialog, which ->
+        alertDialogBuilder.setNegativeButton(R.string.no) { dialog, which ->
             dialog.dismiss()
         }
 

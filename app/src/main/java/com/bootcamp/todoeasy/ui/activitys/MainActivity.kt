@@ -1,6 +1,7 @@
 package com.bootcamp.todoeasy.ui.activitys
 
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
@@ -115,7 +116,6 @@ class MainActivity : AppCompatActivity() {
                     chip.setOnCheckedChangeListener { _, isChecked ->
                         if (isChecked) {
                             viewModel.setCategoryFilter(chip.text.toString())
-                            viewModel.updateTaskWithCategory()
                         }
                     }
                 }

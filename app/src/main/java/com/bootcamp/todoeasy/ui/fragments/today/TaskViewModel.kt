@@ -15,6 +15,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZoneId
@@ -29,7 +30,7 @@ class TaskViewModel @Inject constructor(
 ) : ViewModel() {
 
 
-    private val categoryRequest: MutableLiveData<String> = MutableLiveData("")
+    private var categoryRequest: MutableLiveData<String> = MutableLiveData("")
     val searchTask: MutableLiveData<String> = MutableLiveData("")
     private val hideCompletedTask: MutableLiveData<Boolean> = MutableLiveData(false)
 
@@ -39,31 +40,10 @@ class TaskViewModel @Inject constructor(
         get() = _category
 
 
-
     /** Task Today */
-    private var _taskTodayNormal: MutableLiveData<List<Task>> = MutableLiveData()
-    private var _taskTodayFilter: MutableLiveData<List<Task>> = MutableLiveData()
-
     private var _taskToday: MediatorLiveData<List<Task>> = MediatorLiveData()
     val taskToday: LiveData<List<Task>>
         get() = _taskToday
-
-    /**
-    Transformations.switchMap(categoryRequest) { it ->
-    if (it != "") {
-    repositoryImp.getTasksByDateTodayCategory(
-    searchTask.value.toString(),
-    hideCompletedTask.value!!,
-    it
-    ).asLiveData()
-    } else {
-    repositoryImp.getTasksByDateToday(
-    searchTask.value.toString(),
-    hideCompletedTask.value!!
-    ).asLiveData()
-    }
-    }
-     */
 
 
     /** Task Weekly */
@@ -93,14 +73,34 @@ class TaskViewModel @Inject constructor(
 
     private fun getTaskToday() = viewModelScope.launch {
 
-        _taskTodayNormal = repositoryImp.getTasksByDateToday(
-            searchTask.value.toString(),
-            hideCompletedTask.value!!
-        ).asLiveData() as MutableLiveData<List<Task>>
-
-        _taskToday.addSource(_taskTodayNormal) {
-            _taskToday.value = it
+        _taskToday.addSource(
+            repositoryImp.getTasksByDateToday(
+                searchTask.value.toString(),
+                hideCompletedTask.value!!
+            ).asLiveData()
+        ) { taskList ->
+            _taskToday.value = taskList
         }
+
+        //_taskToday.addSource(
+        //    Transformations.switchMap(categoryRequest) {
+        //        if (it == "") {
+        //            repositoryImp.getTasksByDateTodayCategory(
+        //                searchTask.value.toString(),
+        //                hideCompletedTask.value!!,
+        //                it
+        //            ).asLiveData()
+        //        } else {
+        //            repositoryImp.getTasksByDateToday(
+        //                searchTask.value.toString(),
+        //                hideCompletedTask.value!!
+        //            ).asLiveData()
+        //        }
+        //    }
+        //) { taskList ->
+        //    _taskToday.value = taskList
+        //}
+
 
     }
 
@@ -177,49 +177,8 @@ class TaskViewModel @Inject constructor(
 
 
     /** Filter the list of tasks with the category selected in main activity in chip buttons */
-    fun updateTaskWithCategory() = viewModelScope.launch {
+    fun updateTaskWithCategory(categoryName: String) = viewModelScope.launch {
 
-        _taskTodayFilter = repositoryImp.getTasksByDateTodayCategory(
-            searchTask.value.toString(),
-            hideCompletedTask.value!!,
-            categoryRequest.value.toString()
-        ).asLiveData() as MutableLiveData<List<Task>>
-
-
-        _taskToday.removeSource(_taskToday)
-        _taskToday.addSource(_taskTodayFilter){ taskList ->
-            _taskToday.value = taskList
-        }
-
-
-        //_taskToday.addSource(
-        //    repositoryImp.getTasksByDateTodayCategory(
-        //        searchTask.value.toString(),
-        //        hideCompletedTask.value!!,
-        //        categoryRequest.value.toString()
-        //    ).asLiveData()
-        //) { taskList ->
-        //    _taskToday.value = taskList
-        //}
-
-        //if (categoryRequest.value.toString() != null) {
-        //    repositoryImp.getTasksByDateTodayCategory(
-        //        searchTask.value.toString(),
-        //        hideCompletedTask.value!!,
-        //        categoryRequest.value.toString()
-        //    ).collect {
-        //        listFilter.addAll(it)
-        //    }
-        //} else {
-        //    repositoryImp.getTasksByDateToday(
-        //        searchTask.value.toString(),
-        //        hideCompletedTask.value!!,
-        //    ).collect {
-        //        listFilter.addAll(it)
-        //    }
-        //}
-
-        //_taskToday.postValue(listFilter)
     }
 
     /** Create a task and his category in room db */
@@ -233,21 +192,6 @@ class TaskViewModel @Inject constructor(
     fun updateTaskByChecked(taskId: String, checked: Boolean) = viewModelScope.launch {
         repositoryImp.updateTaskChecked(taskId, checked)
     }
-
-
-//fun updateFiltersByCategoryOrAndSearch() {
-//    mutableListFilterCategory.clear()
-//    viewModelScope.launch {
-//        repositoryImp.getTasksByDateToday(
-//            searchTask.value.toString(),
-//            hideCompletedTask.value!!
-//        ).asLiveData().switchMap { taskList ->
-
-
-//    }
-//    _task.postValue(mutableListFilterCategory)
-//}
-
 
 }
 /**  talvez usar */

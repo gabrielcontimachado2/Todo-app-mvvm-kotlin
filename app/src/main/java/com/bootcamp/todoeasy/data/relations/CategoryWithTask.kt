@@ -1,4 +1,4 @@
-package com.bootcamp.todoeasy.data.relantions
+package com.bootcamp.todoeasy.data.relations
 
 import androidx.room.Embedded
 import androidx.room.Relation

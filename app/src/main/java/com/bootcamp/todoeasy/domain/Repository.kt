@@ -1,10 +1,9 @@
 package com.bootcamp.todoeasy.domain
 
 
-import androidx.room.Query
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
-import com.bootcamp.todoeasy.data.relantions.CategoryWithTask
+import com.bootcamp.todoeasy.data.relations.CategoryWithTask
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
