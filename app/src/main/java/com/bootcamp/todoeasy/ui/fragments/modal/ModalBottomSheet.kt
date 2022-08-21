@@ -206,8 +206,8 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
 
         /** Get the values in fields for test if is empty */
         with(binding) {
-            name = ediTextNameTask.text.toString()
-            description = ediTextDescriptionTask.text.toString()
+            name = ediTextNameTask.text.toString().replaceFirstChar { it.uppercase() }
+            description = ediTextDescriptionTask.text.toString().replaceFirstChar { it.uppercase() }
             //  category = autoCompleteCategory.text.toString()
         }
 

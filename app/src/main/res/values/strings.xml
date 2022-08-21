@@ -78,8 +78,8 @@
     <string name="message_delete_category">WARNING!! Are you sure you want delete the category? All Task with this Category will excluded together</string>
     <string name="category_deleted_success">The category was deleted with success!</string>
 
-    <string name="message_complete">Are you sure you want complete the task</string>
-    <string name="message_complete_undone">Are you sure you want undone the task</string>
+    <string name="message_complete">Are you sure you want complete the task?</string>
+    <string name="message_complete_undone">Are you sure you want undone the task?</string>
     <string name="complete_task_message">Congratulations, task completed with success!</string>
     <string name="complete_task_message_undo">Task Undone with Success!</string>
     <string name="all">All</string>
