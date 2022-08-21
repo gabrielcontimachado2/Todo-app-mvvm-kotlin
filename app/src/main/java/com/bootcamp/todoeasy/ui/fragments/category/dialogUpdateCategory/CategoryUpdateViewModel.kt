@@ -13,12 +13,14 @@ class CategoryUpdateViewModel @Inject constructor(
     private val repositoryImp: RepositoryImp
 ): ViewModel(){
 
-    fun updateCategory(taskId: String, categoryName: String) {
+    /** Function to update the Category Name in the Task */
+    fun updateTaskCategory(taskId: String, categoryName: String) {
         viewModelScope.launch {
             repositoryImp.updateTaskCategory(taskId, categoryName)
         }
     }
 
+    /** Function to Create new Category */
     fun insertCategory(category: Category) = viewModelScope.launch {
         repositoryImp.insertCategory(category)
     }

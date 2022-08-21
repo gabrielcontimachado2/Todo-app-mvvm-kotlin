@@ -35,7 +35,7 @@ class PriorityDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = DialogPriorityBinding.inflate(inflater, container, false)
 
@@ -70,6 +70,7 @@ class PriorityDialogFragment : DialogFragment() {
         }
     }
 
+    /** Function to create the autocomplete with his Array Adapter */
     private fun setupAutoComplete() {
         val priority = resources.getStringArray(R.array.priorityArray)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_category, priority)
@@ -99,6 +100,7 @@ class PriorityDialogFragment : DialogFragment() {
         super.onDismiss(dialog)
     }
 
+    /** Function to update the task priority */
     private fun updatePriority() {
         binding.btnCreateCategory.setOnClickListener {
             if (checkFieldNotEmpty()) {
@@ -133,6 +135,7 @@ class PriorityDialogFragment : DialogFragment() {
         }
     }
 
+    /** Function to check if the fields is not empty */
     private fun checkFieldNotEmpty(): Boolean {
         return if (binding.autoCompletePriority.text!!.isEmpty()) {
 

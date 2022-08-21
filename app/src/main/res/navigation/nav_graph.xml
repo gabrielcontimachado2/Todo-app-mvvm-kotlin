@@ -74,6 +74,14 @@
         <argument android:name="taskPriority"
             app:argType="integer" />
     </dialog>
+    <dialog
+        android:id="@+id/categoryEditDialogFragment"
+        android:name="com.bootcamp.todoeasy.ui.fragments.category.dialogEditCategory.CategoryEditDialogFragment"
+        android:label="CategoryEditDialogFragment" >
+        <argument
+            android:name="category"
+            app:argType="com.bootcamp.todoeasy.data.models.Category" />
+    </dialog>
 
 
 </navigation>

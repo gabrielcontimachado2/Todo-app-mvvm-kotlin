@@ -13,6 +13,7 @@ class PriorityViewModel @Inject constructor(
 ) : ViewModel() {
 
 
+    /** Function to Update the Task Priority */
     fun updateTaskPriority(taskId: String, taskPriority: Int) = viewModelScope.launch {
         repositoryImp.updateTaskPriority(taskId, taskPriority)
     }

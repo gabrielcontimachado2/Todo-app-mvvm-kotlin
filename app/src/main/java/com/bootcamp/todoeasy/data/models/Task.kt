@@ -4,14 +4,21 @@ import android.os.Parcelable
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
-import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 
 @Entity(
-    tableName = "task")
+    tableName = "task",
+    foreignKeys = [ForeignKey(
+        entity = Category::class,
+        parentColumns = arrayOf("categoryName"),
+        childColumns = arrayOf("categoryName"),
+        onUpdate = ForeignKey.CASCADE,
+        onDelete = ForeignKey.CASCADE
+    )]
+)
 @Parcelize
 data class Task(
     @ColumnInfo(name = "idTask")

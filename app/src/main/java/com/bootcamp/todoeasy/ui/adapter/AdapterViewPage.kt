@@ -9,7 +9,6 @@ import com.bootcamp.todoeasy.ui.fragments.today.TodayFragment
 import com.bootcamp.todoeasy.ui.fragments.weekly.WeekFragment
 
 
-
 class AdapterViewPage(fragment: FragmentActivity) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount() = 3

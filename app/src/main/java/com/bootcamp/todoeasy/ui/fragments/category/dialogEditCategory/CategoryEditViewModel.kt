@@ -1,4 +1,4 @@
-package com.bootcamp.todoeasy.ui.fragments.category.dialogCreateCategory
+package com.bootcamp.todoeasy.ui.fragments.category.dialogEditCategory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,13 +9,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoryDialogViewModel @Inject constructor(
+class CategoryEditViewModel @Inject constructor(
     private val repositoryImp: RepositoryImp
 ) : ViewModel() {
 
-    /** Function to create the category in Room DataBase */
-    fun insertCategory(category: Category) = viewModelScope.launch {
-        repositoryImp.insertCategory(category)
+
+    /** Function to Edit the categoryName in Room Database with his Id */
+    fun editCategory(categoryId: Long, newCategoryName: String) {
+        viewModelScope.launch { repositoryImp.updateCategoryName(categoryId, newCategoryName) }
     }
 
 }

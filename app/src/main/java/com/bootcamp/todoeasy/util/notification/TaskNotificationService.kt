@@ -5,12 +5,10 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import com.bootcamp.todoeasy.R
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.ui.activitys.MainActivity
-import com.bootcamp.todoeasy.ui.activitys.detailTask.DetailTaskActivity
 import com.bootcamp.todoeasy.util.date.FormatDate
 
 class TaskNotificationService(
@@ -21,6 +19,7 @@ class TaskNotificationService(
     private val notificationManager =
         context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+    /** Function to show the notification when alarm receiver call him */
     fun showNotification() {
 
         val intent = Intent(context, MainActivity::class.java)

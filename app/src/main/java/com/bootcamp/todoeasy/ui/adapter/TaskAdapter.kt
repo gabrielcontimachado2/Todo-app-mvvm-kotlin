@@ -27,9 +27,7 @@ class TaskAdapter :
     }
 
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        val currentTask = currentList[position]
-
-        holder.bind(currentTask)
+        holder.bind(currentList[position])
     }
 
     private var onCardClickListener: ((Task) -> Unit)? = null

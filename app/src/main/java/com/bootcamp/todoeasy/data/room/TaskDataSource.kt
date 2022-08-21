@@ -14,6 +14,7 @@ interface TaskDataSource {
 
     suspend fun deleteCategory(category: Category)
 
+
     /** Inserts */
     suspend fun insertTask(task: Task)
 
@@ -29,7 +30,7 @@ interface TaskDataSource {
 
     fun getCategory(): Flow<List<Category>>
 
-    suspend fun getCategoryWithTask(): List<CategoryWithTask>
+    fun getCategoryWithTask(): Flow<List<CategoryWithTask>>
 
     fun getTasksByDateToday(
         search: String,
@@ -49,6 +50,14 @@ interface TaskDataSource {
         endDayWeek: Date
     ): Flow<List<Task>>
 
+    fun getTaskByDateWeekCategory(
+        search: String,
+        hide: Boolean,
+        categoryName: String,
+        startDayWeek: Date,
+        endDayWeek: Date
+    ): Flow<List<Task>>
+
     fun getTaskByDateMonth(
         search: String,
         hide: Boolean,
@@ -56,8 +65,18 @@ interface TaskDataSource {
         endDayMonth: Date
     ): Flow<List<Task>>
 
+    fun getTaskByDateMonthCategory(
+        search: String,
+        hide: Boolean,
+        categoryName: String,
+        startDayMonth: Date,
+        endDayMonth: Date
+    ): Flow<List<Task>>
+
 
     /** Updates */
+    suspend fun updateCategoryName(categoryId: Long, newCategoryName: String)
+
     suspend fun updateTaskCategory(taskId: String, categoryName: String)
 
     suspend fun updateTaskChecked(taskId: String, status: Boolean)

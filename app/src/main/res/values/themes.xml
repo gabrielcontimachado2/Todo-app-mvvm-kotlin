@@ -13,6 +13,7 @@
         <item name="colorOnBackground">@color/onBackground</item>
         <item name="colorOnSurface">@color/onSurface</item>
         <item name="colorOnError">@color/onError</item>
+        <item name="fontFamily">@font/roboto_condensed_regular</item>
 
         <!-- Primary brand color. -->
         <item name="android:statusBarColor">@color/dark_card</item>
@@ -27,7 +28,6 @@
 
         <item name="listPopupWindowStyle">@style/popupMenuCustom</item>
     </style>
-
 
 
 </resources>

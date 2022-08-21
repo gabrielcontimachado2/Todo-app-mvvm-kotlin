@@ -10,7 +10,7 @@ import com.bootcamp.todoeasy.databinding.FragmentViewPageBinding
 import com.bootcamp.todoeasy.ui.adapter.AdapterViewPage
 import com.bootcamp.todoeasy.util.Constants.Companion.MONTH
 import com.bootcamp.todoeasy.util.Constants.Companion.TODAY
-import com.bootcamp.todoeasy.util.Constants.Companion.WEEKLY
+import com.bootcamp.todoeasy.util.Constants.Companion.WEEK
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,14 +34,14 @@ class ViewPageFragment : Fragment() {
     }
 
 
-    /** Create the view Pager fo tasks fragments*/
+    /** Create the view Pager for tasks fragments*/
     private fun setupViewPage() {
         binding.viewPageFragment.adapter = AdapterViewPage(requireActivity())
 
         TabLayoutMediator(binding.tabTask, binding.viewPageFragment) { tabLayout, position ->
             tabLayout.text = when (position) {
                 0 -> TODAY
-                1 -> WEEKLY
+                1 -> WEEK
                 2 -> MONTH
                 else -> {
                     throw  Resources.NotFoundException("Position Not Found")

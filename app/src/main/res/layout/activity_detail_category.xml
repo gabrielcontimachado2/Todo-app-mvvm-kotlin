@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.activitys.detailCategory.DetailCategoryActivity">
 
     <com.google.android.material.appbar.MaterialToolbar
@@ -12,59 +13,27 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:elevation="@dimen/card_category_margin"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/menu_top_bar" />
+        app:menu="@menu/menu_top_bar"
+        app:title="@string/category_detail" />
 
-    <TextView
-        android:id="@+id/textView_tittle_create_task"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_default_app"
-        android:layout_marginTop="@dimen/margin_sixteen"
-        android:text="@string/textView_detail_category"
-        android:textSize="@dimen/textSize_card_tittle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_detail_category" />
-
-    <include
-        android:id="@+id/layout_category"
-        layout="@layout/layout_chip_detail_category"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_categories"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_default_app"
-        android:layout_marginTop="@dimen/editText_height_search_toolbar"
-        android:layout_marginEnd="@dimen/margin_default_app"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView_tittle_create_task" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/button_delete_category"
-        style="@style/Widget.MaterialComponents.Button.TextButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_default_app"
-        android:layout_marginEnd="@dimen/cardView_margin_default"
-        android:text="@string/button_delete"
-        android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="@id/button_add_category"
-        app:layout_constraintEnd_toStartOf="@+id/button_add_category"
-        app:layout_constraintTop_toTopOf="@id/button_add_category" />
+        app:layout_constraintBottom_toTopOf="@id/button_add_category"
+        tools:listitem="@layout/card_category_detail" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_add_category"
         style="@style/Widget.MaterialComponents.Button.TextButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_default_app"
-        android:layout_marginTop="@dimen/layout_height_chip_group"
-        android:layout_marginEnd="@dimen/margin_default_app"
+        android:layout_marginStart="@dimen/card_category_start_end_margin"
+        android:layout_marginTop="@dimen/card_category_margin"
         android:text="@string/button_add"
         android:textAllCaps="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_category" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

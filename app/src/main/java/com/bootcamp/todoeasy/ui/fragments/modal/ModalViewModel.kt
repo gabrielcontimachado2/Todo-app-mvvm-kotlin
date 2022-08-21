@@ -19,34 +19,16 @@ class ModalViewModel @Inject constructor(
     val category: LiveData<List<Category>>
         get() = _category
 
-    /** Create a task and his category in room db */
-    fun insertTask(task: Task, category: Category) = viewModelScope.launch {
-        repositoryImp.insertCategory(category)
+    /** Function to Create a task in Room database */
+    fun insertTask(task: Task ) = viewModelScope.launch {
         repositoryImp.insertTask(task)
     }
 
-
-    /** Create a category in room db */
-    fun insertCategory(category: Category) = viewModelScope.launch {
-        repositoryImp.insertCategory(category)
-    }
 
     init {
         _category = repositoryImp.getCategory().asLiveData() as MutableLiveData<List<Category>>
     }
 
-    fun setAlarm(
-        context: Context,
-        task: Task,
-        alarmHour: Int,
-        alarmMinute: Int,
-        date: Long,
-        createdTime: Long,
-        interval: String
-    ) {
-        val setAlarm = SetAlarm(context)
 
-        setAlarm.setAlarmTask(task, alarmHour, alarmMinute, date, createdTime, interval = "")
-    }
 
 }

@@ -2,62 +2,56 @@ package com.bootcamp.todoeasy.ui.fragments.today
 
 
 import android.icu.util.Calendar
-import android.icu.util.TimeZone
 import android.icu.util.ULocale
-import androidx.core.app.NotificationCompat.getCategory
 import androidx.lifecycle.*
-import com.bootcamp.todoeasy.data.di.IoDispatcher
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
 import com.bootcamp.todoeasy.domain.RepositoryImp
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.ZoneId
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import java.util.*
 import javax.inject.Inject
 
 
 @HiltViewModel
 class TaskViewModel @Inject constructor(
-    private val repositoryImp: RepositoryImp,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val repositoryImp: RepositoryImp
 ) : ViewModel() {
 
+    /** MutableStates Flow for use in the Combine Method with Triple() and Get the last value when one or more change his value */
+    private val hideCompletedTask: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private var categoryName: MutableStateFlow<String> = MutableStateFlow("")
+    private var searchQuery: MutableStateFlow<String> = MutableStateFlow("")
 
-    private var categoryRequest: MutableLiveData<String> = MutableLiveData("")
-    val searchTask: MutableLiveData<String> = MutableLiveData("")
-    private val hideCompletedTask: MutableLiveData<Boolean> = MutableLiveData(false)
-
-
+    /** MutableLiveData to set the chip group in the Main Activity */
     private var _category: MutableLiveData<List<Category>> = MutableLiveData()
     val category: LiveData<List<Category>>
         get() = _category
 
 
-    /** Task Today */
-    private var _taskToday: MediatorLiveData<List<Task>> = MediatorLiveData()
-    val taskToday: LiveData<List<Task>>
-        get() = _taskToday
+    /** Ui State Flow for the Month Fragment */
+    private var _uiStateMonth: MutableStateFlow<TasksUiStateMonth> =
+        MutableStateFlow(TasksUiStateMonth())
+    val uiStateMonth: StateFlow<TasksUiStateMonth> = _uiStateMonth.asStateFlow()
+
+    /** Ui State Flow for the Week Fragment */
+    private var _uiStateWeek: MutableStateFlow<TasksUiStateWeek> =
+        MutableStateFlow(TasksUiStateWeek())
+    val uiStateWeek: StateFlow<TasksUiStateWeek> = _uiStateWeek.asStateFlow()
+
+    /** Ui State Flow for the Today Fragment */
+    private var _uiStateToday: MutableStateFlow<TasksUiStateToday> =
+        MutableStateFlow(TasksUiStateToday())
+    val uiStateToday: StateFlow<TasksUiStateToday> = _uiStateToday.asStateFlow()
+
+    /** Ui State Flow for the Main Activity */
+    private var _uiStateMain: MutableStateFlow<TaskUiStateMain> =
+        MutableStateFlow(TaskUiStateMain())
+    val uiStateMain: StateFlow<TaskUiStateMain> = _uiStateMain.asStateFlow()
 
 
-    /** Task Weekly */
-    private var _taskWeekly: MutableLiveData<List<Task>> = MutableLiveData()
-    val taskWeekly: LiveData<List<Task>>
-        get() = _taskWeekly
-
-    /** Task Month */
-    private var _taskMonth: MutableLiveData<List<Task>> = MutableLiveData()
-    val taskMonth: LiveData<List<Task>>
-        get() = _taskMonth
-
-
-    /** Collect the data in room for list of tasks and category's */
+    /** Collect the data in room for list of tasks and categories when the ViewModel Start  */
     init {
 
         getTaskToday()
@@ -67,49 +61,52 @@ class TaskViewModel @Inject constructor(
 
     }
 
+    /** Function for Get the list Categories with the Values Emitted in Room DB */
     private fun getCategoryList() {
         _category = repositoryImp.getCategory().asLiveData() as MutableLiveData<List<Category>>
     }
 
-    private fun getTaskToday() = viewModelScope.launch {
+    /** Function for Combine the Three StateFlow and Return the "Transformation" with Experimental "FlatMapLatest" and Collect and Set the Ui State For Today */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun getTaskToday() {
 
-        _taskToday.addSource(
-            repositoryImp.getTasksByDateToday(
-                searchTask.value.toString(),
-                hideCompletedTask.value!!
-            ).asLiveData()
-        ) { taskList ->
-            _taskToday.value = taskList
+        viewModelScope.launch {
+            // Combine Three State Flow
+            combine(
+                searchQuery,
+                categoryName,
+                hideCompletedTask
+            ) { searchQuery, categorySelected, hideCompletedTask ->
+                Triple(searchQuery, categorySelected, hideCompletedTask)
+            }.flatMapLatest { (searchQuery, categorySelected, hideCompletedTask) ->
+                // When the Category Selected not have a Value get Normal List of Task
+                if (categorySelected == "") {
+                    repositoryImp.getTasksByDateToday(searchQuery, hideCompletedTask)
+                } else {
+                    repositoryImp.getTasksByDateTodayCategory(
+                        searchQuery,
+                        hideCompletedTask,
+                        categorySelected
+                    )
+                }
+            }.distinctUntilChanged().collect { taskList ->
+                _uiStateToday.update { uiState ->
+                    uiState.copy(tasksToday = taskList)
+                }
+            }
         }
-
-        //_taskToday.addSource(
-        //    Transformations.switchMap(categoryRequest) {
-        //        if (it == "") {
-        //            repositoryImp.getTasksByDateTodayCategory(
-        //                searchTask.value.toString(),
-        //                hideCompletedTask.value!!,
-        //                it
-        //            ).asLiveData()
-        //        } else {
-        //            repositoryImp.getTasksByDateToday(
-        //                searchTask.value.toString(),
-        //                hideCompletedTask.value!!
-        //            ).asLiveData()
-        //        }
-        //    }
-        //) { taskList ->
-        //    _taskToday.value = taskList
-        //}
-
 
     }
 
-    private fun getTaskWeek() = viewModelScope.launch {
+    /** Function for Combine the Three StateFlow and Return the "Transformation" with Experimental "FlatMapLatest" and Collect and Set the Ui State For Week */
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private fun getTaskWeek() {
+
+        //Start Calendar with Locale Instance
         val calendar = Calendar.getInstance(ULocale.forLocale(Locale.getDefault()))
 
-
+        //Set the Start of the Week
         calendar.firstDayOfWeek = Calendar.MONDAY
-
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
@@ -117,160 +114,164 @@ class TaskViewModel @Inject constructor(
 
         val startWeek = calendar.time
 
+        //Set the End of the Week
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY)
         val endWeek = calendar.time
 
-        repositoryImp.getTaskByDateWeek(
-            searchTask.value.toString(),
-            hideCompletedTask.value!!,
-            startWeek,
-            endWeek
-        ).collect {
-            _taskWeekly.postValue(it)
+        viewModelScope.launch {
+            combine(
+                searchQuery,
+                categoryName,
+                hideCompletedTask
+            ) { searchQuery, categorySelected, hideCompletedTask ->
+                Triple(searchQuery, categorySelected, hideCompletedTask)
+            }.flatMapLatest { (searchQuery, categorySelected, hideCompletedTask) ->
+                if (categorySelected == "") {
+
+                    repositoryImp.getTaskByDateWeek(
+                        searchQuery,
+                        hideCompletedTask,
+                        startWeek,
+                        endWeek
+                    )
+
+                } else {
+
+                    repositoryImp.getTaskByDateWeekCategory(
+                        searchQuery,
+                        hideCompletedTask,
+                        categorySelected,
+                        startWeek,
+                        endWeek
+                    )
+
+                }
+            }.distinctUntilChanged().collect { taskList ->
+                _uiStateWeek.update { uiState ->
+                    uiState.copy(tasksWeek = taskList)
+                }
+
+            }
         }
+
 
     }
 
+    /** Function for Combine the Three StateFlow and Return the "Transformation" with Experimental "FlatMapLatest" and Collect and Set the Ui State For Month */
+    @OptIn(ExperimentalCoroutinesApi::class)
     private fun getTaskMonth() = viewModelScope.launch {
         val calendar = Calendar.getInstance(ULocale.forLocale(Locale.getDefault()))
 
-
+        //Set the Start of the Month to be Use in the Query in the Room
         calendar.set(Calendar.DAY_OF_MONTH, 1)
         calendar.set(Calendar.HOUR_OF_DAY, 0)
         calendar.set(Calendar.MINUTE, 0)
         calendar.set(Calendar.SECOND, 0)
         val startMonth = calendar.time
 
+        //Set the End of the Month to be Use in the Query in the Room
         calendar.add(Calendar.MONTH, 1)
         calendar.set(Calendar.DAY_OF_MONTH, 1)
         calendar.add(Calendar.DATE, -1)
         val endMonth = calendar.time
 
-        repositoryImp.getTaskByDateMonth(
-            searchTask.value.toString(),
-            hideCompletedTask.value!!,
-            startMonth,
-            endMonth
-        ).collect {
-            _taskMonth.postValue(it)
+        viewModelScope.launch {
+            combine(
+                searchQuery,
+                categoryName,
+                hideCompletedTask
+            ) { searchQuery, categorySelected, hideCompletedTask ->
+                Triple(searchQuery, categorySelected, hideCompletedTask)
+            }.flatMapLatest { (searchQuery, categorySelected, hideCompletedTask) ->
+                if (categorySelected == "") {
+
+                    repositoryImp.getTaskByDateMonth(
+                        searchQuery,
+                        hideCompletedTask,
+                        startMonth,
+                        endMonth
+                    )
+
+                } else {
+
+                    repositoryImp.getTaskByDateMonthCategory(
+                        searchQuery,
+                        hideCompletedTask,
+                        categorySelected,
+                        startMonth,
+                        endMonth
+                    )
+
+                }
+            }.distinctUntilChanged().collect { taskList ->
+                _uiStateMonth.update { uiState ->
+                    uiState.copy(taskMonth = taskList)
+                }
+            }
         }
 
     }
 
 
-    /** Delete the task choice by user */
+    /** Function for Delete the task choice by user */
     fun deleteTask(task: Task) {
         viewModelScope.launch {
             repositoryImp.deleteTask(task)
         }
     }
 
-    /** Set the value for filter category*/
+    /** Function for Set the value for filter category*/
     fun setCategoryFilter(categorySelected: String) {
-        categoryRequest.value = categorySelected
+        categoryName.value = categorySelected
     }
 
-    /** Set the value when the query changed his value */
-    fun updateSearchQuery(queryChanged: String) {
-        searchTask.value = queryChanged
+    /** Function for Set the HideCompleted Value in State Flow and in the Main data class Ui State */
+    fun setHide(hideCompleted: Boolean) {
+
+        //Data class Main
+        _uiStateMain.update {
+            it.copy(hideCompleted = hideCompleted)
+        }
+
+        //MutableStateFlow
+        hideCompletedTask.value = hideCompleted
     }
 
-
-    /** Filter the list of tasks with the category selected in main activity in chip buttons */
-    fun updateTaskWithCategory(categoryName: String) = viewModelScope.launch {
-
+    /** Function for Set the value when the query changed his value */
+    fun setSearchQuery(query: String) {
+        searchQuery.value = query
     }
 
-    /** Create a task and his category in room db */
-    fun insertTask(task: Task, category: Category?) = viewModelScope.launch {
-        repositoryImp.insertTask(task)
-        if (category != null) {
-            repositoryImp.insertCategory(category)
+    /** Function for Create the Task and his Category When was Deleted and user Want undone his action in Fragments (TODAY, WEEK, MONTH) */
+    fun insertTask(task: Task) {
+        viewModelScope.launch {
+            repositoryImp.insertTask(task)
         }
     }
 
+    /** Function for update the Task when checked change his value */
     fun updateTaskByChecked(taskId: String, checked: Boolean) = viewModelScope.launch {
         repositoryImp.updateTaskChecked(taskId, checked)
     }
 
 }
-/**  talvez usar */
-//var searchTask = MutableStateFlow("")
-//var hideCompletedTask = MutableStateFlow(false)
-//var taskDay = MutableStateFlow("")
-//var categoryRequest = MutableStateFlow("")
-//val category = repositoryImp.getCategory()
-//private var _taskFlow: MutableLiveData<List<Task>> = MutableLiveData()
-//val taskFlow: LiveData<List<Task>> = _taskFlow
 
+/** Data class Ui State for each Fragment */
+data class TasksUiStateToday(
+    var tasksToday: List<Task> = listOf(),
+    var message: String = "",
+)
 
-//init {
-//    viewModelScope.launch {
-//        repositoryImp.getTasksByDateToday(
-//            searchTask.value,
-//            hideCompletedTask.value
-//        ).collectLatest { taskList ->
-//            _taskFlow.value = taskList
-//        }
-//    }
-//}
+data class TasksUiStateWeek(
+    var tasksWeek: List<Task> = listOf(),
+    var message: String = "",
+)
 
-//@OptIn(ExperimentalCoroutinesApi::class)
-//fun updateFiltersByCategoryOrAndSearch() {
+data class TasksUiStateMonth(
+    var taskMonth: List<Task> = listOf(),
+    var message: String = "",
+)
 
-//    combine(
-//        searchTask,
-//        hideCompletedTask,
-//        categoryRequest
-//    ) { searchTask, hideCompletedTask, categoryRequest ->
-//        Triple(
-//            searchTask,
-//            hideCompletedTask,
-//            categoryRequest
-//        )
-//    }.flatMapLatest { (searchTask, hideCompleted, categoryRequest) ->
-//        if (categoryRequest.isNotEmpty()) {
-//            repositoryImp.getTasksByDateToday(searchTask, hideCompleted)
-//                .mapLatest { taskList ->
-//                    taskList.filter { task ->
-//                        task.categoryName == categoryRequest
-//                    }
-//                }
-//        } else {
-//            repositoryImp.getTasksByDateToday(searchTask, hideCompleted)
-//        }
-//    }.onEach { taskList ->
-//        _taskFlow.postValue(taskList)
-//    }.flowOn(ioDispatcher).conflate()
-
-//}
-
-
-//@OptIn(ExperimentalCoroutinesApi::class)
-//_taskFlow = combine(
-//searchTask,
-//hideCompletedTask,
-//taskDay,
-//)
-//{
-//    searchTask, hideCompletedTask, taskDay ->
-//    Triple(searchTask, hideCompletedTask, taskDay)
-//}.flatMapLatest
-//{
-//    (searchTask, hideCompletedTask, taskDay) ->
-//    if (categoryRequest.value.isNotEmpty()) {
-//        repositoryImp.getTask(searchTask, hideCompletedTask, taskDay).mapLatest { taskList ->
-//            taskList.filter { task ->
-//                task.categoryName == categoryRequest.value
-//            }
-//        }
-//    } else {
-//        repositoryImp.getTask(searchTask, hideCompletedTask, taskDay)
-//    }
-//}.flowOn(ioDispatcher).conflate()
-
-
-
-
-
-
+data class TaskUiStateMain(
+    var hideCompleted: Boolean = false
+)

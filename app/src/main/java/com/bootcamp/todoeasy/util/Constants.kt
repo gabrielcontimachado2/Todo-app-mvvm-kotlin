@@ -18,7 +18,7 @@ class Constants {
 
         const val DAY = "Day"
         const val TODAY = "Today"
-        const val WEEKLY = "Weekly"
+        const val WEEK = "Week"
         const val MONTH = "Month"
 
 

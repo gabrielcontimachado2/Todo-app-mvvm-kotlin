@@ -36,51 +36,53 @@ class DetailTaskViewModel @Inject constructor(
         }
     }
 
-    fun updateStatus(taskId: String, taskStatus: Boolean) = viewModelScope.launch {
-        repositoryImp.updateTaskStatus(taskId, taskStatus)
-    }
 
+    /** Function for delete the task */
     fun deleteTask(task: Task) = viewModelScope.launch {
         repositoryImp.deleteTask(task)
     }
 
-    fun getTaskByCreate(taskCreate: Date) {
-        viewModelScope.launch {
-            _task.value = repositoryImp.getTaskByCreate(taskCreate)
-        }
+    /** Function to update the Status in Task */
+    fun updateStatus(taskId: String, taskStatus: Boolean) = viewModelScope.launch {
+        repositoryImp.updateTaskStatus(taskId, taskStatus)
     }
 
+    /** Function to update the Category in Task */
     fun updateCategory(taskId: String, categoryName: String) {
         viewModelScope.launch {
             repositoryImp.updateTaskCategory(taskId, categoryName)
         }
     }
 
+    /** Function to update the title in Task */
     fun updateTitle(taskId: String, taskTitle: String) {
         viewModelScope.launch {
             repositoryImp.updateTaskTitle(taskId, taskTitle)
         }
     }
 
+    /** Function to update the Description in Task */
     fun updateDescription(taskId: String, taskDescription: String) {
         viewModelScope.launch {
             repositoryImp.updateTaskDescription(taskId, taskDescription)
         }
     }
 
-
+    /** Function to update the Due Date in Task */
     fun updateDueDate(taskId: String, dueDate: Long) {
         viewModelScope.launch {
             repositoryImp.updateTaskDueDate(taskId, Date(dueDate))
         }
     }
 
+    /** Function to update the Hour in Task */
     fun updateHour(taskId: String, hour: String): Boolean {
         return viewModelScope.launch {
             repositoryImp.updateTaskHour(taskId, hour)
         }.isCompleted
     }
 
+    /** Function to update the Task LiveData  */
     fun updateTask(taskId: String) {
         viewModelScope.launch {
             _task.value = repositoryImp.getTask(taskId)
