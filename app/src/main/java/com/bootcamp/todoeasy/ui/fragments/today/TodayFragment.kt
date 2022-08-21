@@ -7,26 +7,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.*
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bootcamp.todoeasy.R
-import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.databinding.FragmentTodayBinding
 import com.bootcamp.todoeasy.ui.adapter.TaskAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
 class TodayFragment : Fragment() {
 
     private lateinit var binding: FragmentTodayBinding
-    private val viewModel: TaskViewModel by viewModels()
+    private val taskSharedViewModel: TaskViewModel by activityViewModels()
     private lateinit var taskAdapter: TaskAdapter
     private lateinit var recyclerViewTask: RecyclerView
 
@@ -38,6 +40,7 @@ class TodayFragment : Fragment() {
     ): View {
         binding = FragmentTodayBinding.inflate(inflater, container, false)
 
+
         setupRecyclerView()
         observeTask()
         itemTouchHelper()
@@ -47,6 +50,8 @@ class TodayFragment : Fragment() {
         return binding.root
     }
 
+
+    /** Function for Navigate for the Detail Task Activity and Pass the Task in the Args */
     private fun setupCardClicked() {
         taskAdapter.setonCardClickListener { task ->
             val bundle = Bundle().apply {
@@ -60,6 +65,7 @@ class TodayFragment : Fragment() {
         }
     }
 
+    /** Function for Complete or Undone the Task */
     private fun setupCheckedTask() {
         taskAdapter.setonCheckClickListener { taskClicked ->
 
@@ -70,20 +76,21 @@ class TodayFragment : Fragment() {
 
             if (!taskClicked.status) {
 
-                viewModel.updateTaskByChecked(taskClicked.idTask!!, true)
+                taskSharedViewModel.updateTaskByChecked(taskClicked.idTask, true)
 
-                Snackbar.make(view!!, R.string.task_completed, Snackbar.LENGTH_LONG)
+                Snackbar.make(requireView(), R.string.task_today_completed, Snackbar.LENGTH_LONG)
                     .setAnchorView(floatingMain).show()
             } else {
 
-                viewModel.updateTaskByChecked(taskClicked.idTask!!, false)
+                taskSharedViewModel.updateTaskByChecked(taskClicked.idTask, false)
 
-                Snackbar.make(view!!, R.string.task_undo_completed, Snackbar.LENGTH_LONG)
+                Snackbar.make(requireView(), R.string.task_undo_completed, Snackbar.LENGTH_LONG)
                     .setAnchorView(floatingMain).show()
             }
 
         }
     }
+
 
     /** Create the recyclerView with adapter*/
     private fun setupRecyclerView() {
@@ -97,10 +104,19 @@ class TodayFragment : Fragment() {
 
     }
 
-    /** LiveData for observer the list os tasks*/
+    /** Function for Observer the Ui State in ViewModel and set the list in TaskAdapter and if have errors a Toast with the Message */
     private fun observeTask() {
-        viewModel.taskToday.observe(viewLifecycleOwner) { taskList ->
-            taskAdapter.submitList(taskList)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+
+                taskSharedViewModel.uiStateToday.collect {
+                    taskAdapter.submitList(it.tasksToday)
+
+                    if (it.message.isNotEmpty()) {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
         }
     }
 
@@ -111,7 +127,7 @@ class TodayFragment : Fragment() {
         }
     }
 
-    /** Function for swipe card effect in recyclerView, delete the task and undo that action with necessary*/
+    /** Function for swipe card effect in recyclerView, delete the task and undo that action if necessary */
     private val itemTouchHelperCallBack = object : ItemTouchHelper.SimpleCallback(
         0,
         ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -129,9 +145,9 @@ class TodayFragment : Fragment() {
             val task = taskAdapter.currentList[position]
 
             /** Delete the task in room db */
-            viewModel.deleteTask(task)
+            taskSharedViewModel.deleteTask(task)
 
-            /** The floating button in main activity for anchor the snackBar above the fab in bottom bar*/
+            /** The floating button from main activity for anchor the snackBar above the fab in bottom bar */
             val floatingMain: FloatingActionButton =
                 activity?.findViewById(R.id.floatingButton_create_task)!!
 
@@ -139,10 +155,9 @@ class TodayFragment : Fragment() {
             Snackbar.make(view!!, R.string.task_deleted_success, Snackbar.LENGTH_LONG)
                 .apply {
                     setAction("Undo") {
-                        val categoryUndo = Category(null, task.categoryName)
-                        viewModel.insertTask(task, categoryUndo)
+                        taskSharedViewModel.insertTask(task)
                         Snackbar.make(
-                            view!!,
+                            view,
                             R.string.create_task_completed,
                             Toast.LENGTH_LONG
                         ).setAnchorView(floatingMain)
@@ -154,24 +169,6 @@ class TodayFragment : Fragment() {
         }
 
     }
-
-
-// /** Flow*/
-// private fun observeTask() {
-
-//     viewLifecycleOwner.lifecycleScope.launch {
-//         viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-
-//             viewModel.taskDay.value = TODAY
-
-//             viewModel.taskFlow.collectLatest { taskList ->
-//                 taskAdapter.submitList(taskList)
-//             }
-//         }
-//     }
-
-// }
-
 
 }
 

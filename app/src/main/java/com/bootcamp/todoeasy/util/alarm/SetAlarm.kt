@@ -15,6 +15,7 @@ class SetAlarm(
     private val context: Context
 ) {
 
+    /** Function to set the alarm */
     fun setAlarmTask(
         task: Task,
         alarmHour: Int,
@@ -24,6 +25,7 @@ class SetAlarm(
         interval: String
     ) {
 
+        /** Create the intent and a bundle with a task*/
         val intent = Intent(context, AlarmReceiver::class.java)
         val taskBundle = Bundle()
         taskBundle.putParcelable("task",task)
@@ -32,6 +34,7 @@ class SetAlarm(
 
         val alarmMgr = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
+        /** Create the Pending intent */
         val alarmIntent = PendingIntent.getBroadcast(
             context,
             createdTime.toInt(),

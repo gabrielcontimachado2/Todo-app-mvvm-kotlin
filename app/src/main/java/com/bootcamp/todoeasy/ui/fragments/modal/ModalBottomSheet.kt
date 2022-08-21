@@ -1,9 +1,12 @@
 package com.bootcamp.todoeasy.ui.fragments.modal
 
+import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.bootcamp.todoeasy.R
 import com.bootcamp.todoeasy.data.models.Category
@@ -14,6 +17,7 @@ import com.bootcamp.todoeasy.util.*
 import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_HIGH
 import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_LOW
 import com.bootcamp.todoeasy.util.Constants.Companion.PRIORITY_TASK_MEDIUM
+import com.bootcamp.todoeasy.util.alarm.SetAlarm
 import com.bootcamp.todoeasy.util.date.FormatDate
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
@@ -41,17 +45,17 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     private var listFilter: MutableSet<String> = mutableSetOf()
     private var alarmHour: Int = 0
     private var alarmMinute: Int = 0
-    private var alarmYear: Int = 0
-    private var alarmMonth: Int = 0
-    private var alarmDay: Int = 0
     private var createdTime: Long = 0
+    //private var alarmYear: Int = 0
+    //private var alarmMonth: Int = 0
+    //private var alarmDay: Int = 0
 
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         binding = ModalBottomSheetBinding.inflate(inflater, container, false)
 
@@ -78,11 +82,12 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    /** Create the Chip Group with Category from Room */
+    /** Create the Chip Group with Categories from Room */
     private fun setupCategoryChip() {
         val categoryChipGroup = binding.categoryFilterLayout.chipGroupCategory
 
 
+        /** Observer the Livedata With Categories */
         viewModel.category.observe(this) { categoryList ->
             categoryList.forEach { category ->
                 if (!listFilter.contains(category.categoryName)) {
@@ -107,27 +112,6 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-
-    //private fun setupAutoCompleteCategory() {
-    //    val autoComplete = binding.autoCompleteCategory
-
-    //    viewModel.category.observe(viewLifecycleOwner){
-    //        val listCategory = mutableListOf<String>()
-    //        it.forEach {
-    //            listCategory.add(it.categoryName)
-    //        }
-    //        listCategory.add("+ ${getString(R.string.create_category)}")
-    //        val categoryAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_category, listCategory)
-    //        autoComplete.setAdapter(categoryAdapter)
-
-    //    }
-
-    //    autoComplete.setOnItemClickListener { adapterView, view, i, l ->
-
-    //    }
-
-    //}
-
     /** Enter Action in the AutoCompleteText*/
     private fun actionEnter() {
         binding.ediTextDescriptionTask.setOnEnterKeyListener(clickedAction())
@@ -141,15 +125,17 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         return onClickAction
     }
 
-    /** Function for create a task */
+    /** Function to create a task and his alarm */
     private fun addTask() {
 
         binding.imageButtonAddTask.setOnClickListener {
 
             if (checkFieldNotEmpty()) {
 
-                createdTime = Calendar.getInstance().timeInMillis.toUTCLocalDateTime()
-                    .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    createdTime = Calendar.getInstance().timeInMillis.toUTCLocalDateTime()
+                        .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+                }
 
                 /** Random ID for Task*/
                 val taskId = UUID.randomUUID().toString()
@@ -169,20 +155,17 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                         ""
                     )
 
-                val category =
-                    Category(null, category)
+                viewModel.insertTask(task)
 
-                viewModel.insertTask(task, category)
-
-                viewModel.setAlarm(
+                setAlarm(
                     requireContext(),
                     task,
                     alarmHour,
                     alarmMinute,
                     date,
-                    createdTime,
-                    interval = ""
+                    createdTime
                 )
+
 
                 clearFields()
                 disableErrorMessage()
@@ -203,7 +186,22 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    /** Check if Inputs is Empty */
+    /** Function to Set the Alarm */
+    private fun setAlarm(
+        context: Context,
+        task: Task,
+        alarmHour: Int,
+        alarmMinute: Int,
+        date: Long,
+        createdTime: Long
+    ) {
+        val setAlarm = SetAlarm(context)
+
+        setAlarm.setAlarmTask(task, alarmHour, alarmMinute, date, createdTime, interval = "")
+    }
+
+
+    /** Check if the Inputs is Empty */
     private fun checkFieldNotEmpty(): Boolean {
 
         /** Get the values in fields for test if is empty */
@@ -331,9 +329,10 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                 val format = FormatDate()
 
                 /** Convert the UTC date for the System Default Locale */
-                date = it.toUTCLocalDateTime().atZone(ZoneId.systemDefault()).toInstant()
-                    .toEpochMilli()
-
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    date = it.toUTCLocalDateTime().atZone(ZoneId.systemDefault()).toInstant()
+                        .toEpochMilli()
+                }
 
                 binding.textViewDateUpdate.text = format.formatLong(date)
             }

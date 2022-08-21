@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.activitys.detailTask.DetailTaskActivity">
 
-
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar_detail"
         style="@style/Widget.MaterialComponents.Toolbar.Surface"
@@ -63,7 +62,7 @@
             android:drawablePadding="@dimen/card_category_start_end_margin"
             android:inputType="none"
             android:padding="@dimen/card_category_start_end_margin"
-            android:textAlignment="center"/>
+            android:textAlignment="center" />
 
         <!--
         <AutoCompleteTextView
@@ -116,7 +115,7 @@
 
             <EditText
                 android:id="@+id/ediText_title"
-                android:layout_width="@dimen/margin_hundred"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="19dp"
                 android:focusedByDefault="true"
@@ -151,14 +150,23 @@
 
 
             <include
-                android:id="@+id/due_date"
-                layout="@layout/card_detail_expiration_date"
+                android:id="@+id/priority"
+                layout="@layout/card_detail_priority"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ediText_category_description" />
+
+            <include
+                android:id="@+id/due_date"
+                layout="@layout/card_detail_expiration_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/priority" />
 
             <include
                 android:id="@+id/hour"

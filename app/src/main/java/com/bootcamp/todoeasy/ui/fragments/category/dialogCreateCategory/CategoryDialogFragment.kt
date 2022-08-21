@@ -23,7 +23,7 @@ class CategoryDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DialogCategoryBinding.inflate(inflater, container, false)
 
         addCategory()
@@ -48,6 +48,7 @@ class CategoryDialogFragment : DialogFragment() {
         )
     }
 
+    /** Function to Create category */
     private fun addCategory() {
         binding.btnCreateCategory.setOnClickListener {
             if (checkFieldNotEmpty()) {
@@ -61,6 +62,7 @@ class CategoryDialogFragment : DialogFragment() {
         }
     }
 
+    /** Function for Check if the fields is not empty */
     private fun checkFieldNotEmpty(): Boolean {
         return if (binding.ediTextNameCategory.text!!.isEmpty()) {
             binding.textInputNameCategory.isErrorEnabled = true

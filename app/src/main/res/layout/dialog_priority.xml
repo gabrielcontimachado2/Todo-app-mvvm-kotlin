@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <View
+        android:id="@+id/task_push_down"
+        android:layout_width="@dimen/bottom_sheet_width"
+        android:layout_height="@dimen/margin_one"
+        android:layout_marginTop="@dimen/card_category_start_end_margin"
+        android:background="@color/text_secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_create_priority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_sixteen"
+        android:layout_marginTop="@dimen/margin_sixteen"
+        android:text="@string/textView_priority_task"
+        android:textSize="@dimen/textSize_card_tittle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/task_push_down" />
+
+
+    <View
+        android:id="@+id/divide"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_top_search_icon"
+        android:layout_marginStart="@dimen/card_category_margin"
+        android:layout_marginTop="@dimen/card_category_start_end_margin"
+        android:layout_marginEnd="@dimen/card_category_margin"
+        android:background="@color/text_secondary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_view_create_priority" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInput_priority"
+        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_default_app"
+        android:layout_marginTop="@dimen/margin_default_app"
+        android:layout_marginEnd="@dimen/margin_default_app"
+        android:hint="@string/label_priority"
+        app:boxBackgroundColor="@color/dark_hover"
+        app:boxCornerRadiusTopEnd="@dimen/margin_sixteen"
+        app:boxCornerRadiusTopStart="@dimen/margin_sixteen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divide">
+
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:id="@+id/autoComplete_priority"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="none"
+            app:errorEnabled="true"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_create_category"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/card_category_start_end_margin"
+        android:layout_marginEnd="@dimen/margin_default_app"
+        android:layout_marginBottom="@dimen/card_category_start_end_margin"
+        android:text="@string/enter"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textInput_priority" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancel"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/cardView_radius"
+        android:text="@string/cancel"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="@id/btn_create_category"
+        app:layout_constraintEnd_toStartOf="@id/btn_create_category"
+        app:layout_constraintTop_toTopOf="@id/btn_create_category" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

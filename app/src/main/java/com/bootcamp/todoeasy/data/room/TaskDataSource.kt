@@ -1,10 +1,9 @@
 package com.bootcamp.todoeasy.data.room
 
 
-import androidx.room.Query
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
-import com.bootcamp.todoeasy.data.relantions.CategoryWithTask
+import com.bootcamp.todoeasy.data.relations.CategoryWithTask
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
@@ -14,6 +13,7 @@ interface TaskDataSource {
     suspend fun deleteTask(task: Task)
 
     suspend fun deleteCategory(category: Category)
+
 
     /** Inserts */
     suspend fun insertTask(task: Task)
@@ -30,7 +30,7 @@ interface TaskDataSource {
 
     fun getCategory(): Flow<List<Category>>
 
-    suspend fun getCategoryWithTask(): List<CategoryWithTask>
+    fun getCategoryWithTask(): Flow<List<CategoryWithTask>>
 
     fun getTasksByDateToday(
         search: String,
@@ -50,6 +50,14 @@ interface TaskDataSource {
         endDayWeek: Date
     ): Flow<List<Task>>
 
+    fun getTaskByDateWeekCategory(
+        search: String,
+        hide: Boolean,
+        categoryName: String,
+        startDayWeek: Date,
+        endDayWeek: Date
+    ): Flow<List<Task>>
+
     fun getTaskByDateMonth(
         search: String,
         hide: Boolean,
@@ -57,8 +65,18 @@ interface TaskDataSource {
         endDayMonth: Date
     ): Flow<List<Task>>
 
+    fun getTaskByDateMonthCategory(
+        search: String,
+        hide: Boolean,
+        categoryName: String,
+        startDayMonth: Date,
+        endDayMonth: Date
+    ): Flow<List<Task>>
+
 
     /** Updates */
+    suspend fun updateCategoryName(categoryId: Long, newCategoryName: String)
+
     suspend fun updateTaskCategory(taskId: String, categoryName: String)
 
     suspend fun updateTaskChecked(taskId: String, status: Boolean)
@@ -67,5 +85,12 @@ interface TaskDataSource {
 
     suspend fun updateTaskHour(taskId: String, hour: String)
 
+    suspend fun updateTaskTitle(taskId: String, taskTitle: String)
+
+    suspend fun updateTaskDescription(taskId: String, taskDescription: String)
+
+    suspend fun updateTaskPriority(taskId: String, taskPriority: Int)
+
+    suspend fun updateTaskStatus(taskId: String, taskStatus: Boolean)
 
 }

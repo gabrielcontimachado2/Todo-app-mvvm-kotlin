@@ -14,10 +14,14 @@ import java.time.ZoneId
 import java.time.ZoneOffset
 
 
-fun Long.toUTCLocalDateTime() = LocalDateTime.ofInstant(
-    Instant.ofEpochMilli(this),
-    ZoneId.ofOffset("UTC", ZoneOffset.UTC)
-)
+fun Long.toUTCLocalDateTime() = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+    LocalDateTime.ofInstant(
+        Instant.ofEpochMilli(this),
+        ZoneId.ofOffset("UTC", ZoneOffset.UTC)
+    )
+} else {
+    TODO("VERSION.SDK_INT < O")
+}
 
 inline fun SearchView.onQueryTextChanged(crossinline listener: (String) -> Unit) {
     this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {

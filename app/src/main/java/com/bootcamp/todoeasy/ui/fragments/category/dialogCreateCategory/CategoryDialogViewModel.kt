@@ -13,6 +13,7 @@ class CategoryDialogViewModel @Inject constructor(
     private val repositoryImp: RepositoryImp
 ) : ViewModel() {
 
+    /** Function to create the category in Room DataBase */
     fun insertCategory(category: Category) = viewModelScope.launch {
         repositoryImp.insertCategory(category)
     }

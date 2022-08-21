@@ -1,4 +1,4 @@
-package com.bootcamp.todoeasy.data.relantions
+package com.bootcamp.todoeasy.data.relations
 
 import androidx.room.Embedded
 import androidx.room.Relation
@@ -8,7 +8,7 @@ import com.bootcamp.todoeasy.data.models.Task
 data class CategoryWithTask(
     @Embedded val category: Category,
     @Relation(
-        parentColumn = "idCategory",
+        parentColumn = "categoryName",
         entityColumn = "categoryName"
     )
     val taskList: List<Task>

@@ -1,24 +1,26 @@
 package com.bootcamp.todoeasy.ui.activitys
 
-
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import com.bootcamp.todoeasy.R
 import com.bootcamp.todoeasy.databinding.ActivityMainBinding
 import com.bootcamp.todoeasy.ui.activitys.detailCategory.DetailCategoryActivity
 import com.bootcamp.todoeasy.ui.fragments.category.dialogCreateCategory.CategoryDialogFragment
 import com.bootcamp.todoeasy.ui.fragments.today.TaskViewModel
+import com.bootcamp.todoeasy.util.Constants.Companion.JOB_DELAY
 import com.bootcamp.todoeasy.util.onQueryTextChanged
 import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
@@ -27,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: TaskViewModel by viewModels()
     private var listFilter: MutableSet<String> = mutableSetOf()
+    private var hide: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        observeState()
         setupBottomBar()
         setupFabButton()
         setupChipGroup()
@@ -41,33 +45,58 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    /** Function to Observer the Ui State and if the Hide is active or not */
+    private fun observeState() {
+        lifecycleScope.launch {
+            viewModel.uiStateMain.collect {
+                hide = if (it.hideCompleted) {
+                    it.hideCompleted
+                } else {
+                    it.hideCompleted
+                }
+            }
+        }
+    }
+
     /** Function for menu item clicked in bottom bar menu*/
     private fun setupBottomBar() {
-        binding.bottomAppBar.setOnMenuItemClickListener {
-            when (it.itemId) {
+        val searchQuery = binding.bottomAppBar.menu.findItem(R.id.action_search)
+        val searchView = searchQuery.actionView as SearchView
+
+        var jobSearch: Job? = null
+
+        /** Function Extended in the "ViewExtend", for listener changes in the Search View , and repeat in 0.5 with a Job for get the last Value */
+        searchView.onQueryTextChanged { queryChanged ->
+            jobSearch?.cancel()
+            jobSearch = MainScope().launch {
+                delay(JOB_DELAY)
+                queryChanged.let {
+                    viewModel.setSearchQuery(queryChanged)
+                }
+            }
+        }
+
+        binding.bottomAppBar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
                 R.id.category_detail -> {
                     openDetailCategory()
                     true
                 }
-                else -> true
+                R.id.hide_completed -> {
+                    if (hide) {
+                        viewModel.setHide(false)
+                    } else {
+                        viewModel.setHide(true)
+                    }
+                    true
+                }
+                else -> false
             }
-
-            /**Don't work ;( TODO*/
-            //val searchQuery = it.subMenu.findItem(R.id.action_search)
-            //val searchView = searchQuery.actionView as SearchView
-
-            //searchView.onQueryTextChanged { queryChanged ->
-            //    viewModel.searchTask.value = queryChanged
-            //}
-
-            //true
         }
-
 
     }
 
-
-    /** Open the Dialog Fragment for create category*/
+    /** Open the Dialog Fragment for create category */
     private fun setupCreateCategory() {
         val createCategory = binding.categoryFilter.addCategory
 
@@ -79,9 +108,12 @@ class MainActivity : AppCompatActivity() {
 
 
     /** Create the Chip Group with Category from Room */
+    @SuppressLint("InflateParams")
     private fun setupChipGroup() {
 
         val categoryChipGroup = binding.categoryFilter.chipGroupCategory
+
+        listFilter.add(getString(R.string.all))
 
         viewModel.category.observe(this) { categoryList ->
             categoryList.forEach { category ->
@@ -90,6 +122,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+
             with(categoryChipGroup) {
                 removeAllViews()
                 listFilter.forEach { categoryString ->
@@ -97,11 +130,16 @@ class MainActivity : AppCompatActivity() {
                     chip.text = categoryString
                     addView(chip)
 
+                    categoryChipGroup.check(categoryChipGroup.getChildAt(0).id)
+
                     /** Check which Chip was Selected */
                     chip.setOnCheckedChangeListener { _, isChecked ->
                         if (isChecked) {
-                            viewModel.setCategoryFilter(chip.text.toString())
-                            viewModel.updateTaskWithCategory()
+                            if (chip.text.toString() == getString(R.string.all)) {
+                                viewModel.setCategoryFilter("")
+                            } else {
+                                viewModel.setCategoryFilter(chip.text.toString())
+                            }
                         }
                     }
                 }

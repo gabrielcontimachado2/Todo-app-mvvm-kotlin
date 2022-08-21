@@ -6,11 +6,15 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.android.parcel.Parcelize
 
-@Entity(tableName = "category", indices = [Index(value = ["categoryName"],
-    unique = true)])
+@Entity(
+    tableName = "category", indices = [Index(
+        value = ["categoryName"],
+        unique = true
+    )]
+)
 @Parcelize
-class Category(
+data class Category(
     @PrimaryKey(autoGenerate = true)
     val idCategory: Long?,
-    val categoryName: String
+    var categoryName: String
 ) : Parcelable

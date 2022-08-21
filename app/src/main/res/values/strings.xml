@@ -42,8 +42,10 @@
     <string name="tab_weekly">Weekly</string>
     <string name="tab_month">Month</string>
     <string name="hide_completed">Hide Tasks Completed</string>
-    <string name="task_deleted_success">The task delete with success!!!</string>
-    <string name="task_completed">Congratulations!! one less task for you do today</string>
+    <string name="task_deleted_success">The task was deleted with success!</string>
+    <string name="task_today_completed">Congratulations!! One less task for you do today</string>
+    <string name="task_week_completed">Congratulations!! One less task for you do in this Week</string>
+    <string name="task_month_completed">Congratulations!! One less task for you do in this Month</string>
     <string name="textView_category">Category</string>
     <string name="textMaxLengthDescription">40</string>
     <string name="label_name_category">Category Name</string>
@@ -66,8 +68,28 @@
     <string name="no">No</string>
     <string name="task_undo_completed">Task Successfully Undone</string>
     <string name="textView_detail_category">Category</string>
-    <string name="category_detail">Category Manager</string>
-    <string name="button_add">+ Create</string>
+    <string name="category_detail">Manage Categories</string>
+    <string name="button_add">+ Create New</string>
     <string name="button_delete">Delete</string>
     <string name="category_empty">Select a Category for Delete</string>
+    <string name="category_delete">Category %s was Deleted</string>
+    <string name="label_priority">Task Priority</string>
+    <string name="message_delete">Are you sure you want delete the task</string>
+    <string name="message_delete_category">WARNING!! Are you sure you want delete the category? All Task with this Category will excluded together</string>
+    <string name="category_deleted_success">The category was deleted with success!</string>
+
+    <string name="message_complete">Are you sure you want complete the task</string>
+    <string name="message_complete_undone">Are you sure you want undone the task</string>
+    <string name="complete_task_message">Congratulations, task completed with success!</string>
+    <string name="complete_task_message_undo">Task Undone with Success!</string>
+    <string name="all">All</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+
+    <string-array name="priorityArray">
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
+    </string-array>
+
 </resources>

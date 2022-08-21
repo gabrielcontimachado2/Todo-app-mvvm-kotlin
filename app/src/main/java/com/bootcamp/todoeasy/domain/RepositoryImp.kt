@@ -3,7 +3,7 @@ package com.bootcamp.todoeasy.domain
 
 import com.bootcamp.todoeasy.data.models.Category
 import com.bootcamp.todoeasy.data.models.Task
-import com.bootcamp.todoeasy.data.relantions.CategoryWithTask
+import com.bootcamp.todoeasy.data.relations.CategoryWithTask
 import com.bootcamp.todoeasy.data.room.TaskDataSourceImp
 import kotlinx.coroutines.flow.Flow
 import java.util.*
@@ -38,13 +38,15 @@ class RepositoryImp @Inject constructor(
     override suspend fun getCategoryByName(categoryName: String) =
         taskDataSourceImp.getCategoryByName(categoryName)
 
-    override suspend fun getCategoryWithTask(): List<CategoryWithTask> =
+    override fun getCategoryWithTask(): Flow<List<CategoryWithTask>> =
         taskDataSourceImp.getCategoryWithTask()
 
     override fun getTasksByDateToday(
         search: String,
         hideCompletedTask: Boolean,
-    ) = taskDataSourceImp.getTasksByDateToday(search, hideCompletedTask)
+    ): Flow<List<Task>> {
+        return taskDataSourceImp.getTasksByDateToday(search, hideCompletedTask)
+    }
 
     override fun getTasksByDateTodayCategory(
         search: String,
@@ -59,6 +61,20 @@ class RepositoryImp @Inject constructor(
         endDayWeek: Date
     ) = taskDataSourceImp.getTaskByDateWeek(search, hide, startDayWeek, endDayWeek)
 
+    override fun getTaskByDateWeekCategory(
+        search: String,
+        hide: Boolean,
+        categoryName: String,
+        startDayWeek: Date,
+        endDayWeek: Date
+    ) = taskDataSourceImp.getTaskByDateWeekCategory(
+        search,
+        hide,
+        categoryName,
+        startDayWeek,
+        endDayWeek
+    )
+
     override fun getTaskByDateMonth(
         search: String,
         hide: Boolean,
@@ -66,8 +82,26 @@ class RepositoryImp @Inject constructor(
         endDayMonth: Date
     ) = taskDataSourceImp.getTaskByDateMonth(search, hide, startDayMonth, endDayMonth)
 
+    override fun getTaskByDateMonthCategory(
+        search: String,
+        hide: Boolean,
+        categoryName: String,
+        startDayMonth: Date,
+        endDayMonth: Date
+    ) = taskDataSourceImp.getTaskByDateMonthCategory(
+        search,
+        hide,
+        categoryName,
+        startDayMonth,
+        endDayMonth
+    )
+
 
     /** Updates */
+
+    override suspend fun updateCategoryName(categoryId: Long, newCategoryName: String) =
+        taskDataSourceImp.updateCategoryName(categoryId, newCategoryName)
+
     override suspend fun updateTaskCategory(taskId: String, categoryName: String) =
         taskDataSourceImp.updateTaskCategory(taskId, categoryName)
 
@@ -80,29 +114,19 @@ class RepositoryImp @Inject constructor(
     override suspend fun updateTaskHour(taskId: String, hour: String) =
         taskDataSourceImp.updateTaskHour(taskId, hour)
 
+    override suspend fun updateTaskTitle(taskId: String, taskTitle: String) =
+        taskDataSourceImp.updateTaskTitle(taskId, taskTitle)
+
+    override suspend fun updateTaskDescription(taskId: String, taskDescription: String) =
+        taskDataSourceImp.updateTaskDescription(taskId, taskDescription)
+
+    override suspend fun updateTaskPriority(taskId: String, taskPriority: Int) =
+        taskDataSourceImp.updateTaskPriority(taskId, taskPriority)
+
+    override suspend fun updateTaskStatus(taskId: String, taskStatus: Boolean) =
+        taskDataSourceImp.updateTaskStatus(taskId, taskStatus)
 }
-//override fun getTask(
-//    searchQuery: StateFlow<String>,
-//    hideCompleted: StateFlow<Boolean>,
-//    taskDay: StateFlow<String>
-//): Flow<List<Task>> {
 
-//    val _taskFlow = combine(searchQuery, hideCompleted) {
-
-//    }
-
-//    when (taskDay) {
-//Constants.TODAY -> taskDataSourceImp.getTasksByDateToday(search, hideCompletedTask)
-//Constants.WEEKLY -> TODO()
-//Constants.MONTH -> TODO()
-//else -> {
-//    flow {
-//        emptyList<List<Task>>()
-//    }
-//}
-
-//    }
-//}
 
 
 

@@ -26,7 +26,7 @@ class CategoryUpdateDialogFragment : DialogFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DialogCategoryBinding.inflate(inflater, container, false)
 
         addCategory()
@@ -58,6 +58,7 @@ class CategoryUpdateDialogFragment : DialogFragment() {
         super.onDismiss(dialog)
     }
 
+    /** Function to Create the category and Update the Task with this new Category */
     private fun addCategory() {
         binding.btnCreateCategory.setOnClickListener {
             if (checkFieldNotEmpty()) {
@@ -66,7 +67,7 @@ class CategoryUpdateDialogFragment : DialogFragment() {
 
                 viewModel.insertCategory(newCategory)
 
-                viewModel.updateCategory(
+                viewModel.updateTaskCategory(
                     taskArgs.taskId,
                     binding.ediTextNameCategory.text.toString()
                 )
@@ -77,6 +78,7 @@ class CategoryUpdateDialogFragment : DialogFragment() {
         }
     }
 
+    /** Function for Check if the Fields is not Empty */
     private fun checkFieldNotEmpty(): Boolean {
         return if (binding.ediTextNameCategory.text!!.isEmpty()) {
             binding.textInputNameCategory.isErrorEnabled = true
