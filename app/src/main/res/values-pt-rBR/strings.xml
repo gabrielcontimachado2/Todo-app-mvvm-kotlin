@@ -31,7 +31,7 @@
     <string name="textMaxLength">20</string>
 
     <!-- Description -->
-    <string name="description_close_task">Close create task</string>
+    <string name="description_close_task">Fechar descrição tarefa</string>
     <string name="description_imageView_low">ImageView for radio button low priority</string>
     <string name="description_imageView_medium">Image View for radio button Medium priority</string>
     <string name="description_imageView_high">Description radio button high priority</string>

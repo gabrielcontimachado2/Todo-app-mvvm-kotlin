@@ -208,7 +208,6 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         with(binding) {
             name = ediTextNameTask.text.toString().replaceFirstChar { it.uppercase() }
             description = ediTextDescriptionTask.text.toString().replaceFirstChar { it.uppercase() }
-            //  category = autoCompleteCategory.text.toString()
         }
 
         when {

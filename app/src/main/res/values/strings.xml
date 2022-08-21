@@ -75,7 +75,7 @@
     <string name="category_delete">Category %s was Deleted</string>
     <string name="label_priority">Task Priority</string>
     <string name="message_delete">Are you sure you want delete the task</string>
-    <string name="message_delete_category">WARNING!! Are you sure you want delete the category? All Task with this Category will excluded together</string>
+    <string name="message_delete_category">WARNING!!! Are you sure you want delete the category? All Task with this Category will excluded together</string>
     <string name="category_deleted_success">The category was deleted with success!</string>
 
     <string name="message_complete">Are you sure you want complete the task?</string>

@@ -54,7 +54,7 @@ class CategoryDialogFragment : DialogFragment() {
             if (checkFieldNotEmpty()) {
                 val newCategory = Category(
                     null,
-                    binding.ediTextNameCategory.text.toString().replaceFirstChar { it.uppercase() })
+                    binding.ediTextNameCategory.text.toString().replaceFirstChar { it.uppercase() })//uppercase first letter
 
                 viewModel.insertCategory(newCategory)
 
