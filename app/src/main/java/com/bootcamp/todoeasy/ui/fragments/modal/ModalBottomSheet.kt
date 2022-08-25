@@ -42,7 +42,6 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     private var category: String = ""
     private var date: Long = 0
     private var time: String = ""
-    private var listFilter: MutableSet<String> = mutableSetOf()
     private var alarmHour: Int = 0
     private var alarmMinute: Int = 0
     private var createdTime: Long = 0
@@ -72,7 +71,9 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     }
 
 
-    /** Open the Dialog Fragment for create category*/
+    /** Open the Dialog Fragment for create category
+     * In that function when button create category clicked
+     * i created one dialog for Category Dialog Fragment and show him in screen*/
     private fun setupCreateCategory() {
         val createCategory = binding.categoryFilterLayout.addCategory
 
@@ -82,26 +83,35 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    /** Create the Chip Group with Categories from Room */
+    /** Function to create the chip group and children chips
+     *  In that function i observer the category in viewModel with list of category
+     *  and when categories values change, i remove all children chips in chip group,
+     *  and create the new children with new list of categories, and before the forEach i created one chip for all categories*/
     private fun setupCategoryChip() {
         val categoryChipGroup = binding.categoryFilterLayout.chipGroupCategory
 
 
         /** Observer the Livedata With Categories */
         viewModel.category.observe(this) { categoryList ->
-            categoryList.forEach { category ->
-                if (!listFilter.contains(category.categoryName)) {
-                    listFilter.add(category.categoryName)
-                }
-            }
 
             with(categoryChipGroup) {
                 removeAllViews()
-                listFilter.forEach { categoryString ->
-                    val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
-                    chip.text = categoryString
-                    addView(chip)
 
+                //The chip for select all categories
+                val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
+                chip.text = getString(R.string.all)
+                addView(chip)
+
+
+                //ForEach to read the categoryList and create the chips without repeat values
+                categoryList.forEach { categoryForEach ->
+                    val chipForEach = layoutInflater.inflate(R.layout.single_chip, null) as Chip
+                    chipForEach.text = categoryForEach.categoryName
+                    addView(chipForEach)
+
+                    categoryChipGroup.check(categoryChipGroup.getChildAt(0).id)
+
+                    /** Check which Chip was Selected */
                     chip.setOnCheckedChangeListener { _, isChecked ->
                         if (isChecked) {
                             category = chip.text.toString()
@@ -125,7 +135,12 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         return onClickAction
     }
 
-    /** Function to create a task and his alarm */
+    /** Function to create a task and his alarm
+     *  In that function i created the task in room db for that
+     *  first i check in the function "checkFieldNotEmpty" if we have fields empty
+     *  and start create the task, create his id with the randomUUID and
+     *  i created the variable for task and pass him for viewModel, in a function to create a task,
+     *  last i created a alarm with "setAlarm", and show message for completed operation*/
     private fun addTask() {
 
         binding.imageButtonAddTask.setOnClickListener {
@@ -186,7 +201,8 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    /** Function to Set the Alarm */
+    /** Function to Set the Alarm
+     *  in that function first i instantiating the setAlarm class, and pass the parameters he needed to create a alarm*/
     private fun setAlarm(
         context: Context,
         task: Task,
@@ -201,7 +217,8 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     }
 
 
-    /** Check if the Inputs is Empty */
+    /** Check if the Inputs is Empty
+     *  I check all field before created a task, to see if one of them was empty*/
     private fun checkFieldNotEmpty(): Boolean {
 
         /** Get the values in fields for test if is empty */
@@ -310,7 +327,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
         }
     }
 
-    /** Open the Material Date Picker, set and Convert Date*/
+    /** Open the Material Date Picker, set and Convert Date */
     private fun setupShowDatePicker() {
         val calendar = binding.imageButtonDate
 

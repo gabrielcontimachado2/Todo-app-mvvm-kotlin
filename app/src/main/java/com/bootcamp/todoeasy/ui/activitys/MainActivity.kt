@@ -28,7 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val viewModel: TaskViewModel by viewModels()
-    private var listFilter: MutableSet<String> = mutableSetOf()
     private var hide: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -113,22 +112,20 @@ class MainActivity : AppCompatActivity() {
 
         val categoryChipGroup = binding.categoryFilter.chipGroupCategory
 
-        listFilter.add(getString(R.string.all))
-
         viewModel.category.observe(this) { categoryList ->
-            categoryList.forEach { category ->
-                if (!listFilter.contains(category.categoryName)) {
-                    listFilter.add(category.categoryName)
-                }
-            }
-
 
             with(categoryChipGroup) {
                 removeAllViews()
-                listFilter.forEach { categoryString ->
-                    val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
-                    chip.text = categoryString
-                    addView(chip)
+
+                val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
+                chip.text = getString(R.string.all)
+                addView(chip)
+
+                categoryList.forEach { category ->
+
+                    val chipForEach = layoutInflater.inflate(R.layout.single_chip, null) as Chip
+                    chipForEach.text = category.categoryName
+                    addView(chipForEach)
 
                     categoryChipGroup.check(categoryChipGroup.getChildAt(0).id)
 
@@ -146,7 +143,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-
 
     /** Open the Modal Bottom Sheet for create the Task */
     private fun setupFabButton() {
