@@ -14,7 +14,7 @@
     <string name="textView_today_tasks">Hoje</string>
 
     <!-- Create Task-->
-    <string name="textView_create_task">criar Tarefa</string>
+    <string name="textView_create_task">Criar Tarefa</string>
     <string name="textView_priority_task">Prioridade</string>
     <string name="textView_hour">Hora</string>
     <string name="textView_date">Data</string>
@@ -26,9 +26,9 @@
     <string name="radio_medium_priority">Média</string>
     <string name="radio_low_priority">Baixo</string>
     <string name="error_text">Campo Necessário</string>
-    <string name="error_empty_field">"Campo vazio"</string>
+    <string name="error_empty_field">"O Campo %1$s está vazio"</string>
     <string name="create_task_completed">Tarefa Criada com Sucesso!</string>
-    <string name="textMaxLength">20</string>
+    <string name="textMaxLength">40</string>
 
     <!-- Description -->
     <string name="description_close_task">Fechar descrição tarefa</string>
@@ -49,7 +49,7 @@
     <string name="task_week_completed">Parabéns!! Uma Tarefa a menos para você Concluir nessa Semana</string>
     <string name="task_month_completed">Parabéns!! Uma Tarefa a menos para você Concluir nesse Mês</string>
     <string name="textView_category">Categoria</string>
-    <string name="textMaxLengthDescription">40</string>
+    <string name="textMaxLengthDescription">80</string>
     <string name="label_name_category">Nome da Categoria</string>
     <string name="delete_task">Deletar Tarefa</string>
     <string name="complete_task">Completar Tarefa</string>
@@ -87,6 +87,11 @@
     <string name="all">Todas</string>
     <string name="edit">Editar</string>
     <string name="delete">Deletar</string>
+
+    <string name="name">Nome</string>
+    <string name="description">Descrição</string>
+    <string name="category">Categoria</string>
+    <string name="time">Hora</string>
 
     <string-array name="priorityArray">
         <item>Baixo</item>

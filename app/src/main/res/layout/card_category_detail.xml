@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="@dimen/layout_height_priority_bar"
-    android:layout_marginTop="@dimen/margin_one">
+    android:layout_marginTop="@dimen/margin_stroke_chip">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

@@ -117,16 +117,20 @@ class MainActivity : AppCompatActivity() {
             with(categoryChipGroup) {
                 removeAllViews()
 
-                val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
-                chip.text = getString(R.string.all)
-                addView(chip)
+                //I use for Each Indexed because i need know when the index is 0 to create the "All" option
+                categoryList.forEachIndexed { index, category ->
 
-                categoryList.forEach { category ->
+                    val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
 
-                    val chipForEach = layoutInflater.inflate(R.layout.single_chip, null) as Chip
-                    chipForEach.text = category.categoryName
-                    addView(chipForEach)
+                    if (index == 0) {
+                        chip.text = getString(R.string.all)
+                        addView(chip)
+                    } else {
+                        chip.text = category.categoryName
+                        addView(chip)
+                    }
 
+                    //Select the first chip "All" when the app init
                     categoryChipGroup.check(categoryChipGroup.getChildAt(0).id)
 
                     /** Check which Chip was Selected */

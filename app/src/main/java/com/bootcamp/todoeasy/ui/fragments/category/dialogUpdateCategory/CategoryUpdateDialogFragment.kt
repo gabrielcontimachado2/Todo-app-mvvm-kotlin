@@ -69,7 +69,7 @@ class CategoryUpdateDialogFragment : DialogFragment() {
 
                 viewModel.updateTaskCategory(
                     taskArgs.taskId,
-                    binding.ediTextNameCategory.text.toString()
+                    binding.ediTextNameCategory.text.toString().replaceFirstChar { it.uppercase() }
                 )
 
                 dismiss()

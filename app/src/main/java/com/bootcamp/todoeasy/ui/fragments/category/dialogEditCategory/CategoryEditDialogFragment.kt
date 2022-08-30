@@ -78,7 +78,7 @@ class CategoryEditDialogFragment : DialogFragment() {
 
                 viewModel.editCategory(
                     categoryArgs.category.idCategory!!,
-                    binding.ediTextNameCategory.text.toString()
+                    binding.ediTextNameCategory.text.toString().replaceFirstChar { it.uppercase() }
                 )
 
                 dismiss()
