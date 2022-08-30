@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import com.bootcamp.todoeasy.R
@@ -45,6 +46,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     private var alarmHour: Int = 0
     private var alarmMinute: Int = 0
     private var createdTime: Long = 0
+    private lateinit var fieldEmpty: String
     //private var alarmYear: Int = 0
     //private var alarmMonth: Int = 0
     //private var alarmDay: Int = 0
@@ -90,26 +92,18 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
     private fun setupCategoryChip() {
         val categoryChipGroup = binding.categoryFilterLayout.chipGroupCategory
 
-
         /** Observer the Livedata With Categories */
         viewModel.category.observe(this) { categoryList ->
 
             with(categoryChipGroup) {
                 removeAllViews()
 
-                //The chip for select all categories
-                val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
-                chip.text = getString(R.string.all)
-                addView(chip)
-
-
                 //ForEach to read the categoryList and create the chips without repeat values
                 categoryList.forEach { categoryForEach ->
-                    val chipForEach = layoutInflater.inflate(R.layout.single_chip, null) as Chip
-                    chipForEach.text = categoryForEach.categoryName
-                    addView(chipForEach)
 
-                    categoryChipGroup.check(categoryChipGroup.getChildAt(0).id)
+                    val chip = layoutInflater.inflate(R.layout.single_chip, null) as Chip
+                    chip.text = categoryForEach.categoryName
+                    addView(chip)
 
                     /** Check which Chip was Selected */
                     chip.setOnCheckedChangeListener { _, isChecked ->
@@ -193,7 +187,7 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
             } else {
                 Snackbar.make(
                     dialog!!.window!!.decorView,
-                    R.string.error_empty_field,
+                    getString(R.string.error_empty_field, fieldEmpty),
                     Snackbar.LENGTH_SHORT
                 )
                     .show()
@@ -232,25 +226,32 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                 binding.textInputNameTask.isErrorEnabled = true
                 binding.textInputNameTask.error = getString(R.string.error_text)
 
+                fieldEmpty = getString(R.string.name)
                 return false
             }
             description.isEmpty() -> {
                 binding.textInputDescriptionTask.isErrorEnabled = true
                 binding.textInputDescriptionTask.error = getString(R.string.error_text)
 
+                fieldEmpty = getString(R.string.description)
                 return false
             }
             category.isEmpty() -> {
                 //binding.textInputCategoryTask.isErrorEnabled = true
                 //binding.textInputCategoryTask.error = getString(R.string.error_text)
 
+                fieldEmpty = getString(R.string.category)
+
                 return false
             }
             time.isEmpty() -> {
 
+                fieldEmpty = getString(R.string.time)
                 return false
             }
             date.equals(null) -> {
+
+                fieldEmpty = getString(R.string.time)
                 return false
             }
             else -> {
@@ -344,7 +345,6 @@ class ModalBottomSheet : BottomSheetDialogFragment() {
                 /** Format the Date*/
                 val format = FormatDate()
 
-                /** Convert the UTC date for the System Default Locale */
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     date = it.toUTCLocalDateTime().atZone(ZoneId.systemDefault()).toInstant()
                         .toEpochMilli()
