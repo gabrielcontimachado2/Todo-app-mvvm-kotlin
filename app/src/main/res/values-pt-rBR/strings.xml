@@ -94,9 +94,9 @@
     <string name="time">Hora</string>
 
     <string-array name="priorityArray">
-        <item>Baixo</item>
-        <item>Médio</item>
-        <item>Alta</item>
+        <item>Low</item>
+        <item>Medium</item>
+        <item>High</item>
     </string-array>
 
 </resources>
