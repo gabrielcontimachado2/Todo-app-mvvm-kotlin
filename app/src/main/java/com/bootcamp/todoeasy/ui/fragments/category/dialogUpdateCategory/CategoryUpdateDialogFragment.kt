@@ -63,7 +63,9 @@ class CategoryUpdateDialogFragment : DialogFragment() {
         binding.btnCreateCategory.setOnClickListener {
             if (checkFieldNotEmpty()) {
 
-                val newCategory = Category(null, binding.ediTextNameCategory.text.toString())
+                val newCategory = Category(
+                    null,
+                    binding.ediTextNameCategory.text.toString().replaceFirstChar { it.uppercase() })
 
                 viewModel.insertCategory(newCategory)
 
