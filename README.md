@@ -1,2 +1,4 @@
 # Todo Easy
-Todo App Projeto pessoal desenvolvido utilizando Kotlin / MVVM / ROOM
+Projeto pessoal desenvolvido para aprimorar conhecimentos no Android utilizando a arquitetura MVVM
+
+
