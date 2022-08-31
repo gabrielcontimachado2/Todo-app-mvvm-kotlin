@@ -14,3 +14,5 @@ Projeto pessoal desenvolvido para aprimorar meus conhecimentos no Android utiliz
 • Material Design  
 
 ## Gifs do projeto finalizado
+• Edit Task Screen
+![Alt Text]([https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif](https://media4.giphy.com/media/JYCgOpLU21wbbdRId1/giphy.gif?cid=790b761111984e7640ef2221e844740900fb644b328e483d&rid=giphy.gif&ct=g))
