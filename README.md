@@ -6,13 +6,11 @@ Projeto pessoal desenvolvido para aprimorar meus conhecimentos no Android utiliz
 
 ## Ferramentas e linguagens utilizadas no projeto
 • Kotlin  
-
 • Android Jetpack  
 • Room  
 • Dagger Hilt  
 • Firebase (Analytics and Crashlytics)  
 • Arquitetura MVVM  
 • Material Design  
-
 
 ## Gifs do projeto finalizado
